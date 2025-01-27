@@ -442,7 +442,7 @@ namespace SystemGenerator.Generation
             );
 
             this.g    = this.m / Math.Pow(this.r, 2.0);
-            this.escV        = Math.Sqrt( (2.0 * Const.GRAV_CONST * Const.Earth.MASS * this.m) / (Const.Earth.RADIUS * this.r)) * Const.Earth.ESCV;
+            this.escV = Math.Sqrt( this.m/this.r ) * Const.Earth.ESCV;
 
             spin();
         }
@@ -486,7 +486,7 @@ namespace SystemGenerator.Generation
             //Calculate properties
             this.bulkDensity = this.m/Math.Pow(this.r, 3.0)*Const.Earth.DENSITY;
             this.g           = this.m/Math.Pow(this.r, 2.0)      ;
-            this.escV        = Math.Sqrt( (2.0 * Const.GRAV_CONST * Const.Earth.MASS * this.m) / (Const.Earth.RADIUS * this.r)) * Const.Earth.ESCV;
+            this.escV        = Math.Sqrt( this.m/this.r ) * Const.Earth.ESCV;
 
             //Assign albedo
             switch (this.subtype)
@@ -610,7 +610,7 @@ namespace SystemGenerator.Generation
 
             this.bulkDensity = (this.m / Math.Pow(this.r, 3.0))*Const.Earth.DENSITY;
             this.g           = this.m / Math.Pow(this.r, 2.0);
-            this.escV        = Math.Sqrt( (2.0 * Const.GRAV_CONST * Const.Earth.MASS * this.m) / (Const.Earth.RADIUS * this.r)) * Const.Earth.ESCV;
+            this.escV        = Math.Sqrt( this.m/this.r ) * Const.Earth.ESCV;
 
             spin();
         }
@@ -643,9 +643,9 @@ namespace SystemGenerator.Generation
                 this.bulkWater*Const.WATER_DENS
             );
 
-            this.m = Math.Pow(this.r, 3.0) * (this.bulkDensity*Const.Earth.DENSITY) * Math.Pow((1.0/Const.Earth.RADIUS), 3.0);
-            this.g = (this.m / Math.Pow(this.r/Const.Earth.DENSITY, 2.0));
-            this.escV        = Math.Sqrt( (2.0 * Const.GRAV_CONST * Const.Earth.MASS * this.m) / this.r) * Const.Earth.ESCV;
+            this.m    = Math.Pow(this.r, 3.0) * (this.bulkDensity*Const.Earth.DENSITY) * Math.Pow((1.0/Const.Earth.RADIUS), 3.0);
+            this.g    = (this.m / Math.Pow(this.r/Const.Earth.DENSITY, 2.0));
+            this.escV = Math.Sqrt( this.m/this.r ) * Const.Earth.ESCV;
 
             spin();
         }
@@ -762,7 +762,7 @@ namespace SystemGenerator.Generation
 
                 features.Add(
                     String.Format(
-                        "There is a persistent %s storm over its %s pole.",
+                        "There is a persistent {0} storm over its {1} pole.",
                         sides,
                         pole
                     )
@@ -774,7 +774,7 @@ namespace SystemGenerator.Generation
                 string pole = (Utils.randSign() > 0) ? "northern" : "southern";
                 features.Add(
                     String.Format(
-                        "A large, discolored storm rages in its %s hemisphere.",
+                        "A large, discolored storm rages in its {0} hemisphere.",
                         pole
                     )
                 );

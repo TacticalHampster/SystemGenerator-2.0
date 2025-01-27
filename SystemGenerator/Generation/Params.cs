@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,11 @@ namespace SystemGenerator.Generation
         public const double METAL_DENS = 7.87;
         public const double ROCK_DENS  = 3.25;
         public const double WATER_DENS = 0.93;
+
+        public const string FORMAT = "{0,7:N4}";
+
+        public const double ZETTAGRAMS_PER_EARTHMASS = 5972200.0;
+        public const double AU_PER_EARTHRADIUS       = 6378000.0/149597870700.0;
 
         public class Earth
         {
@@ -50,7 +56,7 @@ namespace SystemGenerator.Generation
             public const bool DISABLE_GAS_GIANT_CUTOFF   = false;
 
             //Probability distributions of planet types
-            public const double DENSE_CHANCE             = 0.4;
+            public const double DENSE_CHANCE             = 0.8;
             public const double OCEAN_CHANCE             = 0.6;
             public const double ICE_GIANT_CHANCE         = 0.8;
             public const double ICE_DWARF_CHANCE         = 0.15;
@@ -318,7 +324,7 @@ namespace SystemGenerator.Generation
 
             public const int MIN_CTYPE_CLUSTERS  = 0;
             public const int MAX_CTYPE_CLUSTERS  = 3;
-            public const double CTYPE_MOON_DECAY = 0.5;
+            public const double CTYPE_MOON_DECAY = 0.9;
             public const int MIN_CTYPE_MOONS     = 0;
             public const int MAX_CTYPE_MOONS     = 4;
 
@@ -459,7 +465,7 @@ namespace SystemGenerator.Generation
             public const char BELT_INNER  = 'B';
             public const char BELT_KUIPER = 'k';
 
-            public const char DWARF     = 'c';
+            public const char DWARF     = 'd';
             public const char PLUTINO   = '1'; //2:3 resonant kuiper object
             public const char CUBEWANO  = 'C'; //Classical non-resonant kuiper object
             public const char TWOTINO   = '2'; //1:2 resonant kuiper object
@@ -476,7 +482,7 @@ namespace SystemGenerator.Generation
             public const char MJR_MINERVAN  = 'M'; //Primarily covalent compounts
             public const char MJR_EDELIAN   = 'E'; //Primarily neon
 
-            public const char MNR_CRYOAZURIAN = 'E'; //Cold, dull blue
+            public const char MNR_CRYOAZURIAN = 'Y'; //Cold, dull blue
             public const char MNR_FRIGIDIAN   = 'F'; //Cold, grey-blue
             public const char MNR_NEONEAN     = 'N'; //Cold, pinkish
             public const char MNR_BOREAN      = 'B'; //Cold, pink-purple
@@ -538,20 +544,20 @@ namespace SystemGenerator.Generation
 
         public class Color
         {
-            public const int HYDROGEN = 0xFFFFFF;
-            public const int CARBON   = 0x838383;
-            public const int NITROGEN = 0x0000FF;
-            public const int OXYGEN   = 0x00FFFF;
-            public const int WATER    = 0x00008B;
-            public const int FLUORINE = 0xFFFF00;
-            public const int NEON     = 0xFF4500;
-            public const int SILICON  = 0xB8860B;
-            public const int PHOSPHOR = 0x8B0000;
-            public const int SULFUR   = 0xFFEA00;
-            public const int CHLORINE = 0x006400;
-            public const int ARGON    = 0xEE82EE;
-            public const int KRYPTON  = 0xA9A9A9;
-            public const int XENON    = 0x99CFE0;
+            public        const    int HYDROGEN = 0xFFFFFF;
+            public        const    int CARBON   = 0x838383;
+            public static readonly int NITROGEN = System.Drawing.Color.RoyalBlue.ToArgb();
+            public        const    int OXYGEN   = 0x00FFFF;
+            public static readonly int WATER    = System.Drawing.Color.DodgerBlue.ToArgb();
+            public        const    int FLUORINE = 0xFFFF00;
+            public        const    int NEON     = 0xFF4500;
+            public        const    int SILICON  = 0xB8860B;
+            public        const    int PHOSPHOR = 0x8B0000;
+            public        const    int SULFUR   = 0xFFEA00;
+            public        const    int CHLORINE = 0x006400;
+            public        const    int ARGON    = 0xEE82EE;
+            public        const    int KRYPTON  = 0xA9A9A9;
+            public        const    int XENON    = 0x99CFE0;
         }
     }
 }

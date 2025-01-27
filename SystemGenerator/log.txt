@@ -7,43 +7,53 @@ Beginning system generation
     Star generation complete
 
     Generating orbital distances
-        Frost orbit: 4.462239441871845
+        Frost orbit: 7.606687148146343
         Generating outer orbits
         Generating inner orbits
-        Total orbits: 9
+        Total orbits: 10
         Habitable orbit exists: True
     Distance generation complete
 
     Picking types of planets
-        Orbit 5 (4.462239441871845 AU): gas giant (frost orbit)
-        Orbit 2 (0.8338405346286972 AU): habitable rocky planet (hab orbit)
-        Orbit 0 (0.21687045895557597 AU): dense rocky planet (inner orbit)
-        Orbit 1 (0.47019230808917667 AU): dense rocky planet (inner orbit)
-        Orbit 3 (1.270850115249059 AU): rocky planet (mid orbit)
-        Orbit 4 (2.3773086728928843 AU): ocean planet (mid orbit)
-        Orbit 6 (8.723719997450127 AU): gas dwarf (outer orbit)
-        Orbit 7 (14.482471903966658 AU): ice giant (outer orbit)
-        Orbit 8 (24.606008857266843 AU): gas dwarf (outer orbit)
+        Orbit 7 (7.606687148146343 AU): gas giant (frost orbit)
+        Orbit 3 (1.2702115753338392 AU): habitable rocky planet (hab orbit)
+        Orbit 0 (0.16487403426213518 AU): dense rocky planet (inner orbit)
+        Orbit 1 (0.42152754325167147 AU): dense rocky planet (inner orbit)
+        Orbit 2 (0.8144067874971603 AU): dense rocky planet (inner orbit)
+        Orbit 3 (1.2702115753338392 AU) is already a habitable rocky planet (mid orbit)
+        Orbit 4 (1.7837954025585043 AU): ocean planet (mid orbit)
+        Orbit 5 (2.5316440603525163 AU): rocky planet (mid orbit)
+        Orbit 6 (4.341038723302956 AU): rocky planet (mid orbit)
+        Orbit 8 (14.015760136576967 AU): ice giant (outer orbit)
+        Orbit 9 (24.8098467216399 AU): gas dwarf (outer orbit)
+        Orbit 10 ( X AU): kuiper asteroid belt (kuiper orbit)
+            Generating 1 plutinos, 1 cubewanos, 0 twotinos, 3 SDOs, and 1 sednoids
+        Orbit 11: plutino dwarf (kuiper orbit)
+        Orbit 12: cubewano dwarf (kuiper orbit)
+        Orbit 13: scattered disk dwarf (kuiper orbit)
+        Orbit 14: scattered disk dwarf (kuiper orbit)
+        Orbit 15: scattered disk dwarf (kuiper orbit)
+        Orbit 16: sednoid dwarf (kuiper orbit)
     Type generation complete
 
     Generating a dense rocky planet for orbit 0
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 1.2298777300190191
+            Mass: 1.2281372858700053
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
             Planet has no atmosphere
-            Estimated temperature: 515.9518219616931
+            Estimated temperature: 819.1962803964803
                 Calculating albedo
                     Thin  clouds     cover  0% of the surface, contributing 0 albedo
                     Thick clouds     cover  0% of the surface, contributing 0 albedo
-                    Reflective land  covers 83.29491115368174% of the surface, contributing 0.36490493569109456 albedo
-                    Absorptive land  covers 16.70508884631826% of the surface, contributing 0.12458271366611112 albedo
+                    Reflective land  covers 89.2429932138662% of the surface, contributing 0.24078864067424852 albedo
+                    Absorptive land  covers 10.757006786133793% of the surface, contributing 0.12119218141038862 albedo
                     The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.7146158754150516
-                Calculated temp: 365.4746014274452
+                    Total albedo: 0.809467834955596
+                Calculated temp: 524.5303782132389
         Atmospheric generation complete
         Generating satellite system
             Generating moons for desert/water planet
@@ -52,79 +62,120 @@ Beginning system generation
     Generating a dense rocky planet for orbit 1
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 0.9767547057830049
+            Mass: 1.3571087396653954
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
             Planet has no atmosphere
-            Estimated temperature: 350.40604485874127
+            Estimated temperature: 512.3315786643445
                 Calculating albedo
                     Thin  clouds     cover  0% of the surface, contributing 0 albedo
                     Thick clouds     cover  0% of the surface, contributing 0 albedo
-                    Reflective land  covers 68.67311174498174% of the surface, contributing 0.3551004335312322 albedo
-                    Absorptive land  covers 31.32688825501826% of the surface, contributing 0.22748508583124444 albedo
+                    Reflective land  covers 78.3858422778344% of the surface, contributing 0.3241366356790748 albedo
+                    Absorptive land  covers 21.614157722165594% of the surface, contributing 0.18346573224374924 albedo
                     The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.5428636263090613
-                Calculated temp: 279.2374301123101
+                    Total albedo: 0.6540885996938431
+                Calculated temp: 380.7877269958055
         Atmospheric generation complete
         Generating satellite system
             Generating moons for desert/water planet
         Satellite system generation complete
 
-    Generating a habitable rocky planet for orbit 2
+    Generating a dense rocky planet for orbit 2
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 3.780634148649542
+            Mass: 1.2629596596035442
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 263.1284746072665
+            Planet has no atmosphere
+            Estimated temperature: 368.5898840088811
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 22.90186136842277% of the surface, contributing 0.30733197899831377 albedo
+                    Absorptive land  covers 77.09813863157723% of the surface, contributing 0.09346672253821449 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.12451062873074978
+                Calculated temp: 345.53872739106015
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moons for desert/water planet
+        Satellite system generation complete
+
+    Generating a habitable rocky planet for orbit 3
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 5.354454568603091
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 295.13863951307167
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=91716.24797214718, lim=763596992.1095823, div=0.00012011080310670626)
-                    Planet can retain substance (rms=46192.21255236397, lim=763596992.1095823, div=6.049292104300879E-05)
-                    Planet can retain substance (rms=10856.024306387882, lim=763596992.1095823, div=1.4216955303079501E-05)
-                    Planet can retain substance (rms=6599.8768459374605, lim=763596992.1095823, div=8.64314149235193E-06)
-                    Planet can retain substance (rms=6600.819348878687, lim=763596992.1095823, div=8.644375786031667E-06)
-                    Planet can retain substance (rms=9162.125797811268, lim=763596992.1095823, div=1.1998640503414174E-05)
+                    Planet cannot retain substance (rms=4361.217332122665, lim=2420.659551343187, div=1.8016648932323802)
+                    Planet cannot retain substance (rms=3095.0592828248577, lim=2420.659551343187, div=1.2786016443772346)
+                    Planet can retain substance (rms=1500.4446970805081, lim=2420.659551343187, div=0.6198495349120591)
+                    Planet can retain substance (rms=1169.9101403160112, lim=2420.659551343187, div=0.4833022221843819)
+                    Planet can retain substance (rms=1169.9936725099212, lim=2420.659551343187, div=0.48333673021499846)
+                    Planet can retain substance (rms=1378.4236463555585, lim=2420.659551343187, div=0.5694413514658401)
                 Jotunnian allowed: False
                 Helian    allowed: False
                 Ydatrian  allowed: False
                 Rhean     allowed: True
                 Minervan  allowed: False
                 Edelian   allowed: False
-                    Picked class 5 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 0 (allowed: False)
-                    Picked class 0 (allowed: False)
-                    Picked class 0 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 5 (allowed: False)
                     Picked class 3 (allowed: True)
                 Major class: Rhean
-                      Generated 58.83569575809344% Nitrogen        (41.16430424190656% remaining)
-                      Generated 34.070930496386204% Oxygen          (7.093373745520354% remaining)
-                      Generated 1.289116588362274% Argon           (5.80425715715808% remaining)
-                      Generated 4.969838148613358% Argon           (0.8344190085447213% remaining)
-                      Generated 0.7188004125539316% Silane          (0.11561859599078976% remaining)
-                      Generated 0.1062874295297618% Krypton         (0.009331166461027957% remaining)
+                    Generated 59.65224075852017% Nitrogen        (      5% remaining)
+                    Generated 33.83719843514279% Oxygen          (      5% remaining)
+                    Generated 0.8055907653534076% Argon           (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 5.00504113797922% Cyanogen        (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has already been picked
+                    Generated 0.6202221623766162% Sulfur Dioxide  (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has already been picked
+                    Generated 0.07100591092011191% Nitric Oxide    (      5% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
                 Minor class: Mesoazurian
                 Atmosphere color: steel blue (0x4682B4)
                 Cloud      color: pale blue (0x86C5D8)
                 Calculating albedo
-                    Thin  clouds     cover  39.72358452377586% of the surface, contributing 0.3972358452377586 albedo
-                    Thick clouds     cover  4.347440703742598% of the surface, contributing 0.04347440703742598 albedo
-                    Reflective land  covers 16.129253912219326% of the surface, contributing 0.2664863475999314 albedo
-                    Absorptive land  covers 22.159567699392817% of the surface, contributing 0.12108997696878339 albedo
-                    Reflective ice   covers 61.71117838838786% of the surface, contributing 0.7223244485888604 albedo
-                    Absorptive water covers 0% of the surface, contributing 0.06120539761932329 albedo
-                    Total albedo: 0.40020733804937814
-                Calculated temp: 297.90278984512224
+                    Thin  clouds     cover  47.317383997600615% of the surface, contributing 0.47317383997600615 albedo
+                    Thick clouds     cover  2.12579326095712% of the surface, contributing 0.021257932609571203 albedo
+                    Reflective land  covers 12.394275935849086% of the surface, contributing 0.3773722377928683 albedo
+                    Absorptive land  covers 25.384728598048433% of the surface, contributing 0.16813156680444952 albedo
+                    Reflective ice   covers -8.600015622257917% of the surface, contributing 0.6824057995705514 albedo
+                    Absorptive water covers 70.8210110883604% of the surface, contributing 0.07416824069885407 albedo
+                    Total albedo: 0.15546879153977886
+                Calculated temp: 350.58741867265434
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
@@ -134,112 +185,91 @@ Beginning system generation
                     Orbital parameter generation complete
         Satellite system generation complete
 
-    Generating a rocky planet for orbit 3
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 3.349990379844068
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 213.13863659286338
-            Picking a major class for the atmosphere
-                    Planet can retain substance (rms=82545.5085455605, lim=815909784.4658614, div=0.00010116989661988089)
-                    Planet can retain substance (rms=41573.43720752123, lim=815909784.4658614, div=5.095347304204404E-05)
-                    Planet can retain substance (rms=9770.52667293902, lim=815909784.4658614, div=1.1975008584233776E-05)
-                    Planet can retain substance (rms=5939.952872378971, lim=815909784.4658614, div=7.2801588919142385E-06)
-                    Planet can retain substance (rms=5940.801134124401, lim=815909784.4658614, div=7.281198543309013E-06)
-                    Planet can retain substance (rms=8246.001663395615, lim=815909784.4658614, div=1.010651155359522E-05)
-                Jotunnian allowed: True
-                Helian    allowed: True
-                Ydatrian  allowed: True
-                Rhean     allowed: True
-                Minervan  allowed: True
-                Edelian   allowed: True
-                    Picked class 5 (allowed: True)
-                Major class: Edelian
-                      Generated 86.36511031907965% Neon            (13.63488968092036% remaining)
-                      Generated 12.109001436139742% Argon           (1.5258882447806168% remaining)
-                      Generated 1.753015952598842% Hydrogen Chloride (-0.2271277078182251% remaining)
-                Remainder is negative, rereandomizing
-                    Picked class 4 (allowed: True)
-                Major class: Minervan
-                      Generated 87.95346077122707% Carbon Disulfide (12.046539228772923% remaining)
-                      Generated 11.161197533199209% Carbon Monoxide (0.8853416955737146% remaining)
-                      Generated 1.1937471131646835% Argon           (-0.30840541759096907% remaining)
-                Remainder is negative, rereandomizing
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
-                      Generated 86.14980042915724% Hydrogen        (13.850199570842758% remaining)
-                      Generated 12.133065232263213% Helium          (1.7171343385795443% remaining)
-                      Generated 1.4053974955332977% Argon           (0.31173684304624666% remaining)
-                      Generated 0.2807205818291381% Argon           (0.031016261217108564% remaining)
-                      Generated 0.02916445743846108% Oxygen          (0.0018518037786474824% remaining)
-                      Generated 0.0017334577078254889% Nitrogen        (0.00011834607082199346% remaining)
-            Major class generation complete
-            Generating minor class for the atmosphere
-                Minor class: Mesoazurian
-                Atmosphere color: smalt (0x489090)
-                Cloud      color: very close to the rest of the atmosphere (0x0)
-                Calculating albedo
-                    Thin  clouds     cover  60.8846263377314% of the surface, contributing 0.608846263377314 albedo
-                    Thick clouds     cover  0.3584656784967054% of the surface, contributing 0.003584656784967054 albedo
-                    Reflective land  covers 72.30278916609119% of the surface, contributing 0.39459174286295073 albedo
-                    Absorptive land  covers 27.697210833908812% of the surface, contributing 0.13812315008887002 albedo
-                    The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.21743617253830846
-                Calculated temp: 234.43382924327665
-            Minor class generation complete
-            Calculating molar weight
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moons for desert/water planet
-        Satellite system generation complete
-
     Generating a ocean planet for orbit 4
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 8.074310527450814
+            Mass: 2.0791254317666836
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 155.8355586788852
+            Estimated temperature: 249.0528890186109
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=70582.2724913304, lim=1284367594.3853261, div=5.4954884255787945E-05)
-                    Planet can retain substance (rms=35548.24151047397, lim=1284367594.3853261, div=2.767762256372303E-05)
-                    Planet can retain substance (rms=8354.494244015214, lim=1284367594.3853261, div=6.504753219045141E-06)
-                    Planet can retain substance (rms=5079.081583130688, lim=1284367594.3853261, div=3.954538876046184E-06)
-                    Planet can retain substance (rms=5079.806907169694, lim=1284367594.3853261, div=3.955103608481178E-06)
-                    Planet can retain substance (rms=7050.917083495945, lim=1284367594.3853261, div=5.489796779613067E-06)
-                Jotunnian allowed: True
-                Helian    allowed: True
+                    Planet cannot retain substance (rms=4006.272498868533, lim=2468.2159451580487, div=1.6231450520882187)
+                    Planet cannot retain substance (rms=2843.1628013167397, lim=2468.2159451580487, div=1.1519100696574918)
+                    Planet can retain substance (rms=1378.328541829636, lim=2468.2159451580487, div=0.5584310985971597)
+                    Planet can retain substance (rms=1074.6950826718478, lim=2468.2159451580487, div=0.4354137184714732)
+                    Planet can retain substance (rms=1074.771816461005, lim=2468.2159451580487, div=0.4354448072379597)
+                    Planet can retain substance (rms=1266.238374664204, lim=2468.2159451580487, div=0.5130176624732574)
+                Jotunnian allowed: False
+                Helian    allowed: False
                 Ydatrian  allowed: True
                 Rhean     allowed: True
                 Minervan  allowed: True
                 Edelian   allowed: True
-                    Picked class 1 (allowed: True)
-                Major class: Helian
-                      Generated 89.51922458916982% Helium          (10.480775410830178% remaining)
-                      Generated 8.986348894042063% Carbonyl Sulfide (1.4944265167881166% remaining)
-                      Generated 0.9021499359042315% Argon           (0.592276580883885% remaining)
-                      Generated 0.5591310581541059% Argon           (0.03314552272977904% remaining)
-                      Generated 0.02905624127458796% Nitrogen        (0.004089281455191084% remaining)
-                      Generated 0.003648011363866073% Ammonia         (0.0004412700913250106% remaining)
+                    Picked class 0 (allowed: False)
+                    Picked class 2 (allowed: True)
+                Major class: Ydatrian
+                    Picking hydride
+                        Water has not already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has not already been picked
+                        Phosphine has not already been picked
+                        Silane has not already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 89.6928117386875% Water           (      5% remaining)
+                    Picking hydride
+                        Water has already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has not already been picked
+                        Phosphine has not already been picked
+                        Silane has not already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 9.108328159248883% Hydrogen Cyanide (      5% remaining)
+                    Generated 0.742674396258425% Argon           (      5% remaining)
+                    Picking hydride
+                        Water has already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has already been picked
+                        Phosphine has not already been picked
+                        Silane has not already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 0.4280200795240182% Hydrogen Fluoride (      5% remaining)
+                    Picking noble gas
+                        Neon has not already been picked
+                        Argon has already been picked
+                        Krypton has not already been picked
+                    Generated 0.02555165825898907% Krypton         (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 0.002454784834747971% Nitrogen        (      5% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
-                Minor class: Tholian
-                Atmosphere color: yellow (0xFFFF00)
-                Cloud      color: pale brown (0xB99C80)
+                Minor class: Mesoazurian
+                Atmosphere color: steel blue (0x4682B4)
+                Cloud      color: pale blue (0x86C5D8)
                 Calculating albedo
-                    Thin  clouds     cover  52.88493551373457% of the surface, contributing 0.5288493551373457 albedo
-                    Thick clouds     cover  22.775106239658786% of the surface, contributing 0.22775106239658785 albedo
-                    Reflective land  covers 4.61907168067267% of the surface, contributing 0.22811504640226776 albedo
-                    Absorptive land  covers 0.7637619123308094% of the surface, contributing 0.1581009250698795 albedo
-                    Reflective ice   covers 94.61716640699652% of the surface, contributing 0.6732094346863484 albedo
-                    Absorptive water covers 0% of the surface, contributing 0.07294576082066521 albedo
-                    Total albedo: 0.3285004301613127
-                Calculated temp: 205.0904839372846
+                    Thin  clouds     cover  16.509698917053818% of the surface, contributing 0.16509698917053817 albedo
+                    Thick clouds     cover  1.7743052202624743% of the surface, contributing 0.017743052202624742 albedo
+                    Reflective land  covers 3.7435809807670855% of the surface, contributing 0.21659413980592968 albedo
+                    Absorptive land  covers 0.5429582066948114% of the surface, contributing 0.0895740254017097 albedo
+                    Reflective ice   covers 95.7134608125381% of the surface, contributing 0.7443674424214655 albedo
+                    Absorptive water covers 0% of the surface, contributing 0.06507061443089353 albedo
+                    Total albedo: 0.6340052981139854
+                Calculated temp: 219.15252481058613
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
@@ -247,25 +277,247 @@ Beginning system generation
             Generating moons for desert/water planet
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Generated moon 0 as minor moon (a = 357.7237253580376)
+                Generated moon 0 as minor moon (a = 173.1399648216238)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 1 as minor moon (a = 410.81739704348377)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 2 as minor moon (a = 478.0564473812079)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 3 as minor moon (a = 414.22868072579803)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 4 as minor moon (a = 127.58975371828444)
         Satellite system generation complete
 
-    Generating a gas giant for orbit 5
+    Generating a rocky planet for orbit 5
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 1.8850250886445907
+            Mass: 9.334023018912315
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 113.74515696603096
+            Estimated temperature: 209.05606970909088
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=60301.59686491877, lim=273640435.3037586, div=0.0002203680051816176)
-                    Planet can retain substance (rms=30370.45497627853, lim=273640435.3037586, div=0.00011098672220194854)
-                    Planet can retain substance (rms=7137.618641773967, lim=273640435.3037586, div=2.6083932492837718E-05)
-                    Planet can retain substance (rms=4339.28689541131, lim=273640435.3037586, div=1.585762312720494E-05)
-                    Planet can retain substance (rms=4339.906572226078, lim=273640435.3037586, div=1.5859887693163844E-05)
-                    Planet can retain substance (rms=6023.914284555888, lim=273640435.3037586, div=2.2013977129765024E-05)
+                    Planet cannot retain substance (rms=3670.507235640681, lim=2986.910312563394, div=1.228864228096162)
+                    Planet can retain substance (rms=2604.877635578921, lim=2986.910312563394, div=0.8720977073273388)
+                    Planet can retain substance (rms=1262.8109763638333, lim=2986.910312563394, div=0.42278168549362205)
+                    Planet can retain substance (rms=984.6250044570227, lim=2986.910312563394, div=0.3296466587280983)
+                    Planet can retain substance (rms=984.6953071956406, lim=2986.910312563394, div=0.3296701956713812)
+                    Planet can retain substance (rms=1160.1150739405489, lim=2986.910312563394, div=0.38839970154474684)
+                Jotunnian allowed: False
+                Helian    allowed: True
+                Ydatrian  allowed: True
+                Rhean     allowed: True
+                Minervan  allowed: True
+                Edelian   allowed: True
+                    Picked class 2 (allowed: True)
+                Major class: Ydatrian
+                    Picking hydride
+                        Water has not already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has not already been picked
+                        Phosphine has not already been picked
+                        Silane has not already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 85.43146032848182% Silane          (      5% remaining)
+                    Picking hydride
+                        Water has not already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has not already been picked
+                        Phosphine has not already been picked
+                        Silane has already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 13.359309022509832% Phosphine       (      5% remaining)
+                    Generated 0.9458740587952652% Argon           (      5% remaining)
+                    Picking hydride
+                        Water has not already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has not already been picked
+                        Phosphine has already been picked
+                        Silane has already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 0.24480569304739505% Hydrogen Cyanide (      5% remaining)
+                    Generated 0.016033370085687965% Oxygen          (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 0.002232699945182529% Nitrogen Dioxide (      5% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+                Minor class: Mesoazurian
+                Atmosphere color: azure (0x7FFF)
+                Cloud      color: pale green (0x98FB98)
+                Calculating albedo
+                    Thin  clouds     cover  28.846309751631367% of the surface, contributing 0.28846309751631366 albedo
+                    Thick clouds     cover  2.3514962084934146% of the surface, contributing 0.023514962084934143 albedo
+                    Reflective land  covers 6.6535516748818635% of the surface, contributing 0.385138739889694 albedo
+                    Absorptive land  covers 93.34644832511813% of the surface, contributing 0.15483120856361934 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.19231788165909408
+                Calculated temp: 282.87045659354646
+            Minor class generation complete
+            Calculating molar weight
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moons for desert/water planet
+        Satellite system generation complete
+
+    Generating a rocky planet for orbit 6
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 9.78233125014599
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 159.64939390323198
+            Picking a major class for the atmosphere
+                    Planet cannot retain substance (rms=3207.5861599771615, lim=3149.482634712751, div=1.0184485936274132)
+                    Planet can retain substance (rms=2276.352807913363, lim=3149.482634712751, div=0.7227703949925026)
+                    Planet can retain substance (rms=1103.5463902974318, lim=3149.482634712751, div=0.35038973643938853)
+                    Planet can retain substance (rms=860.4449832973905, lim=3149.482634712751, div=0.27320200905818537)
+                    Planet can retain substance (rms=860.5064195177607, lim=3149.482634712751, div=0.2732215158240564)
+                    Planet can retain substance (rms=1013.8024028450286, lim=3149.482634712751, div=0.32189490161691037)
+                Jotunnian allowed: False
+                Helian    allowed: True
+                Ydatrian  allowed: True
+                Rhean     allowed: True
+                Minervan  allowed: True
+                Edelian   allowed: True
+                    Picked class 0 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 5 (allowed: True)
+                Major class: Edelian
+                    Generated 87.29861579883034% Neon            (      5% remaining)
+                    Generated 11.293147384961811% Argon           (      5% remaining)
+                    Generated 1.9124778091603036% Nitrogen        (     -5% remaining)
+                Remainder is negative, rereandomizing
+                    Picked class 0 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 4 (allowed: True)
+                Major class: Minervan
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 88.6976074870723% Carbon Disulfide (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 10.176750722113068% Nitrogen Dioxide (      5% remaining)
+                    Generated 1.0979714881490295% Argon           (      5% remaining)
+                    Picking hydride
+                        Water has not already been picked
+                        Hydrogen Sulfide has not already been picked
+                        Ammonia has not already been picked
+                        Hydrogen Cyanide has not already been picked
+                        Phosphine has not already been picked
+                        Silane has not already been picked
+                        Hydrogen Fluoride has not already been picked
+                        Hydrogen Chloride has not already been picked
+                    Generated 0.025604674239519475% Hydrogen Sulfide (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 0.0018627251494475975% Carbon Monoxide (      5% remaining)
+                    Generated 0.00019080881009418083% Nitrogen        (      5% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+                Minor class: Sulfanian
+                Atmosphere color: pale yellow (0xFFFFAA)
+                Cloud      color: white (0xFAFAFA)
+                Calculating albedo
+                    Thin  clouds     cover  42.954212828249574% of the surface, contributing 0.4295421282824957 albedo
+                    Thick clouds     cover  10.866173842039121% of the surface, contributing 0.10866173842039122 albedo
+                    Reflective land  covers 47.453982135972495% of the surface, contributing 0.3207697468501642 albedo
+                    Absorptive land  covers 52.546017864027505% of the surface, contributing 0.05043684458005746 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.42587446886930025
+                Calculated temp: 207.7148442928468
+                    Planet is outside temp range for minor class, rerandomizing
+                Minor class: Mesoazurian
+                Atmosphere color: blue-green (0xABAB5)
+                Cloud      color: teal (0x8080)
+                Calculating albedo
+                    Thin  clouds     cover  16.391303541378107% of the surface, contributing 0.16391303541378108 albedo
+                    Thick clouds     cover  0.265763777593543% of the surface, contributing 0.00265763777593543 albedo
+                    Reflective land  covers 64.23270900862107% of the surface, contributing 0.39291973958367965 albedo
+                    Absorptive land  covers 35.76729099137893% of the surface, contributing 0.22054514225018396 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.42198608922034325
+                Calculated temp: 248.87706781777564
+            Minor class generation complete
+            Calculating molar weight
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moons for desert/water planet
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 0 as minor moon (a = 1706.135876543562)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 1 as minor moon (a = 1290.7024719737822)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 2 as minor moon (a = 1302.2900235855425)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 3 as minor moon (a = 484.8156295138408)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generated moon 4 as minor moon (a = 244.93229354093995)
+        Satellite system generation complete
+
+    Generating a gas giant for orbit 7
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 2.9979226149977434
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 120.60528150396448
+            Picking a major class for the atmosphere
+                    Planet cannot retain substance (rms=2787.9042710945146, lim=984.2543002829049, div=2.8325040289823327)
+                    Planet cannot retain substance (rms=1978.513872794875, lim=984.2543002829049, div=2.0101653325021687)
+                    Planet can retain substance (rms=959.1579279301574, lim=984.2543002829049, div=0.9745021460962537)
+                    Planet can retain substance (rms=747.864008739121, lim=984.2543002829049, div=0.7598280327799045)
+                    Planet can retain substance (rms=747.9174066192176, lim=984.2543002829049, div=0.7598822848975546)
+                    Planet can retain substance (rms=881.1560806078741, lim=984.2543002829049, div=0.8952524569662563)
                 Jotunnian allowed: True
                 Helian    allowed: False
                 Ydatrian  allowed: False
@@ -274,397 +526,618 @@ Beginning system generation
                 Edelian   allowed: False
                     Picked class 0 (allowed: True)
                 Major class: Jotunnian
-                      Generated 85.90654288182749% Hydrogen        (14.093457118172504% remaining)
-                      Generated 13.237338619811222% Helium          (0.8561184983612802% remaining)
-                      Generated 1.0844524100246222% Methylene       (-0.22833391166334205% remaining)
+                    Generated 86.31285438276088% Hydrogen        (      5% remaining)
+                    Generated 12.707889376696638% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 1.6589905393233166% Diacetylene     (     -5% remaining)
                 Remainder is negative, rereandomizing
+                    Picked class 3 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 3 (allowed: False)
                     Picked class 5 (allowed: False)
                     Picked class 4 (allowed: False)
-                    Picked class 4 (allowed: False)
+                    Picked class 1 (allowed: False)
                     Picked class 0 (allowed: True)
                 Major class: Jotunnian
-                      Generated 90.74527807937115% Hydrogen        (9.25472192062885% remaining)
-                      Generated 8.19475066407826% Helium          (1.0599712565505903% remaining)
-                      Generated 0.9457218432240816% Propane         (0.11424941332650873% remaining)
-                      Generated 0.1079465826265977% Propane         (0.006302830699911029% remaining)
-                      Generated 0.0058588247835508565% Tholins         (0.00044400591636017234% remaining)
-                      Generated 0.0003876818855899299% Tholins         (5.6324030770242384E-05% remaining)
-                      Generated 4.952011935336198E-05% Hydrogen Cyanide (6.803911416880407E-06% remaining)
+                    Generated 86.36842520797452% Hydrogen        (      5% remaining)
+                    Generated 11.911583198753068% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 1.922989970598492% Acetylene       (     -5% remaining)
+                Remainder is negative, rereandomizing
+                    Picked class 0 (allowed: True)
+                Major class: Jotunnian
+                    Generated 85.16114197574305% Hydrogen        (      5% remaining)
+                    Generated 13.51805385264521% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 0.7117270200480568% Methylene       (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has not already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 0.5654692902163497% Carbon Disulfide (      5% remaining)
+                    Picking nonmetal
+                        Nitric Oxide has not already been picked
+                        Nitrogen Dioxide has not already been picked
+                        Sulfur Dioxide has not already been picked
+                        Carbon Disulfide has already been picked
+                        Carbonyl Sulfide has not already been picked
+                        Carbon Monoxide has not already been picked
+                        Carbon Dioxide has not already been picked
+                        Cyanogen has not already been picked
+                    Generated 0.03988402684133783% Cyanogen        (      5% remaining)
+                    Generated 0.003330969106852192% Ammonia         (      5% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
-                Minor class: Ammonian
-                Atmosphere color: brown (0x8B4513)
-                Cloud      color: gray (0x828282)
+                Minor class: Sulfanian
+                Atmosphere color: gold (0xFFD700)
+                Cloud      color: pale yellow (0xFFFFAA)
                 Calculating albedo
-                Calculated temp: 163.38408800233333
-                    Switched to class-2
-                Calculated temp: 132.27552232564997
-                    Switched to class-1
-                Calculated temp: 129.77709527942204
+                Calculated temp: 146.4004234301366
                     Confirmed class-1
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
             Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 27.278660674630913)
+                Generating moon 0 as type-A minor moon (a = 25.034571020441167)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                    Added ring gap from 27.236736607362555 to 27.32058474189927
-                Generating moon 1 as type-B major moon (a = 33.372507264125296)
+                    Added ring gap from 25.001076346886254 to 25.06806569399608
+                Generating moon 1 as type-A minor moon (a = 25.47326211677562)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                    Checking for resonance gap overlap (1 existing gaps)
+                    Added ring gap from 25.426091297887965 to 25.520432935663273
+                Generating moon 2 as type-A minor moon (a = 26.346062147582117)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 3 as type-B major moon (a = 31.056630508487565)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                    Checking for resonance gap overlap (2 existing gaps)
                         Gap from moon 0 does not overlap
-                    Added ring gap from 20.76347719043948 to 21.283247199401544
-                Generating moon 2 as type-B major moon (a = 70.99252884339577)
+                        Gap from moon 1 does not overlap
+                    Added ring gap from 19.31888670903665 to 19.81001580741415
+                Generating moon 4 as type-B major moon (a = 62.52653896110526)
                     Generating orbital parameters
                     Orbital parameter generation complete
+                Generating moon 5 as type-B major moon (a = 88.73762097567368)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 6 as type-B major moon (a = 105.08530407084675)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 7 as type-B major moon (a = 134.57994292777292)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 8 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 9 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 10 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 11 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+        Satellite system generation complete
+
+    Generating a ice giant for orbit 8
+        Generating physical characteristics
+            Assigning tilt and spin
+            Assigning tilt and spin
+            Assigning tilt and spin
+            Assigning tilt and spin
+            Assigning tilt and spin
+            Assigning tilt and spin
+            Mass: 5.599145641028002
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 88.84966114562646
+            Picking a major class for the atmosphere
+                    Planet can retain substance (rms=2392.889157108432, lim=2670.687096780933, div=0.8959825956371525)
+                    Planet can retain substance (rms=1698.180401130052, lim=2670.687096780933, div=0.6358589904361782)
+                    Planet can retain substance (rms=823.2558877631758, lim=2670.687096780933, div=0.30825621195215014)
+                    Planet can retain substance (rms=641.8999734165619, lim=2670.687096780933, div=0.2403501234533484)
+                    Planet can retain substance (rms=641.9458054092958, lim=2670.687096780933, div=0.240367284577461)
+                    Planet can retain substance (rms=756.3060370716952, lim=2670.687096780933, div=0.2831878125982245)
+                Jotunnian allowed: True
+                Helian    allowed: False
+                Ydatrian  allowed: False
+                Rhean     allowed: False
+                Minervan  allowed: False
+                Edelian   allowed: False
+                    Picked class 0 (allowed: True)
+                Major class: Jotunnian
+                    Generated 88.36051390806158% Hydrogen        (      5% remaining)
+                    Generated 10.855170081028636% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 0.5036676144667094% Methane         (      5% remaining)
+                    Generated 0.2539273789258244% Nitrogen        (      5% remaining)
+                    Generated 0.024445585413408407% Phosphine       (      5% remaining)
+                    Generated 0.002122322396182412% Ammonia         (      5% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+                Minor class: Ammonian
+                Atmosphere color: brown (0x8B4513)
+                Cloud      color: pale yellow (0xFFFFAA)
+                Calculating albedo
+                Calculated temp: 78.83265164835933
+                    Planet is outside temp range for minor class, rerandomizing
+                Minor class: Methanean
+                Atmosphere color: light blue (0xAFEEEE)
+                Cloud      color: white (0xFAFAFA)
+                Calculating albedo
+                Calculated temp: 78.51803729620035
+            Minor class generation complete
+            Calculating molar weight
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for giant
+                Generating moon 0 as type-A minor moon (a = 6.706628027003651)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 1 as type-A minor moon (a = 7.086955490476876)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 2 as type-B major moon (a = 8.259922969594623)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                    Checking for resonance gap overlap (0 existing gaps)
+                    Added ring gap from 4.960558560445012 to 5.446292259457424
                 Generating moon 3 as reverse lagrangian companion to moon 2
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Generating moon 4 as type-B major moon (a = 101.35610049362876)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 5 as type-B major moon (a = 127.21347699241018)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 6 as forward lagrangian companion to moon 5
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 7 as type-B major moon (a = 149.8059382875938)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-                Generating moon 8 as type-C minor moon group (a = 33.372507264125296)
-                    Generated distribution of orbital parameters
-        Satellite system generation complete
-
-    Generating a gas dwarf for orbit 6
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 10.532414665215063
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 81.35017486753436
-            Picking a major class for the atmosphere
-                    Planet can retain substance (rms=50996.64450821861, lim=973649018.2262121, div=5.2376825276447144E-05)
-                    Planet can retain substance (rms=25684.08427802621, lim=973649018.2262121, div=2.6379202153171497E-05)
-                    Planet can retain substance (rms=6036.234850051536, lim=973649018.2262121, div=6.199600407391477E-06)
-                    Planet can retain substance (rms=3669.704995046324, lim=973649018.2262121, div=3.769022436577577E-06)
-                    Planet can retain substance (rms=3670.2290514540423, lim=973649018.2262121, div=3.769560676125821E-06)
-                    Planet can retain substance (rms=5094.38275748538, lim=973649018.2262121, div=5.232257889774589E-06)
-                Jotunnian allowed: True
-                Helian    allowed: False
-                Ydatrian  allowed: False
-                Rhean     allowed: False
-                Minervan  allowed: False
-                Edelian   allowed: False
-                    Picked class 2 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
-                      Generated 90.86231127163646% Hydrogen        (9.137688728363546% remaining)
-                      Generated 8.243893599834957% Helium          (0.8937951285285892% remaining)
-                      Generated 1.5679931214308631% Propane         (-0.6741979929022739% remaining)
-                Remainder is negative, rereandomizing
-                    Picked class 3 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
-                      Generated 86.2763752814104% Hydrogen        (13.723624718589612% remaining)
-                      Generated 12.227711311946587% Helium          (1.4959134066430235% remaining)
-                      Generated 1.0280807524307027% Propane         (0.46783265421232073% remaining)
-                      Generated 0.42162501264435115% Propane         (0.0462076415679696% remaining)
-                      Generated 0.04237180845725644% Ammonia         (0.0038358331107131677% remaining)
-                      Generated 0.0034588338590593615% Nitrogen        (0.00037699925165380634% remaining)
-            Major class generation complete
-            Generating minor class for the atmosphere
-                Minor class: Methanean
-                Atmosphere color: dull green (0x67A37F)
-                Cloud      color: pale green (0x98FB98)
-                Calculating albedo
-                Calculated temp: 71.93397520697592
-            Minor class generation complete
-            Calculating molar weight
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 11.347808395003732)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 1 as type-A minor moon (a = 12.17279474339006)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 2 as type-B major moon (a = 14.417729534304765)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                    Checking for resonance gap overlap (0 existing gaps)
-                    Added ring gap from 8.835225859508432 to 9.32997507245315
-                Generating moon 3 as type-B major moon (a = 28.517260708224832)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 4 as forward lagrangian companion to moon 3
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 5 as type-B major moon (a = 39.525306798626914)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 6 as forward lagrangian companion to moon 5
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 7 as reverse lagrangian companion to moon 6
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 8 as type-B major moon (a = 46.16115543358704)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 9 as type-B major moon (a = 65.35246303639616)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 10 as type-B major moon (a = 72.28662925066078)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 11 as type-C minor moon group (a = 12.17279474339006)
-                    Generated distribution of orbital parameters
-        Satellite system generation complete
-
-    Generating a ice giant for orbit 7
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 15.100083761588927
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 63.13759025677852
-            Picking a major class for the atmosphere
-                    Planet can retain substance (rms=44926.890078420016, lim=1238922207.8490124, div=3.626288220018352E-05)
-                    Planet can retain substance (rms=22627.097179654556, lim=1238922207.8490124, div=1.8263533445686788E-05)
-                    Planet can retain substance (rms=5317.786340865793, lim=1238922207.8490124, div=4.292268156285945E-06)
-                    Planet can retain substance (rms=3232.9270782924727, lim=1238922207.8490124, div=2.609467372374739E-06)
-                    Planet can retain substance (rms=3233.388760131572, lim=1238922207.8490124, div=2.6098400203393768E-06)
-                    Planet can retain substance (rms=4488.035955504063, lim=1238922207.8490124, div=3.6225324940264697E-06)
-                Jotunnian allowed: True
-                Helian    allowed: False
-                Ydatrian  allowed: False
-                Rhean     allowed: False
-                Minervan  allowed: False
-                Edelian   allowed: False
-                    Picked class 4 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
-                      Generated 90.92318190965959% Hydrogen        (9.07681809034041% remaining)
-                      Generated 8.298298274437997% Helium          (0.7785198159024134% remaining)
-                      Generated 1.8273081193732836% Diacetylene     (-1.04878830347087% remaining)
-                Remainder is negative, rereandomizing
-                    Picked class 3 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 3 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
-                      Generated 90.29990448794713% Hydrogen        (9.700095512052876% remaining)
-                      Generated 8.89989955149302% Helium          (0.8001959605598561% remaining)
-                      Generated 0.6533149446246014% Propane         (0.1468810159352546% remaining)
-                      Generated 0.1330814855899207% Propane         (0.013799530345333898% remaining)
-                      Generated 0.012261244685237538% Hydrogen Cyanide (0.0015382856600963592% remaining)
-                      Generated 0.0013829375089128007% Carbon Monoxide (0.00015534815118355854% remaining)
-            Major class generation complete
-            Generating minor class for the atmosphere
-                Minor class: Methanean
-                Atmosphere color: dull green (0x67A37F)
-                Cloud      color: white (0xFAFAFA)
-                Calculating albedo
-                Calculated temp: 56.19786762527704
-            Minor class generation complete
-            Calculating molar weight
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 10.309496213437994)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                    Added ring gap from 10.264115223336953 to 10.354877203539035
-                Generating moon 1 as type-B major moon (a = 12.585790557173576)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                    Checking for resonance gap overlap (1 existing gaps)
-                        Gap from moon 0 does not overlap
-                    Added ring gap from 7.680660724233721 to 8.176441728317391
-                Generating moon 2 as forward lagrangian companion to moon 1
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 3 as type-B major moon (a = 20.484343913861153)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 4 as type-B major moon (a = 37.03073017600133)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 5 as type-B major moon (a = 47.15886713201599)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 6 as type-B major moon (a = 57.59385689311626)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 7 as forward lagrangian companion to moon 6
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 8 as reverse lagrangian companion to moon 7
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 9 as type-C minor moon group (a = 12.585790557173576)
-                    Generated distribution of orbital parameters
-                Generating moon 9 as type-C minor moon group (a = 12.585790557173576)
-                    Generated distribution of orbital parameters
-                Generating moon 9 as type-C minor moon group (a = 12.585790557173576)
-                    Generated distribution of orbital parameters
-        Satellite system generation complete
-
-    Generating a gas dwarf for orbit 8
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 17.94528528207566
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 48.438285391367785
-            Picking a major class for the atmosphere
-                    Planet can retain substance (rms=39351.08729015823, lim=1269774205.7458947, div=3.099061794773386E-05)
-                    Planet can retain substance (rms=19818.88518624998, lim=1269774205.7458947, div=1.5608196399459782E-05)
-                    Planet can retain substance (rms=4657.804582613127, lim=1269774205.7458947, div=3.6682148381467757E-06)
-                    Planet can retain substance (rms=2831.6937904791953, lim=1269774205.7458947, div=2.230076636984284E-06)
-                    Planet can retain substance (rms=2832.098173740956, lim=1269774205.7458947, div=2.230395105622197E-06)
-                    Planet can retain substance (rms=3931.033159387116, lim=1269774205.7458947, div=3.0958521141779976E-06)
-                Jotunnian allowed: True
-                Helian    allowed: False
-                Ydatrian  allowed: False
-                Rhean     allowed: False
-                Minervan  allowed: False
-                Edelian   allowed: False
-                    Picked class 5 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
-                      Generated 90.80715310152144% Hydrogen        (9.192846898478557% remaining)
-                      Generated 8.085009945064309% Helium          (1.1078369534142485% remaining)
-                      Generated 0.8708064243609951% Diacetylene     (0.23703052905325334% remaining)
-                      Generated 0.20923312569388147% Diacetylene     (0.027797403359371878% remaining)
-                      Generated 0.024399325148448253% Nitrogen        (0.003398078210923626% remaining)
-                      Generated 0.0031438528812603793% Methylene       (0.00025422532966324653% remaining)
-            Major class generation complete
-            Generating minor class for the atmosphere
-                Minor class: Cryoazurian
-                Atmosphere color: grayish-blue (0x98AFC7)
-                Cloud      color:  (0x0)
-                Calculating albedo
-                Calculated temp: 42.77518011632166
-            Minor class generation complete
-            Calculating molar weight
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 12.090243306789873)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 1 as type-B major moon (a = 13.926920931523036)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                    Checking for resonance gap overlap (0 existing gaps)
-                    Added ring gap from 8.529789241070592 to 9.017031600776797
-                Generating moon 2 as type-B major moon (a = 31.791083951818493)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 3 as type-B major moon (a = 38.67893839400827)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 4 as type-B major moon (a = 44.71559234995485)
+                Generating moon 4 as type-B major moon (a = 14.620249928658819)
                     Generating orbital parameters
                     Orbital parameter generation complete
                 Generating moon 5 as forward lagrangian companion to moon 4
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Generating moon 6 as reverse lagrangian companion to moon 5
+                Generating moon 6 as type-B major moon (a = 24.039938140755634)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Generating moon 7 as type-B major moon (a = 62.38388148501228)
+                Generating moon 7 as type-B major moon (a = 26.834566950055383)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Generating moon 8 as reverse lagrangian companion to moon 7
+                Generating moon 8 as type-B major moon (a = 34.19334627685551)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Generating moon 9 as type-C minor moon group (a = 13.926920931523036)
+                Generating moon 9 as reverse lagrangian companion to moon 8
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 10 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 11 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 12 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 13 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 14 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 15 as type-C minor moon group (a = 0)
                     Generated distribution of orbital parameters
         Satellite system generation complete
 
+    Generating a gas dwarf for orbit 9
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 6.094984536066606
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 66.7808685965083
+            Picking a major class for the atmosphere
+                    Planet can retain substance (rms=2074.534805531988, lim=2983.0248645434826, div=0.6954467025032564)
+                    Planet can retain substance (rms=1472.2513735127122, lim=2983.0248645434826, div=0.49354311156170105)
+                    Planet can retain substance (rms=713.7284181970377, lim=2983.0248645434826, div=0.2392633151270315)
+                    Planet can retain substance (rms=556.5004265103004, lim=2983.0248645434826, div=0.18655574518500245)
+                    Planet can retain substance (rms=556.5401609308651, lim=2983.0248645434826, div=0.18656906536246293)
+                    Planet can retain substance (rms=655.6856981353693, lim=2983.0248645434826, div=0.2198056428992302)
+                Jotunnian allowed: True
+                Helian    allowed: False
+                Ydatrian  allowed: False
+                Rhean     allowed: False
+                Minervan  allowed: False
+                Edelian   allowed: False
+                    Picked class 1 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 0 (allowed: True)
+                Major class: Jotunnian
+                    Generated 85.01856503115698% Hydrogen        (      5% remaining)
+                    Generated 13.612530653869584% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 1.5223646517677256% Methane         (     -5% remaining)
+                Remainder is negative, rereandomizing
+                    Picked class 2 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 2 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 0 (allowed: True)
+                Major class: Jotunnian
+                    Generated 86.6046018354181% Hydrogen        (      5% remaining)
+                    Generated 12.569975335702718% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 0.8816553842274186% Methane         (     -5% remaining)
+                Remainder is negative, rereandomizing
+                    Picked class 2 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 2 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 0 (allowed: True)
+                Major class: Jotunnian
+                    Generated 90.99368967678718% Hydrogen        (      5% remaining)
+                    Generated 8.039806557225301% Helium          (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has not already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 0.8223273604996525% Diacetylene     (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has already been picked
+                        Propane has not already been picked
+                        Propyne has not already been picked
+                    Generated 0.13392843383720995% Propane         (      5% remaining)
+                    Generated 0.009512570764214726% Nitrogen        (      5% remaining)
+                    Picking hydrocarbon
+                        Methane has not already been picked
+                        Methylene has not already been picked
+                        Ethane has not already been picked
+                        Ethylene has not already been picked
+                        Acetylene has not already been picked
+                        Diacetylene has already been picked
+                        Propane has already been picked
+                        Propyne has not already been picked
+                    Generated 0.0006365455081636994% Methylene       (      5% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+                Minor class: Tholian
+                Atmosphere color: burnt orange (0xBF5700)
+                Cloud      color: pale brown (0xB99C80)
+                Calculating albedo
+                Calculated temp: 59.33063462609205
+                    Planet is outside temp range for minor class, rerandomizing
+                Minor class: Borean
+                Atmosphere color: magenta (0xE11584)
+                Cloud      color: pale orange (0xFFD381)
+                Calculating albedo
+                Calculated temp: 59.17493719309465
+            Minor class generation complete
+            Calculating molar weight
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for giant
+                Generating moon 0 as type-A minor moon (a = 6.077744769449099)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 1 as type-B major moon (a = 6.885469671739914)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                    Checking for resonance gap overlap (0 existing gaps)
+                    Added ring gap from 4.09739849148094 to 4.5777496863569205
+                Generating moon 2 as type-B major moon (a = 9.857834187571877)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 3 as type-B major moon (a = 18.582695456058694)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 4 as type-B major moon (a = 21.47632656846364)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 5 as type-B major moon (a = 25.952179545537987)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 6 as forward lagrangian companion to moon 5
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 7 as type-B major moon (a = 34.96198099566997)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 8 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 9 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 10 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 11 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+                Generating moon 12 as type-C minor moon group (a = 0)
+                    Generated distribution of orbital parameters
+        Satellite system generation complete
+
+    Generating a kuiper asteroid belt for orbit 10
+        Generating physical characteristics
+            Mass: 2.849237789740773
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 58.45423329127131
+                Calculating albedo
+        Atmospheric generation complete
+        Generating satellite system
+
+    Generating a plutino dwarf for orbit 11
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 3.0357571356384745E-05
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 58.45423329127131
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 17.18043636854566% of the surface, contributing 0.3785158648741421 albedo
+                    Absorptive land  covers 82.81956363145434% of the surface, contributing 0.1483738165710552 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.15239928680884704
+                Calculated temp: 54.3568642381467
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for dwarf
+                Generating moon 0 as minor moon (a = 243.33025378990735)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 1 as minor moon (a = 405.47019446514014)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 2 as minor moon (a = 661.8162477240896)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Satellite system generation complete
+
+    Generating a cubewano dwarf for orbit 12
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 0.00027604282031779844
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 58.45423329127131
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 47.223126938757% of the surface, contributing 0.21677555951960564 albedo
+                    Absorptive land  covers 52.776873061243% of the surface, contributing 0.16529105669648597 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.3102378229616873
+                Calculated temp: 51.62753748746724
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for dwarf
+                Generating moon 0 as major moon (a = 488.9409079703422)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 1 as minor moon (a = 943.9519161346594)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Satellite system generation complete
+
+    Generating a scattered disk dwarf for orbit 13
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 8.645037884350255E-05
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 58.45423329127131
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 2.974687284039157% of the surface, contributing 0.3685795256085277 albedo
+                    Absorptive land  covers 97.02531271596084% of the surface, contributing 0.17335302757929838 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.16908119355518253
+                Calculated temp: 54.08741351831
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for dwarf
+                Generating moon 0 as minor moon (a = 322.7989569318668)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Satellite system generation complete
+
+    Generating a scattered disk dwarf for orbit 14
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 0.00039239930063160943
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 58.45423329127131
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 64.88900906404491% of the surface, contributing 0.22192089166341958 albedo
+                    Absorptive land  covers 35.11099093595509% of the surface, contributing 0.053693712058725064 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.43991074410548703
+                Calculated temp: 49.00843982996361
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for dwarf
+                Generating moon 0 as minor moon (a = 524.0406143480574)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 1 as minor moon (a = 1442.9162870373782)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 2 as minor moon (a = 1436.1111649512363)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 3 as minor moon (a = 2707.6901719072234)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 4 as minor moon (a = 2715.896690702137)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Satellite system generation complete
+
+    Generating a scattered disk dwarf for orbit 15
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 0.002572561034954156
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 58.45423329127131
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 72.62455544309546% of the surface, contributing 0.23875602749015112 albedo
+                    Absorptive land  covers 27.375444556904537% of the surface, contributing 0.10406332595711128 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.5559204034321845
+                Calculated temp: 46.24574408989836
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for dwarf
+                Generating moon 0 as major moon (a = 927.8532196566118)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 1 as minor moon (a = 2955.1293870633226)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 2 as minor moon (a = 5306.574770826792)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 3 as minor moon (a = 5144.441774458153)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Satellite system generation complete
+
+    Generating a sednoid dwarf for orbit 16
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 0.0013881560393391662
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Planet has no atmosphere
+            Estimated temperature: 8.266676949863676
+                Calculating albedo
+                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 77.12737519414475% of the surface, contributing 0.2924861066281799 albedo
+                    Absorptive land  covers 22.872624805855246% of the surface, contributing 0.057715378360186524 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.6080642223814428
+                Calculated temp: 6.33906626820505
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moon system for dwarf
+                Generating moon 0 as major moon (a = 930.3703409529998)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Satellite system generation complete
+
     Calculating final miscellanous values
+      Calculating standard deviation of a for Kuiper belt
       Regenerating normally-distributed orbits
-      Calculating apparent magnitude of star (-26.379853603100116)
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+      Calculating apparent magnitude of star (-26.878435832411835)
 
 System generation complete

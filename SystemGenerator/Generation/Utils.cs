@@ -17,7 +17,9 @@ namespace SystemGenerator.Generation
     {
         public static Random rng = new Random();
 
-        //Evenly distributed double
+        /**
+         * Returns an evenly distributed random double from mn to mx.
+         */
         public static double randDouble(double mn, double mx)
         {
             if (mx > mn)
@@ -28,7 +30,9 @@ namespace SystemGenerator.Generation
                 return mn;
         }
 
-        //Normally distributed double
+        /**
+         * Returns a normally distributed random double given mean and standard deviation.
+         */
         public static double randNormal(double mean, double std)
         {
             //Algorithm from https://stackoverflow.com/questions/218060/random-gaussian-variables
@@ -37,8 +41,10 @@ namespace SystemGenerator.Generation
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
             return mean + std * randStdNormal; //random normal(mean,stdDev^2)
         }
-
-        //Exponentially distributed double
+        
+        /**
+         * Returns an evenly distributed random double from mn to mx with lambda steep.
+         */
         public static double randExpo(double mn, double mx, double steep)
         {
             double u = Math.Log(1.0 - flip()) / (-steep);
@@ -51,7 +57,9 @@ namespace SystemGenerator.Generation
                 return fudge(u);
         }
         
-        //Evenly distributed int
+        /**
+         * Returns an evenly distributed random int from mn to mx.
+         */
         public static int randInt(int mn, int mx)
         {
             if (mx > mn)
@@ -62,7 +70,9 @@ namespace SystemGenerator.Generation
                 return mn;
         }
 
-        //Flips a coin. If heads, returns +1; if tails, returns -1.
+        /**
+         * Flips a coin. If heads, returns +1; if tails, returns -1.
+         */
         public static double randSign()
         {
             if (randDouble(0.0, 1.0) >= 0.5)
@@ -70,31 +80,41 @@ namespace SystemGenerator.Generation
             else return -1.0;
         }
 
-        //Evenly distributed double between 0.0 and 1.0
+        /**
+         * Returns an evenly distributed double between 0.0 and 1.0.
+         */
         public static double flip()
         {
             return randDouble(0.0, 1.0);
         }
 
-        //Rolls a die with the specified number of sides.
+        /**
+         * Rolls a die with the specified number of sides.
+         */
         public static int roll(int sides)
         {
             return randInt(0, sides);
         }
 
-        //Randomly varies arg by FUDGE_FACTOR %.
+        /**
+         * Randomly varies arg by FUDGE_FACTOR %.
+         */
         public static double fudge(double arg)
         {
             return randDouble(arg * (1.0 - Gen.FUDGE_FACTOR), arg * (1.0 + Gen.FUDGE_FACTOR));
         }
     
-        //Calculates the orbital distance which is in the given resonant ratio with the given distance
+        /**
+         * Returns the orbital distance which is in the given resonant ratio with a.
+         */
         public static double resonance(double a, double ratio)
         {
             return a * Math.Pow(ratio, (2.0/3.0));
         }
     
-        //Calculates the mean and std dev of a random sample of N items within the limits.
+        /**
+         * Returns the mean and standard deviation of a random sample of N items within the limits.
+         */
         public static double[] getDistribution(double min, double max)
         {
             List<double> dist = new List<double>();
@@ -116,7 +136,9 @@ namespace SystemGenerator.Generation
             return result;
         }
 
-        //Overload of above for existing data
+        /**
+         * Returns the mean and standard deviation of a given dataset.
+         */
         public static double[] getDistribution(double[] data)
         {
             double[] result = new double[]{0.0,0.0};
@@ -134,11 +156,13 @@ namespace SystemGenerator.Generation
             return result;
         }
 
-        //Determines if a planet can retain a gas with the given mass
+        /**
+         * Determines whether or not the given planet can retain a substance with the given molar weight in its atmosphere.
+         */
         public static bool canRetain(double mass, Planet planet)
         {
             //Formula comes from Artifexian's earth-like atmospheres spreadsheet
-            double rms = Math.Sqrt(3.0 * Const.GAS_CONST * ( planet.t / Const.Earth.TEMP ) * 1500.0) / mass;
+            double rms = Math.Sqrt((3.0 * Const.GAS_CONST * ( planet.t / Const.Earth.TEMP ) * 1500.0) / mass);
             double lim = planet.escV / Gen.Atmo.RETENTION_FACTOR;
 
             if (rms / lim < 1.0)
@@ -149,6 +173,21 @@ namespace SystemGenerator.Generation
             return rms / lim < 1.0;
         }
     
+        /**
+         * Determines whether or not the given list contains the given component.
+         */
+        public static bool contains(List<Atmosphere.Component> comps, Atmosphere.Component comp)
+        {
+            foreach (Atmosphere.Component c in comps)
+                if (c.name == comp.name)
+                    return true;
+
+            return false;
+        }
+
+        /**
+         * Returns the ordinal suffix of num.
+         */
         public static string getOrdinal(int num)
         {
             bool tens = 10 <= num && num <= 13;
@@ -162,6 +201,9 @@ namespace SystemGenerator.Generation
                 return "th";
         }
     
+        /**
+         * Returns a text description of the given ID for the listbox.
+         */
         public static string getDescription(char ch)
         {
             switch (ch) 
@@ -189,10 +231,72 @@ namespace SystemGenerator.Generation
                 case ID.Belt.TWOTINO      : return "Twotino dwarf"         ;
                 case ID.Belt.SCATTERED    : return "Scattered disk dwarf"  ;
                 case ID.Belt.SEDNOID      : return "Sednoid dwarf"         ;
+                case ID.Sat.MINOR         : return "Captured asteroid"     ;
+                case ID.Sat.MAJOR         : return "Rounded major moon"    ;
+                case ID.Sat.MOONA         : return "Minor ring shepherd"   ;
+                case ID.Sat.MOONB         : return "Rounded major moon"    ;
+                case ID.Sat.MOONC         : return "Distant asteroid group";
+                case ID.Sat.FOR_B         : return "L₄ Lagrangian companion";
+                case ID.Sat.REV_B         : return "L₅ Lagrangian companion";
                 default                   : return String.Format("GENERATION ERROR: type {0} ({1})", ch, Convert.ToInt32(ch));
             }
         }
+            
+        /**
+         * Returns a longer text description of the given ID for the flavor text.
+         */
+        public static string getLongDesc(Planet p)
+        {
+            switch (p.type) 
+            {
+                case ID.Planet.ROCK_DENSE : return "a hot, dense Mercurial world"     ;
+                case ID.Planet.ROCK_DESERT: return "a rocky terrestrial planet"       ;
+                case ID.Planet.ROCK_GREEN : return "a life-bearing terrestrial planet";
+                case ID.Planet.WATER_OCEAN:
+                    if (p.subtype == "1")
+                        return "a water-ocean planet, comprised primarily of rock";
+                    else if (p.subtype == "3")
+                        return "a water-ocean planet, comprised primarily of water";
+                    else
+                        return "a water-ocean planet, comprised of roughly equal parts water and rock";
+                case ID.Planet.WATER_GREEN: return "a life-bearing ocean planet, comprised primarily of rock";
+                case ID.Planet.GAS_GIANT  :
+                    if (p.subtype == "1")
+                        return "a class-1 gas giant";
+                    else
+                        return "a class-2 gas giant";
+                case ID.Planet.GAS_SUPER  :
+                    if (p.subtype == "1")
+                        return "a class-1 super-Jupiter";
+                    else
+                        return "a class-2 super-Jupiter";
+                case ID.Planet.GAS_PUFFY  : return "a class-3 puffy gas giant";
+                case ID.Planet.GAS_HOT    :
+                    if (p.subtype == "4")
+                        return "a class-4 hot Jupiter";
+                    else
+                        return "a class-5 hot Jupiter";
+                case ID.Planet.ICE_GIANT  :
+                    if (p.subtype == "1")
+                        return "an ice giant, comprised primarily of volatile ices";
+                    else if (p.subtype == "3")
+                        return "an ice giant, comprised primarily of water";
+                    else
+                        return "an ice giant, comprised of roughly equal parts water and volatiles";
+                case ID.Planet.ICE_DWARF  :
+                    if (p.subtype == "1")
+                        return "a gas dwarf, comprised primarily of volatile ices";
+                    else if (p.subtype == "3")
+                        return "a gas dwarf, comprised primarily of water";
+                    else
+                        return "a gas dwarf, comprised of roughly equal parts water and volatiles";
+                default                   : return String.Format("GENERATION ERROR: type {0} ({1})", p.type, Convert.ToInt32(p.type));
+            }
+        }
     
+        /**
+         * Writes string s to the log file.
+         */
         public static void writeLog(string s)
         {
             //Debug.WriteLine(s);
@@ -201,9 +305,12 @@ namespace SystemGenerator.Generation
                 output.WriteLine(s);
         }
      
+        /**
+         * Writes a line to the log file about the given atmospheric component.
+         */
         public static void writeLogAtmo(Atmosphere.Component comp, double remain)
         {
-            Utils.writeLog(String.Format("                      Generated {0}% {1,-15} ({2}% remaining)", comp.quantity*100.0, comp.name, remain*100.0));
+            Utils.writeLog(String.Format("                    Generated {0}% {1,-15} ({2,7:5}% remaining)", comp.quantity*100.0, comp.name, remain*100.0));
         }
     }
 

@@ -31,6 +31,7 @@ namespace SystemGenerator.Generation
         public double tilt ;
 
         public bool isMajor;
+        public bool isIcy;
 
         public Moon(Star star, Planet host, bool major, bool icy, double dist)
         {
@@ -214,9 +215,9 @@ namespace SystemGenerator.Generation
                 for (int j = 0; j < num; j++)
                 {
                     //Create
-                    Utils.writeLog("                Generating moon " + i + " as type-C minor moon group (a = " + moons[1].orbit.a + ")");
                     moons.Add(new Moon(host, false, !(Utils.flip() < rockyDecay.getDecayedChance(index))));
                     moons[i].type = ID.Sat.MOONC;
+                    Utils.writeLog("                Generating moon " + i + " as type-C minor moon group (a = " + moons[i].orbit.a + ")");
 
                     List<double> aSamp = new List<double>();
                     double[] distr;
@@ -249,6 +250,8 @@ namespace SystemGenerator.Generation
                     distr = Utils.getDistribution(0.0, 360.0);
                     moons[i].orbit.p      = distr[0];
                     moons[i].orbit.pSigma = distr[1];
+
+                    i++;
 
                     Utils.writeLog("                    Generated distribution of orbital parameters");
                 }
@@ -367,6 +370,8 @@ namespace SystemGenerator.Generation
 
         private void genProperties(Planet host, double mass_max, bool major, bool icy)
         {
+            this.isMajor = major;
+            this.isIcy   = icy;
             do
             {
                 //Decide radius
