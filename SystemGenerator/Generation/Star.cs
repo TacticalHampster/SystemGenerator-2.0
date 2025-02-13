@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using static SystemGenerator.Generation.Gen;
+using static SystemGenerator.FormMain;
 
 namespace SystemGenerator.Generation
 {
@@ -42,12 +44,14 @@ namespace SystemGenerator.Generation
         public int indexHab;
 
         public List<double> orbits;
+        public string flavortext;
 
         public Star()
         {
             Utils.writeLog(Environment.NewLine + "    Generating star");
             this.genProperties();
             this.genOrbits();
+            this.flavortext = "";
         }
 
         /**
@@ -88,103 +92,131 @@ namespace SystemGenerator.Generation
             this.zoneFrost   = Math.Sqrt(this.lumin) * 4.85;
 
             Utils.writeLog("    Star generation complete");
+            Utils.updateProgress();
         }
     
+
+        public void genFlavorText()
+        {
+            string flavor = "";
+
+            flavor += "This star is a main sequence star, with a spectral type " + this.type + ". It is a";
+
+            if (this.bv <= 0.6)
+                flavor += " cool white color to human eyes.";
+            else if (this.bv <= 0.8)
+                flavor += " warm white color to human eyes, like Sol.";
+            else if (this.bv <= 1.4)
+                flavor += " cream color to human eyes.";
+            else
+                flavor += "n orange color to human eyes.";
+
+            flavor += String.Format(" From the habitable planet, it would have an apparent magnitude of {0:N3}, appearing ", this.magRel);
+            
+            flavor += Utils.getMagDesc(this.magRel) + ". ";
+
+            flavor += String.Format("It is currently {0:N3} billion Earth years old, about a third of the way through its life.", this.age);
+
+            this.flavortext = flavor;
+        }
+
         /**
          * This function returns a list of orbital distances in AU based on this star.
          */
         public void genOrbits()
         {
-            Utils.writeLog(Environment.NewLine + "    Generating orbital distances");
-            List<double> orbits = new List<double>();
-            double current, frost;
-
-            //Start with the frost line orbit
-            orbits.Add(this.zoneFrost + (Utils.randDouble(1.0, 1.2) * Utils.randSign()));
-            current = orbits[0];
-            frost = orbits[0];
-            Utils.writeLog("        Frost orbit: " + frost);
-
-            //Gen outside orbits
-            Utils.writeLog("        Generating outer orbits");
-            while (true)
+            List<double> orbits;
+            bool habitable;
+            do
             {
-                current *= Utils.randDouble(Gen.System.ORBIT_SPACING_MIN, Gen.System.ORBIT_SPACING_MAX);
+                Utils.writeLog(Environment.NewLine + "    Generating orbital distances");
+                orbits = new List<double>();
+                double current, frost;
 
-                if (current > this.zoneFormMax)
-                    break;
+                //Start with the frost line orbit
+                orbits.Add(this.zoneFrost + (Utils.randDouble(1.0, 1.2) * Utils.randSign()));
+                current = orbits[0];
+                frost = orbits[0];
+                Utils.writeLog("        Frost orbit: " + frost);
 
-                if (current > (orbits[orbits.Count-1]+0.15))
-                    orbits.Add(current);
-            }
-
-            //Reset current
-            current = orbits[0];
-
-            //Gen inside orbits
-            Utils.writeLog("        Generating inner orbits");
-            while (true)
-            {
-                current /= Utils.randDouble(Gen.System.ORBIT_SPACING_MIN, Gen.System.ORBIT_SPACING_MAX);
-
-                if (current < this.zoneFormMin)
-                    break;
-
-                if (current < (orbits[orbits.Count - 1] - 0.15))
-                    orbits.Add(current);
-            }
-
-            Utils.writeLog("        Total orbits: " + orbits.Count);
-
-            //Bubble sort
-            for (int i = 0; i < orbits.Count - 1; i++)
-            {
-                bool swapped = false;
-
-                for (int j = 0; j < orbits.Count - i - 1; j++)
+                //Gen outside orbits
+                Utils.writeLog("        Generating outer orbits");
+                while (true)
                 {
-                    if (orbits[j] > orbits[j+1])
+                    current *= Utils.randDouble(Gen.System.ORBIT_SPACING_MIN, Gen.System.ORBIT_SPACING_MAX);
+
+                    if (current > this.zoneFormMax)
+                        break;
+
+                    if (current > (orbits[orbits.Count-1]+0.15))
+                        orbits.Add(current);
+                }
+
+                //Reset current
+                current = orbits[0];
+
+                //Gen inside orbits
+                Utils.writeLog("        Generating inner orbits");
+                while (true)
+                {
+                    current /= Utils.randDouble(Gen.System.ORBIT_SPACING_MIN, Gen.System.ORBIT_SPACING_MAX);
+
+                    if (current < this.zoneFormMin)
+                        break;
+
+                    if (current < (orbits[orbits.Count - 1] - 0.15))
+                        orbits.Add(current);
+                }
+
+                Utils.writeLog("        Total orbits: " + orbits.Count);
+
+                //Bubble sort
+                for (int i = 0; i < orbits.Count - 1; i++)
+                {
+                    bool swapped = false;
+
+                    for (int j = 0; j < orbits.Count - i - 1; j++)
                     {
-                        double temp = orbits[j];
-                        orbits[j] = orbits[j+1];
-                        orbits[j+1] = temp;
-                        swapped = true;
+                        if (orbits[j] > orbits[j+1])
+                        {
+                            double temp = orbits[j];
+                            orbits[j] = orbits[j+1];
+                            orbits[j+1] = temp;
+                            swapped = true;
+                        }
+                    }
+
+                    if (!swapped)
+                        break;
+                }
+
+                //Find the frost index
+                this.indexFrost = orbits.IndexOf(frost);
+
+                //Make sure a habitable planet exists
+                habitable = false;
+                for (int i = 0; i < orbits.Count; i++)
+                {
+                    if ((this.zoneHabMin < orbits[i]) && (orbits[i] < this.zoneHabMax))
+                    {
+                        habitable = true;
+                        this.indexHab = i;
+                        break;
                     }
                 }
 
-                if (!swapped)
-                    break;
+                Utils.writeLog("        Habitable orbit exists: " + habitable);
+
+                //If not, retry; if yes, return orbit list
+                if (!habitable)
+                    Utils.writeLog("            Rerandomizing orbits");
+                else
+                    Utils.writeLog("    Distance generation complete");
             }
-
-            //Find the frost index
-            this.indexFrost = orbits.IndexOf(frost);
-
-            //Make sure a habitable planet exists
-            bool habitable = false;
-            for (int i = 0; i < orbits.Count; i++)
-            {
-                if ((this.zoneHabMin < orbits[i]) && (orbits[i] < this.zoneHabMax))
-                {
-                    habitable = true;
-                    this.indexHab = i;
-                    break;
-                }
-            }
-
-            Utils.writeLog("        Habitable orbit exists: " + habitable);
-
-            //If not, retry; if yes, return orbit list
-            if (!habitable)
-            {
-                Utils.writeLog("            Rerandomizing orbits");
-                this.genOrbits();
-            }
-            else
-            {
-                Utils.writeLog("    Distance generation complete");
-                this.orbits = orbits;
-            }
-
+            while (!habitable);
+            
+            this.orbits = orbits;
+            Utils.updateProgress();
         }
     
         /**
@@ -192,106 +224,112 @@ namespace SystemGenerator.Generation
          */
         public List<char> genTypes()
         {
-            List<char> types = new List<char>();
-            bool migrated = false, belt_dwarf = false;
-            int num;
+            List<char> types;
+            bool migrated, belt_dwarf;
+            int num, indexMig, indexF;
 
             do
             {
                 Utils.writeLog(Environment.NewLine + "    Picking types of planets");
+                types = new List<char>();
+                migrated = false;
+                belt_dwarf = false;
+                indexMig = -1;
+                indexF = this.indexFrost;
 
-                //Zero out the types list
-                types.EnsureCapacity(this.orbits.Count*3);
-                for (int i = 0; i < types.Capacity; i++)
-                {
-                    types.Add('\0');
-                }
-
-                types[this.indexFrost] = ID.Planet.GAS_GIANT;
-            
-                Utils.writeLog("        Orbit " + this.indexFrost + " (" + this.orbits[this.indexFrost] + " AU): " + Utils.getDescription(types[this.indexFrost]).ToLower() + " (frost orbit)");
+                //First do the inner orbits
 
                 //Decide migration
-                if (Utils.flip() <= Gen.System.MIGRATE_MID_CHANCE)
+                if (Utils.flip() <= Gen.System.MIGRATE_HOT_CHANCE)
                 {
-                    int mig_index;
-                    do
-                        mig_index = (int)Math.Round(Utils.randDouble(this.indexHab, this.indexFrost));
-                    while (mig_index == this.indexHab);
-
-                    types[mig_index] = ID.Planet.GAS_PUFFY;
-                    types[this.indexFrost] = ID.Planet.EMPTY;
+                    types.Add(ID.Planet.GAS_HOT);
                     migrated = true;
-                
-                    Utils.writeLog("        Frost giant migrated to mid-system: orbit " + mig_index);
-                }
-                else if (Utils.flip() <= Gen.System.MIGRATE_HOT_CHANCE)
-                {
-                    types[0] = ID.Planet.GAS_HOT;
-                    types[this.indexFrost] = ID.Planet.EMPTY;
-                    migrated = true;
+                    indexMig = 0;
 
                     Utils.writeLog("        Frost giant migrated to inner system: orbit 0");
+                }
+
+                for (int i = indexMig+1; i < this.indexHab; i++)
+                {
+                    Decay denseDecay = new Decay(Gen.System.DENSE_DECAY, Gen.System.DENSE_CHANCE, 0, this.indexHab, Decay.DecayDir.DECREASING);
+                    Utils.writeLog("            Dense chance: " + denseDecay.getDecayedChance(i));
+
+                    if (Utils.flip() < denseDecay.getDecayedChance(i))
+                        types.Add(ID.Planet.ROCK_DENSE);
+                    else
+                        types.Add(ID.Planet.ROCK_DESERT);
+                
+                    Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU): " + Utils.getDescription(types[i]).ToLower() + " (inner orbit)");
                 }
 
                 //Second do the habitable orbit
                 Decay oceanDecay = new Decay(Gen.System.OCEAN_DECAY, Gen.System.OCEAN_CHANCE, 0, this.indexFrost, Decay.DecayDir.INCREASING);
 
                 if (Utils.flip() < oceanDecay.getDecayedChance(this.indexHab))
-                    types[this.indexHab] = ID.Planet.WATER_GREEN;
+                    types.Add(ID.Planet.WATER_GREEN);
                 else
-                    types[this.indexHab] = ID.Planet.ROCK_GREEN;
+                    types.Add(ID.Planet.ROCK_GREEN);
 
-            
                 Utils.writeLog("        Orbit " + this.indexHab + " (" + this.orbits[this.indexHab] + " AU): " + Utils.getDescription(types[this.indexHab]).ToLower() + " (hab orbit)");
 
-                //Third do the inner orbits
-                for (int i = 0; this.orbits[i] <= this.zoneHabMin; i++)
-                {
-                    if (types[i] == '\0') //Make sure not to overwrite
-                    {
-                        Decay denseDecay = new Decay(Gen.System.DENSE_DECAY, Gen.System.DENSE_CHANCE, 0, this.indexHab, Decay.DecayDir.DECREASING);
+                //Third do the mid orbits
 
-                        if (Utils.flip() < denseDecay.getDecayedChance(i))
-                            types[i] = ID.Planet.ROCK_DENSE;
-                        else
-                            types[i] = ID.Planet.ROCK_DESERT;
-                    }
+                //Decide migration
+                if (Utils.flip() <= Gen.System.MIGRATE_MID_CHANCE && !migrated)
+                {
+                    do
+                        indexMig = (int)Math.Round(Utils.randDouble(this.indexHab, indexF));
+                    while (indexMig == this.indexHab);
+                    
+                    migrated = true;
                 
-                    Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU): " + Utils.getDescription(types[i]).ToLower() + " (inner orbit)");
+                    Utils.writeLog("        Frost giant migrated to mid-system: orbit " + indexMig);
                 }
 
-                //Fourth do the mid orbits
-                for (int i = this.indexHab; i < this.indexFrost; i++)
+                for (int i = this.indexHab+1; i < indexF; i++)
                 {
-                    if (types[i] == '\0') //Make sure not to overwrite
+                    if (i == indexMig && migrated) //If the frost giant has migrated to mid system
                     {
-                        //If i is immediately before the frost giant, and it has not migrated, determine whether to add an asteroid belt
-                        if (Utils.flip() < Gen.Belt.INNER_BELT_CHANCE && !migrated)
+                       types.Add(ID.Planet.GAS_PUFFY);
+                    }
+
+                    //If i is immediately before the frost giant, and it has not migrated, determine whether to add an asteroid belt
+                    else if (Utils.flip() < Gen.Belt.INNER_BELT_CHANCE && !migrated && i == indexF-1)
+                    {
+                        types.Add(ID.Belt.BELT_INNER);
+
+                        //Also decide whether to add a dwarf planet to this belt
+                        if (Utils.flip() < Gen.Belt.INNER_DWARF_CHANCE)
                         {
-                            types[i] = ID.Belt.BELT_INNER;
-
-                            //Also decide whether to add a dwarf planet to this belt
-                            if (Utils.flip() < Gen.Belt.INNER_DWARF_CHANCE)
-                            {
-                                types.Insert(++i, ID.Belt.DWARF);
-                                this.indexFrost++;
-                                belt_dwarf = true;
-                            }
+                            Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU): " + Utils.getDescription(types[i]).ToLower() + " (mid orbit)");
+                            types.Add(ID.Belt.DWARF);
+                            i++;
+                            indexF++;
+                            belt_dwarf = true;
                         }
+                    }
 
-                        //Otherwise create a planet
-                        if (Utils.flip() < oceanDecay.getDecayedChance(i))
-                            types[i] = ID.Planet.WATER_OCEAN;
-                        else
-                            types[i] = ID.Planet.ROCK_DESERT;
-                
-                        Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU): " + Utils.getDescription(types[i]).ToLower() + " (mid orbit)");
-                    }
+                    //Otherwise create a planet
+                    else if (Utils.flip() < oceanDecay.getDecayedChance(i))
+                        types.Add(ID.Planet.WATER_OCEAN);
                     else
-                    {
-                        Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU) is already a " + Utils.getDescription(types[i]).ToLower() + " (mid orbit)");
-                    }
+                        types.Add(ID.Planet.ROCK_DESERT);
+                
+                    Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU): " + Utils.getDescription(types[i]).ToLower() + " (mid orbit)");
+                }
+
+                //Fourth do the frost orbit (if not migrated)
+                if (!migrated)
+                {
+                    types.Add(ID.Planet.GAS_GIANT);
+            
+                    Utils.writeLog("        Orbit " + indexF + " (" + this.orbits[indexF] + " AU): " + Utils.getDescription(types[indexF]).ToLower() + " (frost orbit)");
+                }
+                else
+                {
+                    types.Add(ID.Planet.EMPTY);
+
+                    Utils.writeLog("        Orbit " + indexF + " (" + this.orbits[indexF] + " AU): empty (frost orbit)");
                 }
 
                 //Fifth do the outer orbits
@@ -303,52 +341,49 @@ namespace SystemGenerator.Generation
 
                 bool giantsFinished = false; //Once the first non-gas-giant planet generates, gas giants will stop generating entirely
 
-                for (int i = this.indexFrost; i < num; i++)
+                for (int i = indexF+1; i < num; i++)
                 {
-                    if (types[i] == '\0')
+                    Decay iceDecay   = new Decay(Gen.System.ICE_GIANT_DECAY, Gen.System.ICE_GIANT_CHANCE, indexF, num, Decay.DecayDir.INCREASING);
+                    Decay dwarfDecay = new Decay(Gen.System.ICE_DWARF_DECAY, Gen.System.ICE_DWARF_CHANCE, indexF, num, Decay.DecayDir.INCREASING);
+
+                    double ice_chance   = iceDecay.getDecayedChance(i);
+                    double dwarf_chance = dwarfDecay.getDecayedChance(i);
+                    double roll;
+
+                    while (true)
                     {
-                        Decay iceDecay   = new Decay(Gen.System.ICE_GIANT_DECAY, Gen.System.ICE_GIANT_CHANCE, this.indexFrost, num, Decay.DecayDir.INCREASING);
-                        Decay dwarfDecay = new Decay(Gen.System.ICE_DWARF_DECAY, Gen.System.ICE_DWARF_CHANCE, this.indexFrost, num, Decay.DecayDir.INCREASING);
+                        roll = Utils.flip();
 
-                        double ice_chance   = iceDecay.getDecayedChance(i);
-                        double dwarf_chance = dwarfDecay.getDecayedChance(i);
-                        double roll;
-
-                        while (true)
+                        if (roll < ice_chance)
                         {
-                            roll = Utils.flip();
-
-                            if (roll < ice_chance)
-                            {
-                                types[i] = ID.Planet.ICE_GIANT;
-                                giantsFinished = true;
-                                break;
-                            }
-                            else if (roll > dwarf_chance)
-                            {
-                                types[i] = ID.Planet.ICE_DWARF;
-                                giantsFinished = true;
-                                break;
-                            }
-                            else if (!giantsFinished || Gen.System.DISABLE_GAS_GIANT_CUTOFF)
-                            {
-                                types[i] = ID.Planet.GAS_GIANT;
-                                break;
-                            }
+                            types.Add(ID.Planet.ICE_GIANT);
+                            giantsFinished = true;
+                            break;
                         }
-                
-                        Utils.writeLog("        Orbit " + i + " (" + this.orbits[i-(num-orbits.Count)] + " AU): " + Utils.getDescription(types[i-(num-orbits.Count)]).ToLower() + " (outer orbit)");
+                        else if (roll > dwarf_chance)
+                        {
+                            types.Add(ID.Planet.ICE_DWARF);
+                            giantsFinished = true;
+                            break;
+                        }
+                        else if (!giantsFinished || Gen.System.DISABLE_GAS_GIANT_CUTOFF)
+                        {
+                            types.Add(ID.Planet.GAS_GIANT);
+                            break;
+                        }
                     }
+                
+                    Utils.writeLog("        Orbit " + i + " (" + this.orbits[i-(num-orbits.Count)] + " AU): " + Utils.getDescription(types[i-(num-orbits.Count)]).ToLower() + " (outer orbit)");
                 }
 
                 //If there are more types than orbits, redo
             }
-            while (!(( belt_dwarf && types.Count > this.orbits.Count+1) || (!belt_dwarf && types.Count > this.orbits.Count ) ));
+            while (false); //!(( belt_dwarf && types.Count > this.orbits.Count+1) || (!belt_dwarf && types.Count > this.orbits.Count ) )
 
             //Finally decide whether to generate a kuiper belt
             if (Utils.flip() < Gen.Belt.KUIPER_BELT_CHANCE)
             {
-                types[num] = ID.Belt.BELT_KUIPER;
+                types.Add(ID.Belt.BELT_KUIPER);
                 
                 Utils.writeLog("        Orbit " + num + " ( X AU): " + Utils.getDescription(types[num]).ToLower() + " (kuiper orbit)");
 
@@ -364,21 +399,23 @@ namespace SystemGenerator.Generation
                 for (int i = 0; i < plutinos+cubewanos+twotinos+scattered+sednoids; i++)
                 {
                     if (i < plutinos)
-                        types[num+1+i] = ID.Belt.PLUTINO;
+                        types.Add(ID.Belt.PLUTINO);
                     else if (i < plutinos+cubewanos)
-                        types[num+1+i] = ID.Belt.CUBEWANO;
+                        types.Add(ID.Belt.CUBEWANO);
                     else if (i < plutinos+cubewanos+twotinos)
-                        types[num+1+i] = ID.Belt.TWOTINO;
+                        types.Add(ID.Belt.TWOTINO);
                     else if (i < plutinos+cubewanos+twotinos+scattered)
-                        types[num+1+i] = ID.Belt.SCATTERED;
+                        types.Add(ID.Belt.SCATTERED);
                     else
-                        types[num+1+i] = ID.Belt.SEDNOID;
+                        types.Add(ID.Belt.SEDNOID);
 
                     Utils.writeLog("        Orbit " + (int)(num+1+i) + ": " + Utils.getDescription(types[num+1+i]).ToLower() + " (kuiper orbit)");
                 }
             }
 
             Utils.writeLog("    Type generation complete");
+            FormMain.genProgressBar.Maximum = 8 + (types.Count*6);
+            Utils.updateProgress();
 
             return types;
         }
@@ -428,7 +465,7 @@ namespace SystemGenerator.Generation
                         dist       = this.orbits[i-1-mig];
                         maxMass    = 0.0;
                         kuipIndex  = i-mig;
-                        planets[i-1].hasTrojans = true;
+                        planets[i-1-mig].hasTrojans = true;
                         break;
                     case ID.Planet.GAS_PUFFY:
                     case ID.Planet.GAS_HOT:
@@ -445,6 +482,7 @@ namespace SystemGenerator.Generation
                         dist         = this.orbits[i-1-mig];
                         maxMass      = planets[i-1].m;
                         this.orbits.Insert(i, this.orbits[i-1-mig]);
+                        planets[i-1].subtype = "1";
                         break;
                     case ID.Belt.PLUTINO:
                         controller = planets[kuipIndex];
@@ -489,6 +527,7 @@ namespace SystemGenerator.Generation
                         }
                         break;
                 }
+                Utils.updateProgress();
 
                 //Generate composition
                 if (maxMass > 0.0)
@@ -504,6 +543,7 @@ namespace SystemGenerator.Generation
                     maxMass = p.m;
                     giantMax = true;
                 }
+                Utils.updateProgress();
 
                 //Creating orbit
                 if (controller != null)
@@ -516,17 +556,21 @@ namespace SystemGenerator.Generation
                     needsSigma.Add(false);
                     p.orbit.genOrbit(this, p, dist);
                 }
+                Utils.updateProgress();
 
                 //Creating atmosphere
                 p.atmo.genAtmo(this, ref p);
+                Utils.updateProgress();
                 
                 //Creating satellites
                 p.moons = Moon.genSatList(this, ref p);
+                Utils.updateProgress();
 
                 //Picking feature
-                p.GenFeature();
+                p.genFeature();
 
                 planets.Add(p);
+                Utils.updateProgress();
             }
             
             Utils.writeLog(Environment.NewLine + "    Calculating final miscellanous values");
@@ -574,6 +618,7 @@ namespace SystemGenerator.Generation
 
                 planets[this.indexFrost-2].orbit.aSigma = planets[this.indexFrost-2].r / 4.0;
             }
+            Utils.updateProgress();
 
             //Calculate dist std dev for kuiper belts
             if (planets[kuipIndex].type == ID.Belt.BELT_KUIPER)
@@ -583,6 +628,7 @@ namespace SystemGenerator.Generation
                 planets[kuipIndex].r = Utils.resonance(planets[kuipIndex-1].orbit.a, 3.0/2.0) - Utils.resonance(planets[kuipIndex-1].orbit.a, 2.0/1.0);
                 planets[kuipIndex].orbit.aSigma = planets[kuipIndex].r / 2.0;
             }
+            Utils.updateProgress();
 
             //Now that we have the std devs, regenerate the belt object orbits
             Utils.writeLog("      Regenerating normally-distributed orbits");
@@ -596,6 +642,7 @@ namespace SystemGenerator.Generation
                         planets[i].orbit.genOrbit(this, planets[i], planets[kuipIndex]);
                 }
             }
+            Utils.updateProgress();
 
             //Calculate apparent magnitude of the star
             do
@@ -604,7 +651,24 @@ namespace SystemGenerator.Generation
                 Utils.writeLog("      Calculating apparent magnitude of star (" + this.magRel + ")");
             }
             while ((-40.0 > this.magRel) || (this.magRel > 10.0));
-                
+            Utils.updateProgress();
+            
+            //Generate the flavor text for everything
+            this.genFlavorText();
+            foreach (Planet p in planets)
+            {
+                p.genFlavorText(planets);
+
+                if (p.moons != null)
+                {
+                    foreach (Moon m in p.moons)
+                    {
+                        m.genFlavorText(planets, p);
+                    }
+                }
+            }
+            Utils.updateProgress();
+
             return planets;
         }
     }

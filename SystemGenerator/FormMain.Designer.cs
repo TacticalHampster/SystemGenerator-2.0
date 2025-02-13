@@ -105,6 +105,7 @@
             propsAtmoLabelWeight = new Label();
             propsAtmoValueWeight = new Label();
             propsAtmoUnitWeight = new Label();
+            blankGroupBox3 = new GroupBox();
             propsBulkGroup = new GroupBox();
             propsBulkTable = new TableLayoutPanel();
             propsBulkUnitRock = new Label();
@@ -262,6 +263,12 @@
             propsPhysicalMoonUnitGravity = new Label();
             propsPhysicalMoonUnitEscV = new Label();
             propsPhysicalMoonLabelRadii = new Label();
+            genProgressBar = new ProgressBar();
+            drawingGroupBox = new GroupBox();
+            pictureBox = new PictureBox();
+            blankGroupBox1 = new GroupBox();
+            blankGroupBox2 = new GroupBox();
+            blankGroupBox4 = new GroupBox();
             propsPhysicalPlanetGroup.SuspendLayout();
             propsPhysicalPlanetTable.SuspendLayout();
             propsOrbitPlanetGroup.SuspendLayout();
@@ -285,6 +292,8 @@
             tableLayoutPanel1.SuspendLayout();
             propsPhysicalMoonGroup.SuspendLayout();
             propsPhysicalMoonTable.SuspendLayout();
+            drawingGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
             // 
             // systemListBox
@@ -564,7 +573,7 @@
             propsPhysicalPlanetUnitTemp.Name = "propsPhysicalPlanetUnitTemp";
             propsPhysicalPlanetUnitTemp.Size = new Size(45, 20);
             propsPhysicalPlanetUnitTemp.TabIndex = 16;
-            propsPhysicalPlanetUnitTemp.Text = "K";
+            propsPhysicalPlanetUnitTemp.Text = "°C";
             propsPhysicalPlanetUnitTemp.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // propsPhysicalPlanetUnitAlbedo
@@ -1287,6 +1296,14 @@
             propsAtmoUnitWeight.Text = "kg/mol";
             propsAtmoUnitWeight.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // blankGroupBox3
+            // 
+            blankGroupBox3.Location = new Point(1537, 320);
+            blankGroupBox3.Name = "blankGroupBox3";
+            blankGroupBox3.Size = new Size(375, 215);
+            blankGroupBox3.TabIndex = 2;
+            blankGroupBox3.TabStop = false;
+            // 
             // propsBulkGroup
             // 
             propsBulkGroup.Controls.Add(propsBulkTable);
@@ -1575,7 +1592,7 @@
             // 
             propsOrbitStarGroup.Controls.Add(propsOrbitStarTable);
             propsOrbitStarGroup.ForeColor = Color.Purple;
-            propsOrbitStarGroup.Location = new Point(772, 541);
+            propsOrbitStarGroup.Location = new Point(1537, 541);
             propsOrbitStarGroup.Name = "propsOrbitStarGroup";
             propsOrbitStarGroup.Size = new Size(375, 215);
             propsOrbitStarGroup.TabIndex = 4;
@@ -1816,7 +1833,7 @@
             // 
             propsLightGroup.Controls.Add(propsLightTable);
             propsLightGroup.ForeColor = Color.Yellow;
-            propsLightGroup.Location = new Point(772, 159);
+            propsLightGroup.Location = new Point(1537, 159);
             propsLightGroup.Name = "propsLightGroup";
             propsLightGroup.Size = new Size(375, 155);
             propsLightGroup.TabIndex = 6;
@@ -2003,7 +2020,7 @@
             propsPhysicalStarGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             propsPhysicalStarGroup.Controls.Add(propsPhysicalStarTable);
             propsPhysicalStarGroup.ForeColor = Color.Tan;
-            propsPhysicalStarGroup.Location = new Point(772, -2);
+            propsPhysicalStarGroup.Location = new Point(1537, -2);
             propsPhysicalStarGroup.Name = "propsPhysicalStarGroup";
             propsPhysicalStarGroup.Size = new Size(375, 155);
             propsPhysicalStarGroup.TabIndex = 8;
@@ -2267,7 +2284,7 @@
             propsPhysicalBeltGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             propsPhysicalBeltGroup.Controls.Add(propsPhysicalBeltTable);
             propsPhysicalBeltGroup.ForeColor = Color.Tan;
-            propsPhysicalBeltGroup.Location = new Point(1156, -2);
+            propsPhysicalBeltGroup.Location = new Point(1537, -2);
             propsPhysicalBeltGroup.Name = "propsPhysicalBeltGroup";
             propsPhysicalBeltGroup.Size = new Size(375, 155);
             propsPhysicalBeltGroup.TabIndex = 9;
@@ -2452,7 +2469,7 @@
             // 
             propsBulkBeltGroup.Controls.Add(propsBulkBeltTable);
             propsBulkBeltGroup.ForeColor = Color.Sienna;
-            propsBulkBeltGroup.Location = new Point(1156, 159);
+            propsBulkBeltGroup.Location = new Point(1537, 159);
             propsBulkBeltGroup.Name = "propsBulkBeltGroup";
             propsBulkBeltGroup.Size = new Size(375, 155);
             propsBulkBeltGroup.TabIndex = 10;
@@ -2677,7 +2694,7 @@
             // 
             propsOrbitBeltGroup.Controls.Add(tableLayoutPanel1);
             propsOrbitBeltGroup.ForeColor = Color.Purple;
-            propsOrbitBeltGroup.Location = new Point(1153, 541);
+            propsOrbitBeltGroup.Location = new Point(1537, 541);
             propsOrbitBeltGroup.Name = "propsOrbitBeltGroup";
             propsOrbitBeltGroup.Size = new Size(375, 215);
             propsOrbitBeltGroup.TabIndex = 4;
@@ -3114,7 +3131,7 @@
             propsPhysicalMoonGroup.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             propsPhysicalMoonGroup.Controls.Add(propsPhysicalMoonTable);
             propsPhysicalMoonGroup.ForeColor = Color.Tan;
-            propsPhysicalMoonGroup.Location = new Point(391, -2);
+            propsPhysicalMoonGroup.Location = new Point(1537, -2);
             propsPhysicalMoonGroup.Name = "propsPhysicalMoonGroup";
             propsPhysicalMoonGroup.Size = new Size(375, 155);
             propsPhysicalMoonGroup.TabIndex = 12;
@@ -3348,6 +3365,56 @@
             propsPhysicalMoonLabelRadii.Text = "Radii";
             propsPhysicalMoonLabelRadii.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // genProgressBar
+            // 
+            genProgressBar.Location = new Point(12, 12);
+            genProgressBar.Name = "genProgressBar";
+            genProgressBar.Size = new Size(416, 49);
+            genProgressBar.Style = ProgressBarStyle.Continuous;
+            genProgressBar.TabIndex = 13;
+            // 
+            // drawingGroupBox
+            // 
+            drawingGroupBox.Controls.Add(pictureBox);
+            drawingGroupBox.Location = new Point(434, 0);
+            drawingGroupBox.Name = "drawingGroupBox";
+            drawingGroupBox.Size = new Size(1097, 756);
+            drawingGroupBox.TabIndex = 14;
+            drawingGroupBox.TabStop = false;
+            // 
+            // pictureBox
+            // 
+            pictureBox.Dock = DockStyle.Fill;
+            pictureBox.Location = new Point(3, 23);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new Size(1091, 730);
+            pictureBox.TabIndex = 0;
+            pictureBox.TabStop = false;
+            // 
+            // blankGroupBox1
+            // 
+            blankGroupBox1.Location = new Point(1537, -2);
+            blankGroupBox1.Name = "blankGroupBox1";
+            blankGroupBox1.Size = new Size(375, 155);
+            blankGroupBox1.TabIndex = 0;
+            blankGroupBox1.TabStop = false;
+            // 
+            // blankGroupBox2
+            // 
+            blankGroupBox2.Location = new Point(1537, 159);
+            blankGroupBox2.Name = "blankGroupBox2";
+            blankGroupBox2.Size = new Size(375, 155);
+            blankGroupBox2.TabIndex = 1;
+            blankGroupBox2.TabStop = false;
+            // 
+            // blankGroupBox4
+            // 
+            blankGroupBox4.Location = new Point(1537, 541);
+            blankGroupBox4.Name = "blankGroupBox4";
+            blankGroupBox4.Size = new Size(375, 215);
+            blankGroupBox4.TabIndex = 3;
+            blankGroupBox4.TabStop = false;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -3356,21 +3423,27 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = SystemColors.WindowText;
             ClientSize = new Size(1924, 1055);
-            Controls.Add(propsPhysicalMoonGroup);
-            Controls.Add(genButton);
+            Controls.Add(blankGroupBox3);
+            Controls.Add(blankGroupBox4);
+            Controls.Add(blankGroupBox2);
+            Controls.Add(drawingGroupBox);
             Controls.Add(propsOrbitBeltGroup);
             Controls.Add(propsBulkBeltGroup);
-            Controls.Add(propsPhysicalBeltGroup);
             Controls.Add(propsLightGroup);
-            Controls.Add(propsPhysicalStarGroup);
             Controls.Add(propsOrbitStarGroup);
             Controls.Add(textGroupBox);
             Controls.Add(propsBulkGroup);
             Controls.Add(propsAtmoGroup);
             Controls.Add(propsOrbitPlanetGroup);
             Controls.Add(optionListBox);
-            Controls.Add(propsPhysicalPlanetGroup);
             Controls.Add(systemListBox);
+            Controls.Add(genProgressBar);
+            Controls.Add(genButton);
+            Controls.Add(blankGroupBox1);
+            Controls.Add(propsPhysicalBeltGroup);
+            Controls.Add(propsPhysicalStarGroup);
+            Controls.Add(propsPhysicalPlanetGroup);
+            Controls.Add(propsPhysicalMoonGroup);
             Font = new Font("Consolas", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             ForeColor = SystemColors.ControlLight;
             Name = "FormMain";
@@ -3411,6 +3484,8 @@
             propsPhysicalMoonGroup.ResumeLayout(false);
             propsPhysicalMoonTable.ResumeLayout(false);
             propsPhysicalMoonTable.PerformLayout();
+            drawingGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -3630,7 +3705,6 @@
         private Label propsOrbitBeltSigmaI;
         private Label propsOrbitBeltSigmaL;
         private Label propsOrbitBeltSigmaP;
-        private Label label1;
         private Button genButton;
         private GroupBox propsPhysicalMoonGroup;
         private TableLayoutPanel propsPhysicalMoonTable;
@@ -3651,5 +3725,12 @@
         private Label propsPhysicalMoonUnitEscV;
         private Label propsPhysicalMoonLabelRadii;
         private Label flavorTextLabel;
+        private GroupBox drawingGroupBox;
+        private GroupBox blankGroupBox1;
+        private GroupBox blankGroupBox3;
+        private GroupBox blankGroupBox2;
+        private GroupBox blankGroupBox4;
+        private PictureBox pictureBox;
+        public static ProgressBar genProgressBar;
     }
 }

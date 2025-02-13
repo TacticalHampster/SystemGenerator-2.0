@@ -52,7 +52,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.ROCK_DENSE:
                 case ID.Planet.ROCK_DESERT:
                 case ID.Planet.WATER_OCEAN:
-                    this.e = Utils.randExpo(Gen.Orbit.Terrestrial.MIN_ECCENTRICITY, Gen.Orbit.Terrestrial.MAX_ECCENTRICITY, lambda);
+                    this.e = Utils.randDouble(Gen.Orbit.Terrestrial.MIN_ECCENTRICITY, Gen.Orbit.Terrestrial.MAX_ECCENTRICITY);
                     this.y = Math.Sqrt(Math.Pow(this.a, 3.0) / star.m);
                     this.v = Math.Sqrt(star.m / this.a) * Const.Earth.ORBV;
                     this.i = Utils.randDouble(Gen.Orbit.Terrestrial.MIN_INCLINATION, Gen.Orbit.Terrestrial.MAX_INCLINATION) * Utils.randSign();
@@ -62,7 +62,7 @@ namespace SystemGenerator.Generation
 
                 case ID.Planet.ROCK_GREEN:
                 case ID.Planet.WATER_GREEN:
-                    this.e = Utils.randExpo(Gen.Orbit.Terrestrial.MIN_ECCENTRICITY, Gen.Orbit.Terrestrial.MAX_ECCENTRICITY, lambda);
+                    this.e = Utils.randDouble(Gen.Orbit.Terrestrial.MIN_ECCENTRICITY, Gen.Orbit.Terrestrial.MAX_ECCENTRICITY);
                     this.y = Math.Sqrt(Math.Pow(this.a, 3.0) / star.m);
                     this.v = Math.Sqrt(star.m / this.a) * Const.Earth.ORBV;
                     this.i =  0.0;
@@ -76,7 +76,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.GAS_HOT:
                 case ID.Planet.ICE_DWARF:
                 case ID.Planet.ICE_GIANT:
-                    this.e = Utils.randExpo(Gen.Orbit.Giant.MIN_ECCENTRICITY, Gen.Orbit.Giant.MAX_ECCENTRICITY, lambda);
+                    this.e = Utils.randDouble(Gen.Orbit.Giant.MIN_ECCENTRICITY, Gen.Orbit.Giant.MAX_ECCENTRICITY);
                     this.y = Math.Sqrt(Math.Pow(this.a, 3.0) / star.m);
                     this.v = Math.Sqrt(star.m / this.a) * Const.Earth.ORBV;
                     this.i = Utils.randDouble(Gen.Orbit.Giant.MIN_INCLINATION, Gen.Orbit.Giant.MAX_INCLINATION) * Utils.randSign();
@@ -86,7 +86,7 @@ namespace SystemGenerator.Generation
 
                 case ID.Belt.BELT_KUIPER:
                     this.a = (Utils.resonance(dist, 3.0/2.0) + (dist*1.3)) / 2.0;
-                    this.e = Utils.randExpo(Gen.Orbit.Belt.MIN_BELT_ECCENTRICITY, Gen.Orbit.Belt.MAX_BELT_ECCENTRICITY, lambda);
+                    this.e = Utils.randDouble(Gen.Orbit.Belt.MIN_BELT_ECCENTRICITY, Gen.Orbit.Belt.MAX_BELT_ECCENTRICITY);
                     this.y = Math.Sqrt(Math.Pow(this.a, 3.0) / star.m);
                     this.v = Math.Sqrt(star.m / this.a) * Const.Earth.ORBV;
                     this.i = Utils.randDouble(Gen.Orbit.Belt.MIN_INCLINATION, Gen.Orbit.Belt.MAX_INCLINATION) * Utils.randSign();
@@ -101,7 +101,7 @@ namespace SystemGenerator.Generation
                     break;
 
                 case ID.Belt.BELT_INNER:
-                    this.e = Utils.randExpo(Gen.Orbit.Belt.MIN_BELT_ECCENTRICITY, Gen.Orbit.Belt.MAX_BELT_ECCENTRICITY, lambda);
+                    this.e = Utils.randDouble(Gen.Orbit.Belt.MIN_BELT_ECCENTRICITY, Gen.Orbit.Belt.MAX_BELT_ECCENTRICITY);
                     this.y = Math.Sqrt(Math.Pow(this.a, 3.0) / star.m);
                     this.v = Math.Sqrt(star.m / this.a) * Const.Earth.ORBV;
                     this.i = Utils.randDouble(Gen.Orbit.Belt.MIN_INCLINATION, Gen.Orbit.Belt.MAX_INCLINATION) * Utils.randSign();

@@ -30,6 +30,8 @@ namespace SystemGenerator.Generation
         public double day  ;
         public double tilt ;
 
+        public string flavortext;
+
         public bool isMajor;
         public bool isIcy;
 
@@ -39,6 +41,7 @@ namespace SystemGenerator.Generation
             this.orbit = new Orbit();
             this.orbit.genOrbit(star, this, host, dist);
             this.spin(host);
+            this.flavortext = "";
         }
         
         public Moon(Star star, Planet host, double massMax, bool major, bool icy, double dist)
@@ -47,6 +50,7 @@ namespace SystemGenerator.Generation
             this.orbit = new Orbit();
             this.orbit.genOrbit(star, this, host, dist);
             this.spin(host);
+            this.flavortext = "";
         }
         
         public Moon(Planet host, double massMax, bool major, bool icy)
@@ -54,6 +58,7 @@ namespace SystemGenerator.Generation
             this.genProperties(host, massMax, major, icy);
             this.orbit = new Orbit();
             this.spin(host);
+            this.flavortext = "";
         }
         
         public Moon(Planet host, bool major, bool icy)
@@ -61,6 +66,7 @@ namespace SystemGenerator.Generation
             this.genProperties(host, major, icy);
             this.orbit = new Orbit();
             this.spin(host);
+            this.flavortext = "";
         }
 
         public static List<Moon> genSatList(Star star, ref Planet host)
@@ -87,7 +93,7 @@ namespace SystemGenerator.Generation
                 List<double> rings = new List<double>();
                 List<double[]> gaps = new List<double[]>();
                 double ringsMin, ringsMax, limMin, limMax, a;
-                int i, num;
+                int i;
                 
                 Decay rockyDecay = new Decay(Gen.Sat.GIANT_ROCKY_DECAY, Gen.Sat.GIANT_ROCKY_CHANCE, star.indexFrost, star.orbits.Count, Decay.DecayDir.DECREASING);
 
@@ -95,7 +101,7 @@ namespace SystemGenerator.Generation
                 ringsMax = Utils.fudge(2.44)*host.r;
 
                 //Generate the A-type moons
-                limMin = Utils.fudge((ringsMax + ringsMax)/2.0);
+                limMin = Utils.fudge((ringsMin + ringsMax)/2.0);
                 limMax = ringsMax + Utils.fudge(1.0);
 
                 a = limMin;
@@ -203,7 +209,8 @@ namespace SystemGenerator.Generation
                 //Generate the C-type moon clusters
                 limMin = limMax;
                 limMax = host.orbit.a * Math.Pow(host.m/star.m, (1.0/3.0)) * 235.0;
-                num = (int)Math.Ceiling(Utils.randExpo(Gen.Sat.MIN_CTYPE_CLUSTERS, Gen.Sat.MAX_CTYPE_CLUSTERS, Gen.Sat.CTYPE_MOON_DECAY));
+
+                Decay ctypeDecay = new Decay(Gen.Sat.CTYPE_DECAY, Gen.Sat.CTYPE_CHANCE, Gen.Sat.MIN_CTYPE_CLUSTERS, Gen.Sat.MAX_CTYPE_CLUSTERS, Gen.Sat.CTYPE_DIR);
 
                 //Make sure the outer limit doesn't extend into other planet orbits
                 if (Math.Abs(star.orbits[index]-star.orbits[index-1]) < limMax)
@@ -212,7 +219,7 @@ namespace SystemGenerator.Generation
                     if (Math.Abs(star.orbits[index]-star.orbits[index+1]) < limMax)
                         limMax = Math.Abs(star.orbits[index]-star.orbits[index+1]);
 
-                for (int j = 0; j < num; j++)
+                for (int j = 0; Utils.flip() < ctypeDecay.getDecayedChance(j); j++)
                 {
                     //Create
                     moons.Add(new Moon(host, false, !(Utils.flip() < rockyDecay.getDecayedChance(index))));
@@ -235,6 +242,9 @@ namespace SystemGenerator.Generation
                     moons[i].orbit.a      = distr[0];
                     moons[i].orbit.aSigma = distr[1];
 
+                    moons[i].orbit.y = Math.Sqrt(Math.Pow(moons[i].orbit.a, 3.0) / star.m);
+                    moons[i].orbit.v = Math.Sqrt(star.m / moons[i].orbit.a) * Const.Earth.ORBV;
+
                     distr = Utils.getDistribution(eMin, eMax);
                     moons[i].orbit.e      = distr[0];
                     moons[i].orbit.eSigma = distr[1];
@@ -244,12 +254,18 @@ namespace SystemGenerator.Generation
                     moons[i].orbit.iSigma = distr[1];
 
                     distr = Utils.getDistribution(0.0, 360.0);
-                    moons[i].orbit.p      = distr[0];
-                    moons[i].orbit.pSigma = distr[1];
+                    moons[i].orbit.l      = distr[0];
+                    moons[i].orbit.lSigma = distr[1];
 
                     distr = Utils.getDistribution(0.0, 360.0);
                     moons[i].orbit.p      = distr[0];
                     moons[i].orbit.pSigma = distr[1];
+
+                    distr = Utils.getDistribution(Gen.Sat.MIN_DAY_LENGTH, Gen.Sat.MAX_DAY_LENGTH);
+                    moons[i].day = distr[0];
+                    
+                    
+
 
                     i++;
 
@@ -454,6 +470,109 @@ namespace SystemGenerator.Generation
                     ? 180.0
                     : 0.0
                 );
+        }
+    
+        public void genFlavorText(List<Planet> planets, Planet host)
+        {
+            string flavor = "";
+
+            switch (this.type)
+            {
+                case ID.Sat.MINOR:
+                case ID.Sat.MOONA:
+                case ID.Sat.FOR_B:
+                case ID.Sat.REV_B:
+                    if (this.isIcy)
+                        flavor += "This moon is an icy minor moon. ";
+                    else
+                        flavor += "This moon is a rocky minor moon. ";
+                    break;
+                case ID.Sat.MAJOR:
+                case ID.Sat.MOONB:
+                    if (this.isIcy)
+                        flavor += "This moon is an icy minor moon. ";
+                    else
+                        flavor += "This moon is a rocky minor moon. ";
+                    break;
+                case ID.Sat.MOONC:
+                    if (this.isIcy)
+                        flavor += "These moons are a group of distant captured icy asteroids. ";
+                    else
+                        flavor += "These moons are a group of distant captured rocky asteroids. ";
+                    break;
+            }
+
+            if (this.type != ID.Sat.MOONC)
+                flavor += "Its surface is visibly cratered. ";
+            else
+                flavor += "Their surfaces are visibly cratered. ";
+
+            //Determine resonance
+            double resonance, precision = 5.0;
+            int indexResonant = -1;
+            for (int i = 0; i < host.moons.Count; i++)
+            {
+                resonance = Utils.resonance(host.moons[i].orbit.a, 1.0/2.0);
+                if ((resonance * (1.0-(Gen.FUDGE_FACTOR/precision)) <= this.orbit.a) && (resonance * (1.0+(Gen.FUDGE_FACTOR/precision)) <= this.orbit.a))
+                {
+                    //indexResonant is a major moon causing the gap
+                    indexResonant = i;
+                    break;
+                }
+                
+                resonance = Utils.resonance(host.moons[i].orbit.a, 2.0/1.0);
+                if ((resonance * (1.0-(Gen.FUDGE_FACTOR/precision)) <= this.orbit.a) && (resonance * (1.0+(Gen.FUDGE_FACTOR/precision)) <= this.orbit.a))
+                {
+                    //indexResonant is a minor moon caught in the gap
+                    indexResonant = i;
+                    break;
+                }
+
+            }
+
+            switch (this.type)
+            {
+                case ID.Sat.MOONA:
+                    if (this.orbit.a < host.ringsMax)
+                    {
+                        if (indexResonant > 0)
+                            flavor += "It orbits within a resonant gap in the rings caused by the " + (indexResonant+1) + Utils.getOrdinal(indexResonant+1) + " moon.";
+                        else
+                            flavor += "Its orbit is within its host's ring system, clearing gaps in the rings as it ejects material from its path.";
+                    }
+                    else
+                    {
+                        if (indexResonant > 0)
+                            flavor += "It orbits just outside its host's ring system, caught in a 1:2 mean motion resonance with the " + (indexResonant+1) + Utils.getOrdinal(indexResonant+1) + " moon.";
+                        else
+                            flavor += "It orbits just outside its host's ring system.";
+                    }
+                    break;
+                case ID.Sat.FOR_B:
+                    flavor += "It is an L₄ (forward) lagrangian companion to the previous major moon.";
+                    break;
+                case ID.Sat.REV_B:
+                    flavor += "It is an L₅ (reverse) lagrangian companion to the previous major moon.";
+                    break;
+                case ID.Sat.MOONC:
+                    flavor += "There is nothing particularly interesting about them.";
+                    break;
+                default:
+                    if (host.ringsMin < Utils.resonance(this.orbit.a, 2.0/1.0) && Utils.resonance(this.orbit.a, 2.0/1.0) < host.ringsMax)
+                    {
+                        if (indexResonant > 0)
+                            flavor += "The " + (indexResonant+1) + Utils.getOrdinal(indexResonant+1) + " has a 1:2 mean motion resonance with it, causing a substantial gap in the rings.";
+                        else
+                            flavor += "There is a major gap in the rings at its 1:2 mean motion resonance.";
+                    }
+                    else
+                    {
+                        flavor += "There is nothing particularly interesting about it.";
+                    }
+                    break;
+            }
+
+            this.flavortext = flavor;
         }
     }
 }

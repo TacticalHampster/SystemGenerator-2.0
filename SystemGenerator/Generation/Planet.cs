@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SystemGenerator.Generation
 {
@@ -33,6 +35,7 @@ namespace SystemGenerator.Generation
         public double t                  ; //Temperature (K)
         public Atmosphere.Surface surface;
         public string feature            ; //Flavor text
+        public string flavortext         ;
 
         //Atmosphere
         public Atmosphere atmo;
@@ -59,15 +62,18 @@ namespace SystemGenerator.Generation
         public bool isDwarf;
         public bool hasAir ;
 
+        public Bitmap image;
+
         public Planet()
         {
-            this.orbit   = new Orbit();
-            this.atmo    = new Atmosphere();
-            this.rings   = new List<double>();
-            this.moons   = new List<Moon>();
-            this.surface = new Atmosphere.Surface();
-            this.subtype = "";
-            this.feature = "";
+            this.orbit      = new Orbit();
+            this.atmo       = new Atmosphere();
+            this.rings      = new List<double>();
+            this.moons      = new List<Moon>();
+            this.surface    = new Atmosphere.Surface();
+            this.subtype    = "";
+            this.feature    = "";
+            this.flavortext = "";
         }
 
         public void genPlanetProperties()
@@ -128,7 +134,7 @@ namespace SystemGenerator.Generation
                     this.m         = Utils.randDouble(Gen.Planet.Terrestrial.MIN_ROCKY_MASS      , Gen.Planet.Terrestrial.MAX_ROCKY_MASS      );
                     this.bulkRock  = Utils.randDouble(Gen.Planet.Terrestrial.MIN_CORE_MASS       , Gen.Planet.Terrestrial.MAX_CORE_MASS       );
                     this.bulkWater = Utils.randDouble(Gen.Planet.Terrestrial.MIN_EARTH_WATER_MASS, Gen.Planet.Terrestrial.MAX_EARTH_WATER_MASS);
-                    this.bulkMetal = 1.0-this.bulkMetal-this.bulkWater;
+                    this.bulkMetal = 1.0-this.bulkRock-this.bulkWater;
                     propsRocky();
                     break;
 
@@ -372,8 +378,8 @@ namespace SystemGenerator.Generation
                     this.r = Utils.randDouble(Gen.Belt.MIN_DWARF_RADIUS, Math.Min(mass_max*2660.16, Gen.Belt.MAX_DWARF_RADIUS));
 
                     this.bulkIces  = Utils.randDouble(Gen.Belt.MIN_KUIPER_DWARF_ICES_PERCENT, Gen.Belt.MAX_KUIPER_DWARF_ICES_PERCENT);
-                    this.bulkMetal = (this.bulkIces)*Utils.randDouble(Gen.Belt.MIN_KUIPER_DWARF_ROCK_PERCENT, Gen.Belt.MAX_KUIPER_DWARF_ROCK_PERCENT);
-                    this.bulkIces  = 1.0 - this.bulkMetal - this.bulkRock;
+                    this.bulkRock  = (1.0-this.bulkIces)*Utils.randDouble(Gen.Belt.MIN_KUIPER_DWARF_ROCK_PERCENT, Gen.Belt.MAX_KUIPER_DWARF_ROCK_PERCENT);
+                    this.bulkMetal = 1.0 - this.bulkIces - this.bulkRock;
 
                     propsDwarf();
 
@@ -383,6 +389,10 @@ namespace SystemGenerator.Generation
                     break;
             }
             Utils.writeLog("            Mass: " + this.m);
+
+            if (this.m < 0)
+                genPlanetProperties(mass_max);
+
             Utils.writeLog("        Physical property generation complete");
         }
 
@@ -657,7 +667,7 @@ namespace SystemGenerator.Generation
             if (this.isGiant)
             {
                 //Assign tilt
-                this.tilt = Utils.randDouble(Gen.Planet.Giant.MIN_TILT, Gen.Planet.Giant.MAX_TILT);
+                this.tilt = Utils.randExpo(Gen.Planet.Giant.MIN_TILT, Gen.Planet.Giant.MAX_TILT, 0.01);
 
                 //Giant planets have fast spins since they're not rigid
                 this.day = Utils.randDouble(Gen.Planet.Giant.MIN_DAY_LENGTH, Gen.Planet.Giant.MAX_DAY_LENGTH);
@@ -667,7 +677,7 @@ namespace SystemGenerator.Generation
             else
             {
                 //Assign tilt
-                this.tilt = Utils.randDouble(Gen.Planet.Terrestrial.MIN_TILT, Gen.Planet.Terrestrial.MAX_TILT);
+                this.tilt = Utils.randExpo(Gen.Planet.Terrestrial.MIN_TILT, Gen.Planet.Terrestrial.MAX_TILT, 0.01);
 
                 //Each number of digits should have the same probability for day length
                 int digits_min = (int)Math.Floor(Math.Log10(Gen.Planet.Terrestrial.MIN_DAY_LENGTH)) + 1;
@@ -690,7 +700,7 @@ namespace SystemGenerator.Generation
             }
         }
     
-        public void GenFeature()
+        public void genFeature()
         {
             List<string> features = new List<string>();
 
@@ -712,7 +722,7 @@ namespace SystemGenerator.Generation
                 int continents = Utils.randInt(Gen.Planet.Terrestrial.MAX_CONTINENTS, Gen.Planet.Terrestrial.MAX_CONTINENTS);
                 features.Add(
                     String.Format(
-                        "It has %i continent%s, covering about %.0f%% of its surface.",
+                        "It has {0} continent{1}, covering about {2:N0}% of its surface.",
                         continents,
                         (
                             (continents == 1)
@@ -782,6 +792,530 @@ namespace SystemGenerator.Generation
 
             if (features.Count > 0)
                 this.feature = features[Utils.randInt(0, features.Count-1)];
+        }
+    
+        public void genFlavorText(List<Planet> planets)
+        {
+            string flavor = "";
+
+            if (!this.isBelt)
+            {
+                flavor += "This planet is " + Utils.getLongDesc(this) + ". ";
+
+                if (this.hasAir)
+                {
+                    flavor += "It has a";
+                    switch (this.atmo.typeMinor)
+                    {
+                        case ID.Atmo.MNR_CRYOAZURIAN:
+                            flavor += " cryoazuri";
+                            break;
+                        case ID.Atmo.MNR_FRIGIDIAN:
+                            flavor += " frigi";
+                            break;
+                        case ID.Atmo.MNR_NEONEAN:
+                            flavor += " neono";
+                            break;
+                        case ID.Atmo.MNR_BOREAN:
+                            flavor += " boreo";
+                            break;
+                        case ID.Atmo.MNR_METHANEAN:
+                            flavor += " metho";
+                            break;
+                        case ID.Atmo.MNR_MESOAZURIAN:
+                            flavor += " mesoazuri";
+                            break;
+                        case ID.Atmo.MNR_THOLIAN:
+                            flavor += " tholi";
+                            break;
+                        case ID.Atmo.MNR_SULFANIAN:
+                            flavor += " sulfa";
+                            break;
+                        case ID.Atmo.MNR_AMMONIAN:
+                            flavor += "n ammo";
+                            break;
+                        case ID.Atmo.MNR_HYDRONIAN:
+                            flavor += " hydro";
+                            break;
+                        case ID.Atmo.MNR_ACIDIAN:
+                            flavor += "n acidi";
+                            break;
+                        case ID.Atmo.MNR_PYROAZURIAN:
+                            flavor += " pyroazuri";
+                            break;
+                        case ID.Atmo.MNR_SULFOLIAN:
+                            flavor += " sulfoli";
+                            break;
+                        case ID.Atmo.MNR_AITHALIAN:
+                            flavor += "n aithali";
+                            break;
+                    }
+
+                    flavor += "-";
+
+                    switch (this.atmo.classMajor.ID)
+                    {
+                        case ID.Atmo.MJR_JOTUNNIAN:
+                            flavor += "jotunnian atmosphere, largely composed of hydrogen and helium. ";
+                            break;
+                        case ID.Atmo.MJR_HELIAN:
+                            flavor += "helian atmosphere, largely composed of helium. ";
+                            break;
+                        case ID.Atmo.MJR_YDATRIAN:
+                            flavor += "ydatrian atmosphere, largely composed of simple hydride compounds. ";
+                            break;
+                        case ID.Atmo.MJR_RHEAN:
+                            flavor += "rhean atmosphere, largely composed of nitrogen. ";
+                            break;
+                        case ID.Atmo.MJR_MINERVAN:
+                            flavor += "minervan atmosphere, largely composed of compounds of nonmetals. ";
+                            break;
+                        case ID.Atmo.MJR_EDELIAN:
+                            flavor += "edelian atmosphere, largely composed of neon and argon. ";
+                            break;
+                    }
+
+                    switch (this.atmo.typeMinor)
+                    {
+                        case ID.Atmo.MNR_CRYOAZURIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with thin, hydrocarbon-based hazes.";
+                            break;
+                        case ID.Atmo.MNR_FRIGIDIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of condensed hydrogen.";
+                            break;
+                        case ID.Atmo.MNR_NEONEAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of neon.";
+                            break;
+                        case ID.Atmo.MNR_BOREAN:
+                            flavor += "Hazes have made the sky " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of nitrogen and carbon monoxide.";
+                            break;
+                        case ID.Atmo.MNR_METHANEAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " hazes of organic chemicals.";
+                            break;
+                        case ID.Atmo.MNR_MESOAZURIAN:
+                            flavor += "The sky is a clear " + this.atmo.colorName + ", with slight " + this.atmo.colorCloudName + " hazes.";
+                            break;
+                        case ID.Atmo.MNR_THOLIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " hazes of hydrocarbons and organosulfurs.";
+                            break;
+                        case ID.Atmo.MNR_SULFANIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of hydrogen and ammonium sulfide.";
+                            break;
+                        case ID.Atmo.MNR_AMMONIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of ammonia and hydrogen sulfde.";
+                            break;
+                        case ID.Atmo.MNR_HYDRONIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of water vapor.";
+                            break;
+                        case ID.Atmo.MNR_ACIDIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of sulfuric acid.";
+                            break;
+                        case ID.Atmo.MNR_PYROAZURIAN:
+                            flavor += "The clouds on this planet are very thin, making the atmosphere " + this.atmo.colorName + ".";
+                            break;
+                        case ID.Atmo.MNR_SULFOLIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with sulfurous " + this.atmo.colorCloudName + " clouds.";
+                            break;
+                        case ID.Atmo.MNR_AITHALIAN:
+                            flavor += "The sky is " + this.atmo.colorName + ", with carbonaceous " + this.atmo.colorCloudName + " clouds.";
+                            break;
+                    }
+
+                    if (this.atmo.typeMinor != ID.Atmo.MNR_CRYOAZURIAN && this.atmo.typeMinor != ID.Atmo.MNR_PYROAZURIAN && this.surface.coverCloudThick + this.surface.coverCloudThin > 0.0)
+                        flavor += String.Format(" They cover about {0:N0}% of the planet.", (this.surface.coverCloudThick + this.surface.coverCloudThin) * 100.0);
+                }
+                else
+                    flavor += " It has no atmosphere, as it lacks a strong enough magnetosphere.";
+
+                flavor += " " + this.feature;
+
+                if (this.isGiant && this.ringsVisible)
+                    flavor += " The planet's rings are icy and clearly visible.";
+                else if (this.isGiant && !this.ringsVisible)
+                    flavor += " The planet's rings are dusty and faint.";
+
+                if (this.moons.Count > 0)
+                {
+                    int rockMinor = 0, rockMajor = 0, icyMinor = 0, icyMajor = 0;
+                    for (int i = 0; i < this.moons.Count; i++)
+                    {
+                        if (this.moons[i].isMajor && this.moons[i].isIcy)
+                            icyMajor++;
+                        else if (this.moons[i].isMajor && !this.moons[i].isIcy)
+                            rockMajor++;
+                        else if (!this.moons[i].isMajor && this.moons[i].isIcy)
+                            icyMinor++;
+                        else if (!this.moons[i].isMajor && !this.moons[i].isIcy)
+                            rockMinor++;
+                    }
+
+                    if (this.moons.Count > 1)
+                        flavor += " " + this.moons.Count + " satellites orbit this planet:";
+                    else
+                        flavor += " " + this.moons.Count + " satellite orbits this planet:";
+
+                    if (rockMajor > 0)
+                    {
+                        flavor += " " + rockMajor + " rocky major moon" + (rockMajor > 1 ? "s" : "");
+                        if (rockMinor != 0 || icyMajor != 0 || icyMinor != 0)
+                            flavor += ",";
+                    }
+                    if (rockMinor > 0)
+                    {
+                        if (rockMajor != 0 && icyMajor == 0 && icyMinor == 0)
+                            flavor += " and";
+                        flavor += " " + rockMinor + " rocky minor moon" + (rockMinor > 1 ? "s" : "");
+                        if (icyMajor != 0 || icyMinor != 0)
+                            flavor += ",";
+                    }
+                    if (icyMajor > 0)
+                    {
+                        if ((rockMajor != 0 || rockMinor != 0) && icyMinor == 0)
+                            flavor += " and";
+                        flavor += " " + icyMajor + " icy major moon" + (icyMajor > 1 ? "s" : "");
+                        if (icyMinor != 0)
+                            flavor += ",";
+                    }
+                    if (icyMinor > 0)
+                    {
+                        if (rockMajor != 0 || rockMinor != 0 || icyMajor != 0)
+                            flavor += " and";
+                        flavor += " " + icyMinor + " icy minor moon" + (icyMinor > 1 ? "s" : "");
+                    }
+
+                    flavor += ".";
+                }
+                else
+                    flavor += " No satellites orbit this planet.";
+
+                if (this.hasTrojans)
+                    flavor += " It has also captured swarms of trojans from the asteroid belt.";
+
+                this.flavortext = flavor;
+            }
+            else
+            {
+                if (this.type == ID.Belt.BELT_INNER)
+                {
+                    flavor += "The asteroid belt formed when mean motion resonances with the " + (planets.IndexOf(this)+1) + Utils.getOrdinal(planets.IndexOf(this)+1) + " planet disrupted planet formation in this region.";
+
+                    if (this.subtype == "1")
+                        flavor += " It contains one dwarf planet.";
+                    else
+                        flavor += " It does not contain a dwarf planet.";
+                }
+                else
+                {
+                    flavor += "The Kuiper belt formed when gravitational interactions with the giant planets in the early system ejected material out onto wide orbits.";
+
+                    int plutinos = 0, cubewanos = 0, twotinos = 0, scattered = 0, sednoids = 0;
+                    for (int i = planets.IndexOf(this)+1; i < planets.Count; i++)
+                    {
+                        if (planets[i].type == ID.Belt.PLUTINO)
+                            plutinos++;
+                        else if (planets[i].type == ID.Belt.CUBEWANO)
+                            cubewanos++;
+                        else if (planets[i].type == ID.Belt.TWOTINO)
+                            twotinos++;
+                        else if (planets[i].type == ID.Belt.SCATTERED)
+                            scattered++;
+                        else if (planets[i].type == ID.Belt.SEDNOID)
+                            sednoids++;
+                    }
+
+                    if (planets.Count - (planets.IndexOf(this)+1) > 1)
+                        flavor += " It contains " + (planets.Count - (planets.IndexOf(this)+1)) + " objects of interest:";
+                    else
+                        flavor += " It contains 1 object of interest:";
+
+                    if (plutinos > 0)
+                    {
+                        flavor += " " + plutinos + " plutino" + (plutinos > 1 ? "s" : "");
+                        if (cubewanos != 0 || twotinos != 0 || scattered != 0 || sednoids != 0)
+                            flavor += ",";
+                    }
+                    if (cubewanos > 0)
+                    {
+                        if (plutinos != 0 && twotinos == 0 && scattered == 0 && sednoids == 0)
+                            flavor += " and";
+                        flavor += " " + cubewanos + " cubewano" + (cubewanos > 1 ? "s" : "");
+                        if (twotinos != 0 || scattered != 0 || sednoids != 0)
+                            flavor += ",";
+                    }
+                    if (twotinos > 0)
+                    {
+                        if ((plutinos != 0 || cubewanos != 0) && scattered == 0 && sednoids == 0)
+                            flavor += " and";
+                        flavor += " " + twotinos + " twotino" + (twotinos > 1 ? "s" : "");
+                        if (scattered != 0 || sednoids != 0)
+                            flavor += ",";
+                    }
+                    if (scattered > 0)
+                    {
+                        if ((plutinos != 0 || cubewanos != 0 || twotinos != 0) && sednoids == 0)
+                            flavor += " and";
+                        flavor += " " + scattered + " scattered disk object" + (scattered > 1 ? "s" : "");
+                        if (sednoids != 0)
+                            flavor += ",";
+                    }
+                    if (sednoids > 0)
+                    {
+                        if (plutinos != 0 || cubewanos != 0 || twotinos != 0 || sednoids != 0)
+                            flavor += " and";
+                        flavor += " " + sednoids + " scattered disk object" + (sednoids > 1 ? "s" : "");
+                    }
+
+                    flavor += ".";
+                }
+            }
+            
+            this.flavortext = flavor;
+        }
+    
+        public void genImage(int x, int y)
+        {
+            this.image = new Bitmap(x,y);
+
+            
+            Graphics g = Graphics.FromImage(this.image);
+            Pen p = new Pen(Color.Black);
+            PathGradientBrush pgb = null;
+
+            g.Clear(Color.Black);
+
+            if (this.isBelt)
+            {
+                g.Dispose();
+                p.Dispose();
+                return;
+            }
+
+            GraphicsPath path = new GraphicsPath();
+            Point center = new Point(x/2, y/2);
+            Rectangle rect;
+            Color surf;
+
+            int radius; //Radius of the planet
+
+            if (this.isDwarf)
+                radius = (int)Math.Round(this.r * UI.SCALE);
+            else
+                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE);
+
+            p.Width = 1;
+
+            //For giants the atmo is the planet
+            if (this.isGiant)
+            {
+                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
+                p.Color = Color.FromArgb(h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                surf = p.Color;
+                
+                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+
+                g.FillEllipse(p.Brush, rect);
+            }
+            else
+            {
+                //Otherwise draw the planet and atmosphere separately
+                if (this.hasAir)
+                {
+                    int atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE); //Extra radius of the atmosphere
+
+                    rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
+                    path.AddEllipse(rect);
+
+                    pgb = new PathGradientBrush(path);
+
+                    Color h = Utils.UI.colorFromHex((int)this.atmo.color);
+                    pgb.CenterColor = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                    pgb.SurroundColors = new Color[]{Color.Black};
+
+                    PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
+
+                    pgb.FocusScales = scale;
+
+                    g.FillEllipse(pgb, rect);
+
+                    path.Dispose();
+                }
+            
+                double hue;
+                double saturation = Utils.randDouble(0, 0.5);
+                double lightness  = this.albedo;
+
+                if (this.isWater)
+                    hue = Utils.randDouble(180.0, 240.0);
+                else
+                    hue = Utils.randDouble(0.0, 60.0);
+                
+                if (this.type == ID.Planet.ROCK_DENSE)
+                    hue = Utils.randDouble(0.0, 1.0/5.0);
+
+                p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
+                surf = p.Color;
+
+                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+
+                g.FillEllipse(p.Brush, rect);
+            }
+
+            //Now draw the planet's surfaces
+            if (this.isGiant || this.isIcy)
+            {
+                //Draw the bands and jets
+                int l = (int)Math.Round(Utils.fudge(30));
+                int sweep, A, R, G, B, mn, mx;
+
+                //Start at 60°N and end at 60°S
+
+                for (int i = 0; l < 90; i++)
+                {
+                    mn = (int)Math.Abs(Math.Round(1.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
+                    mx = (int)Math.Abs(Math.Round(3.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
+
+                    sweep = Utils.randInt(mn, mx);
+
+                    if (i%2!=0)
+                    {
+                        Color h = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+
+                        //Draw the upper hemisphere band
+                        path = new GraphicsPath();
+
+                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 270+l      -(float)this.tilt, sweep);
+                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 270-l-sweep-(float)this.tilt, sweep);
+                        path.CloseFigure();
+
+                        pgb = new PathGradientBrush(path);
+                        
+                        R = Math.Min(Color.White.R, (int)Math.Round((double)h.R * (Color.White.R/255)));
+                        G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
+                        B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
+
+                        if (this.atmo.typeMinor == ID.Atmo.MNR_CRYOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_MESOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_PYROAZURIAN)
+                            A = Utils.randInt(Color.White.R/7, Color.White.R/5);
+                        else
+                            A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
+                        
+                        pgb.CenterColor = Color.FromArgb(A,R,G,B);
+                        pgb.SurroundColors = new Color[]{surf};
+                        pgb.FocusScales = new PointF(1.0f, 1.0f);
+
+                        g.FillPath(pgb, path);
+
+                        path.Dispose();
+                        pgb.Dispose();
+
+                        //Draw the lower hemisphere band
+
+                        path = new GraphicsPath();
+
+                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90+l      -(float)this.tilt, -sweep);
+                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90-l+sweep-(float)this.tilt, -sweep);
+                        path.CloseFigure();
+
+                        pgb = new PathGradientBrush(path);
+                        
+                        R = Math.Min(Color.White.R, (int)Math.Round((double)h.R * (Color.White.R/255)));
+                        G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
+                        B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
+
+                        if (this.atmo.typeMinor == ID.Atmo.MNR_CRYOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_MESOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_PYROAZURIAN)
+                            A = Utils.randInt(Color.White.R/7, Color.White.R/5);
+                        else
+                            A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
+                        
+                        pgb.CenterColor = Color.FromArgb(A,R,G,B);
+                        pgb.SurroundColors = new Color[]{surf};
+                        pgb.FocusScales = new PointF(1.0f, 1.0f);
+
+                        g.FillPath(pgb, path);
+
+                        path.Dispose();
+                        pgb.Dispose();
+                    }
+                    
+                    l += sweep;
+                }
+            }
+            else
+            {
+                //Draw random geographic features
+                double theta, r;
+                int rad;
+
+                if (this.isWater)
+                {
+                    double hue = Utils.randDouble(0.0, 50.0);
+                    double saturation = Utils.randDouble(0, 0.5);
+                    double lightness  = this.albedo;
+                
+                    p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
+                }
+                else
+                {
+                    int light = Utils.randInt(Color.White.R/10, Color.White.R/5);
+                
+                    if (this.albedo < 0.15)
+                        p.Color = Color.FromArgb(p.Color.R+light, p.Color.G+light, p.Color.B+light);
+                    else
+                        p.Color = Color.FromArgb(Math.Abs(p.Color.R-light), Math.Abs(p.Color.G-light), Math.Abs(p.Color.B-light));
+                }
+                    
+                Point[] points;
+
+                double numFeatures = Utils.randDouble(100.0, 150.0);
+
+                //For each feature
+                for (int f = 0; f < numFeatures; f++)
+                {
+                    points = new Point[2];
+
+                    theta = Utils.randDouble(2.0 * Math.PI * (((double)f)/3.0), 2.0 * Math.PI * (((double)f+1.0)/3.0));
+                    r = Utils.randDouble(radius/4.0, radius);
+                    points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
+
+                    rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
+                    points[1] = new Point(rad, rad);
+
+                    g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+                }
+
+                //Switch back to surface color
+                p.Color = surf;
+                
+                double numPoints = Utils.randDouble(6.0, 12.0);
+
+                //Pepper on some extra circles so the interior isn't boring
+                for (int f = 0; f < numPoints; f++)
+                {
+                    points = new Point[2];
+
+                    theta = Utils.randDouble(0.0, 2.0 * Math.PI);
+                    r = Utils.randDouble(radius/4.0, radius);
+                    points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
+
+                    rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
+                    points[1] = new Point(rad, rad);
+
+                    g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+                }
+
+                //Lastly give a light sheen of atmo color
+                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
+                p.Color = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure)/(int)Gen.Atmo.RETENTION_FACTOR, h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                    
+                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+
+                g.FillEllipse(p.Brush, rect);
+            }
+
+            g.Dispose();
+            p.Dispose();
+
+            if (pgb != null)
+                pgb.Dispose();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SystemGenerator.Generation
 {
     public class Atmosphere
     {
-        public char typeMajor;
+        public Major classMajor;
         public char typeMinor;
         
         public double pressure; //Equatorial sea level atmospheric pressure (atms)
@@ -27,6 +27,7 @@ namespace SystemGenerator.Generation
 
         public Atmosphere()
         {
+            this.classMajor     = new Major();
             this.colorName      = "";
             this.colorCloudName = "";
             this.comps          = new List<Component>();
@@ -55,44 +56,48 @@ namespace SystemGenerator.Generation
                 Utils.writeLog("            Picking a major class for the atmosphere");
                 genMajorType(ref planet);
 
-                //Pick color and albedo
-                Utils.writeLog("            Generating minor class for the atmosphere");
-                bool allowed;
-                do
+                if (planet.hasAir)
                 {
-                    genMinorType(ref planet);
+                    //Pick color and albedo
+                    Utils.writeLog("            Generating minor class for the atmosphere");
+                    bool allowed;
+                    do
+                    {
+                        genMinorType(ref planet);
 
-                    Utils.writeLog("                Calculating albedo");
-                    genAlbedo(star, ref planet);
+                        Utils.writeLog("                Calculating albedo");
+                        genAlbedo(star, ref planet);
 
-                    //Make sure the temp is still within the range for the minor class
-                    allowed = 
-                          0.0 <= planet.t && planet.t <   90.0 && this.typeMinor == ID.Atmo.MNR_CRYOAZURIAN ||
-                          5.0 <= planet.t && planet.t <   20.0 && this.typeMinor == ID.Atmo.MNR_FRIGIDIAN   ||
-                         15.0 <= planet.t && planet.t <   35.0 && this.typeMinor == ID.Atmo.MNR_NEONEAN     ||
-                         35.0 <= planet.t && planet.t <   60.0 && this.typeMinor == ID.Atmo.MNR_BOREAN      ||
-                         60.0 <= planet.t && planet.t <   90.0 && this.typeMinor == ID.Atmo.MNR_METHANEAN   ||
-                         90.0 <= planet.t && planet.t <  550.0 && this.typeMinor == ID.Atmo.MNR_MESOAZURIAN ||
-                         60.0 <= planet.t && planet.t <  550.0 && this.typeMinor == ID.Atmo.MNR_THOLIAN     ||
-                         80.0 <= planet.t && planet.t <  180.0 && this.typeMinor == ID.Atmo.MNR_SULFANIAN   ||
-                         80.0 <= planet.t && planet.t <  190.0 && this.typeMinor == ID.Atmo.MNR_AMMONIAN    ||
-                        170.0 <= planet.t && planet.t <  350.0 && this.typeMinor == ID.Atmo.MNR_HYDRONIAN   ||
-                        250.0 <= planet.t && planet.t <  500.0 && this.typeMinor == ID.Atmo.MNR_ACIDIAN     ||
-                        550.0 <= planet.t && planet.t < 1300.0 && this.typeMinor == ID.Atmo.MNR_PYROAZURIAN ||
-                        400.0 <= planet.t && planet.t < 1000.0 && this.typeMinor == ID.Atmo.MNR_SULFOLIAN   ||
-                        550.0 <= planet.t && planet.t < 1000.0 && this.typeMinor == ID.Atmo.MNR_AITHALIAN    ;
+                        //Make sure the temp is still within the range for the minor class
+                        allowed = 
+                              0.0 <= planet.t && planet.t <   90.0 && this.typeMinor == ID.Atmo.MNR_CRYOAZURIAN ||
+                              5.0 <= planet.t && planet.t <   20.0 && this.typeMinor == ID.Atmo.MNR_FRIGIDIAN   ||
+                             15.0 <= planet.t && planet.t <   35.0 && this.typeMinor == ID.Atmo.MNR_NEONEAN     ||
+                             35.0 <= planet.t && planet.t <   60.0 && this.typeMinor == ID.Atmo.MNR_BOREAN      ||
+                             60.0 <= planet.t && planet.t <   90.0 && this.typeMinor == ID.Atmo.MNR_METHANEAN   ||
+                             90.0 <= planet.t && planet.t <  550.0 && this.typeMinor == ID.Atmo.MNR_MESOAZURIAN ||
+                             60.0 <= planet.t && planet.t <  550.0 && this.typeMinor == ID.Atmo.MNR_THOLIAN     ||
+                             80.0 <= planet.t && planet.t <  180.0 && this.typeMinor == ID.Atmo.MNR_SULFANIAN   ||
+                             80.0 <= planet.t && planet.t <  190.0 && this.typeMinor == ID.Atmo.MNR_AMMONIAN    ||
+                            170.0 <= planet.t && planet.t <  350.0 && this.typeMinor == ID.Atmo.MNR_HYDRONIAN   ||
+                            250.0 <= planet.t && planet.t <  500.0 && this.typeMinor == ID.Atmo.MNR_ACIDIAN     ||
+                            550.0 <= planet.t && planet.t < 1300.0 && this.typeMinor == ID.Atmo.MNR_PYROAZURIAN ||
+                            400.0 <= planet.t && planet.t < 1000.0 && this.typeMinor == ID.Atmo.MNR_SULFOLIAN   ||
+                            550.0 <= planet.t && planet.t < 1000.0 && this.typeMinor == ID.Atmo.MNR_AITHALIAN    ;
 
-                    if (!allowed)
-                        Utils.writeLog("                    Planet is outside temp range for minor class, rerandomizing");
+                        if (!allowed)
+                            Utils.writeLog("                    Planet is outside temp range for minor class, rerandomizing");
+                    }
+                    while (!allowed);
+
+                    Utils.writeLog("            Minor class generation complete");
+
+                    //Calculate molar weight and remaining characteristics
+                    genMolarWeight(planet);
                 }
-                while (!allowed);
-
-                Utils.writeLog("            Minor class generation complete");
-
-                //Calculate molar weight and remaining characteristics
-                genMolarWeight(planet);
             }
-            else
+            
+            if (!planet.hasAir)
             {
                 Utils.writeLog("                Calculating albedo");
                 genAlbedo(star, ref planet);
@@ -107,14 +112,13 @@ namespace SystemGenerator.Generation
             //Atmosphere types come from the Extended World Classification System from Orion's Arm
             //https://www.orionsarm.com/eg-article/5e724eb65b934
 
-            bool[] allowed = {
-                (Utils.canRetain(Comps.HYDROGEN.m  , planet) || planet.isGiant) && !planet.isHab                   , //Jotunnian
-                 Utils.canRetain(Comps.HELIUM.m    , planet)                    && !planet.isHab && !planet.isGiant, //Helian
-                 Utils.canRetain(Comps.AMMONIA.m   , planet)                    && !planet.isHab && !planet.isGiant, //Ydatrian
-                (Utils.canRetain(Comps.NITROGEN.m  , planet) || planet.isHab  )                  && !planet.isGiant, //Rhean
-                 Utils.canRetain(Comps.C_MONOXIDE.m, planet)                    && !planet.isHab && !planet.isGiant, //Minervan
-                 Utils.canRetain(Comps.NEON.m      , planet)                    && !planet.isHab && !planet.isGiant  //Edelian
-            };
+            bool[] allowed = new bool[Comps.MAJOR_CLASSES.Count];
+
+            for (int i = 0; i < allowed.Length; i++)
+                allowed[i] = Comps.MAJOR_CLASSES[i].isAllowed(planet) && !planet.isHab;
+
+            allowed[0] = Comps.MAJOR_CLASSES[1].isAllowed(planet) || planet.isGiant;
+            allowed[3] = Comps.MAJOR_CLASSES[3].isAllowed(planet) || planet.isHab;
             
             Utils.writeLog("                Jotunnian allowed: " + allowed[0]);
             Utils.writeLog("                Helian    allowed: " + allowed[1]);
@@ -123,448 +127,54 @@ namespace SystemGenerator.Generation
             Utils.writeLog("                Minervan  allowed: " + allowed[4]);
             Utils.writeLog("                Edelian   allowed: " + allowed[5]);
 
-            int type, die;
-            double remain;
+            if (!(allowed[0] || allowed[1] || allowed[2] || allowed[3] || allowed[4] || allowed[5]))
+            {
+                Utils.writeLog("            Planet has no atmosphere");
+                planet.hasAir = false;
+                return;
+            }
+
+            int type;
 
             //Generate
-            List<Component> comps;
-            
             do
             {
-                do
-                {
-                    type = Utils.roll(allowed.Length);
-                    Utils.writeLog("                    Picked class " + type + " (allowed: " + allowed[type] + ")");
-                }
-                while(!allowed[type]);
-
-                comps = new List<Component>();
-                remain = 1.0;
-
-                switch (type)
-                {
-                    case 0: //Jotunnian
-                        Utils.writeLog("                Major class: Jotunnian");
-                        this.typeMajor = ID.Atmo.MJR_JOTUNNIAN;
-
-                        comps.Add(Comps.HYDROGEN.copy());
-                        comps[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
-                        remain -= comps[0].quantity;
-                        Utils.writeLogAtmo(comps[0], remain);
-
-                        comps.Add(Comps.HELIUM.copy());
-                        comps[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                        remain -= comps[1].quantity;
-                        Utils.writeLogAtmo(comps[1], remain);
-
-                        break;
-                    case 1: //Helian
-                        Utils.writeLog("                Major class: Helian");
-                        this.typeMajor = ID.Atmo.MJR_HELIAN;
-
-                        comps.Add(Comps.HELIUM.copy());
-                        comps[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
-                        remain -= comps[0].quantity;
-                        Utils.writeLogAtmo(comps[0], remain);
-
-                        die = Utils.roll(11);
-
-                        if (die <= 3)
-                            pickHydride(ref comps);
-                        else if (die <= 7)
-                            pickNonmetal(ref comps);
-                        else if (die <= 9)
-                            comps.Add(Comps.NITROGEN.copy());
-                        else
-                            comps.Add(Comps.NEON.copy());
-                    
-                        comps[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                        remain -= comps[1].quantity;
-                        Utils.writeLogAtmo(comps[1], remain);
-
-                        break;
-                    case 2: //Ydatrian
-                        Utils.writeLog("                Major class: Ydatrian");
-                        this.typeMajor = ID.Atmo.MJR_YDATRIAN;
-
-                        pickHydride(ref comps);
-                        comps[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
-                        remain -= comps[0].quantity;
-                        Utils.writeLogAtmo(comps[0], remain);
-
-                        pickHydride(ref comps);
-                        comps[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                        remain -= comps[1].quantity;
-                        Utils.writeLogAtmo(comps[1], remain);
-
-                        break;
-                    case 3: //Rhean
-                        Utils.writeLog("                Major class: Rhean");
-                        this.typeMajor = ID.Atmo.MJR_RHEAN;
-
-                        if (planet.isHab)
-                        {
-                            comps.Add(Comps.NITROGEN.copy());
-                            comps[0].quantity = Utils.fudge(0.6);
-                            remain -= comps[0].quantity;
-                            Utils.writeLogAtmo(comps[0], remain);
-
-                            comps.Add(Comps.OXYGEN.copy());
-                            comps[1].quantity = Utils.fudge(1.0/3.0);
-                            remain -= comps[1].quantity;
-                            Utils.writeLogAtmo(comps[1], remain);
-                        }
-                        else
-                        {
-                            comps.Add(Comps.NITROGEN.copy());
-                            comps[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
-                            remain -= comps[0].quantity;
-                            Utils.writeLogAtmo(comps[0], remain);
-
-                            die = Utils.roll(2);
-
-                            if (die == 1)
-                                pickHydride(ref comps);
-                            else
-                                pickNonmetal(ref comps);
-                    
-                            comps[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                            remain -= comps[1].quantity;
-                            Utils.writeLogAtmo(comps[1], remain);
-                        }
-
-                        break;
-                    case 4: //Minervan
-                        Utils.writeLog("                Major class: Minervan");
-                        this.typeMajor = ID.Atmo.MJR_MINERVAN;
-
-                        pickNonmetal(ref comps);
-                        comps[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
-                        remain -= comps[0].quantity;
-                        Utils.writeLogAtmo(comps[0], remain);
-
-                        pickNonmetal(ref comps);
-                        comps[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                        remain -= comps[1].quantity;
-                        Utils.writeLogAtmo(comps[1], remain);
-
-                        break;
-                    default: //Edelian
-                        Utils.writeLog("                Major class: Edelian");
-                        this.typeMajor = ID.Atmo.MJR_EDELIAN;
-
-                        comps.Add(Comps.NEON.copy());
-                        comps[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
-                        remain -= comps[0].quantity;
-                        Utils.writeLogAtmo(comps[0], remain);
-
-                        comps.Add(Comps.ARGON.copy());
-                        comps[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                        remain -= comps[1].quantity;
-                        Utils.writeLogAtmo(comps[1], remain);
-
-                        break;
-                }
-
-                if (planet.isGiant)
-                {
-                    pickHydrocarbon(ref comps);
-                    comps[2].quantity = Utils.randDouble(0.005, 0.02);
-                    remain -= comps[2].quantity;
-                    Utils.writeLogAtmo(comps[2], remain);
-                }
-                else if (this.typeMajor != ID.Atmo.MJR_EDELIAN)
-                {
-                    comps.Add(Comps.ARGON.copy());
-                    comps[2].quantity = Utils.randDouble(0.005, 0.02);
-                    remain -= comps[2].quantity;
-                    Utils.writeLogAtmo(comps[2], remain);
-                }
-                else
-                {
-                    die = Utils.roll(10);
-
-                    if (die <= 3)
-                        pickHydride(ref comps);
-                    else if (die <= 7)
-                        pickNonmetal(ref comps);
-                    else
-                        comps.Add(Comps.NITROGEN.copy());
-                    comps[2].quantity = Utils.randDouble(0.005, 0.02);
-                    remain -= comps[2].quantity;
-                    Utils.writeLogAtmo(comps[2], remain);
-                }
-            
-                if (remain < 0)
-                    Utils.writeLog("                Remainder is negative, rereandomizing");
+                type = Utils.roll(allowed.Length);
+                Utils.writeLog("                    Picked class " + type + " (allowed: " + allowed[type] + ")");
             }
-            while (remain < 0);
+            while(!allowed[type]);
 
-            //Generate minor components (not to be confused with minor class)
-            bool fail;
-            for (int i = 0; i < 3; i++)
+            switch (type)
             {
-                die = Utils.roll(7);
-                fail = false;
-
-                if (planet.isGiant)
-                {
-                    switch (die)
-                    {
-                        case 0:
-                            fail = pickHydrocarbon(ref comps);
-                            break;
-                        case 1:
-                            fail = pickHydride(ref comps);
-                            break;
-                        case 2:
-                            fail = pickNonmetal(ref comps);
-                            break;
-                        case 3:
-                            if (!Utils.contains(comps, Comps.AMMONIA))
-                                comps.Add(Comps.AMMONIA.copy());
-                            else
-                                fail = true;
-                            break;
-                        case 4:
-                            if (!Utils.contains(comps, Comps.PHOSPHINE))
-                                comps.Add(Comps.PHOSPHINE.copy());
-                            else
-                                fail = true;
-                            break;
-                        case 5:
-                            if (!Utils.contains(comps, Comps.NITROGEN))
-                                comps.Add(Comps.NITROGEN.copy());
-                            else
-                                fail = true;
-                            break;
-                        default:
-                            if (!Utils.contains(comps, Comps.THOLINS))
-                            {
-                                comps.Add(Comps.THOLINS.copy());
-                                comps[i+2].m = Utils.randDouble(0.04, 0.2);
-                            }
-                            else
-                                fail = true;
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (die)
-                    {
-                        case 0:
-                            fail = pickHydrocarbon(ref comps);
-                            break;
-                        case 1:
-                            fail = pickHydride(ref comps);
-                            break;
-                        case 2:
-                        case 3:
-                            fail = pickNonmetal(ref comps);
-                            break;
-                        case 4:
-                            if (planet.atmo.typeMajor != ID.Atmo.MJR_EDELIAN)
-                                fail = pickNoble(ref comps, planet);
-                            else
-                                fail = true;
-                            break;
-                        case 5:
-                            if (!Utils.contains(comps, Comps.NITROGEN))
-                                comps.Add(Comps.NITROGEN.copy());
-                            else
-                                fail = true;
-                            break;
-                        case 6:
-                            if (!Utils.contains(comps, Comps.OXYGEN))
-                                comps.Add(Comps.OXYGEN.copy());
-                            else
-                                fail = true;
-                            break;
-                    }
-                }
-                
-                if (fail)
-                {
-                    i--;
-                    continue;
+                case 0: //Jotunnian
+                    Utils.writeLog("                Major class: Jotunnian");
+                    this.classMajor = Comps.JOTUNNIAN;
+                    break;
+                case 1: //Helian
+                    Utils.writeLog("                Major class: Helian");
+                    this.classMajor = Comps.HELIAN;
+                    break;
+                case 2: //Ydatrian
+                    Utils.writeLog("                Major class: Ydatrian");
+                    this.classMajor = Comps.YDATRIAN;
+                    break;
+                case 3: //Rhean
+                    Utils.writeLog("                Major class: Rhean");
+                    this.classMajor = Comps.RHEAN;
+                    break;
+                case 4: //Minervan
+                    Utils.writeLog("                Major class: Minervan");
+                    this.classMajor = Comps.MINERVAN;
+                    break;
+                default: //Edelian
+                    Utils.writeLog("                Major class: Edelian");
+                    this.classMajor = Comps.EDELIAN;
+                    break;
                 }
 
-                double frac = Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
-                comps[i+3].quantity = remain*(frac > 0.99 ? 0.99 : frac);
-                remain -= comps[i+3].quantity;
-                Utils.writeLogAtmo(comps[i+3], remain);
-            }
-
-            //Sort comps
-            for (int i = 0; i < comps.Count-1; i++)
-            {
-                for (int j = 0; j < comps.Count-i-1; j++)
-                {
-                    if (comps[j].quantity < comps[j+1].quantity)
-                    {
-                        Component temp = comps[j+1];
-                        comps[j+1] = comps[j];
-                        comps[j] = temp;
-                    }
-                }
-            }
-
-            planet.atmo.comps = comps;
+            planet.atmo.comps = this.classMajor.genAtmoComp();
 
             Utils.writeLog("            Major class generation complete");
-        }
-
-        private bool pickHydrocarbon(ref List<Component> comps)
-        {
-            Component[] c = { 
-                Comps.METHANE,
-                Comps.METHYLENE,
-                Comps.ETHANE,
-                Comps.ETHYLENE,
-                Comps.ACETYLENE,
-                Comps.DIACETYLENE,
-                Comps.PROPANE,
-                Comps.PROPYNE
-            };
-
-            List<Component> list = new List<Component>();
-
-            Utils.writeLog("                    Picking hydrocarbon");
-
-            for (int i = 0; i < c.Length; i++)
-            {
-                if (!Utils.contains(comps, c[i]))
-                {
-                    Utils.writeLog(String.Format("                        {0} has not already been picked", c[i].name));
-                    list.Add(c[i]);
-                }
-                else
-                    Utils.writeLog(String.Format("                        {0} has already been picked", c[i].name));
-            }
-
-            if (list.Count == 0)
-            {
-                Utils.writeLog("                    Failed to generate hydrocarbon");
-                return true;
-            }
-
-            comps.Add(list[Utils.roll(list.Count)].copy());
-            return false;
-        }
-
-        private bool pickHydride(ref List<Component> comps)
-        {
-            Component[] c = { 
-                Comps.WATER,
-                Comps.H_SULFIDE,
-                Comps.AMMONIA,
-                Comps.H_CYANIDE,
-                Comps.PHOSPHINE,
-                Comps.SILANE,
-                Comps.H_FLUORIDE,
-                Comps.H_CHLORIDE
-            };
-
-            List<Component> list = new List<Component>();
-
-            Utils.writeLog("                    Picking hydride");
-
-            for (int i = 0; i < c.Length; i++)
-            {
-                if (!Utils.contains(comps, c[i]))
-                {
-                    Utils.writeLog(String.Format("                        {0} has not already been picked", c[i].name));
-                    list.Add(c[i]);
-                }
-                else
-                    Utils.writeLog(String.Format("                        {0} has already been picked", c[i].name));
-            }
-
-            if (list.Count == 0)
-            {
-                Utils.writeLog("                    Failed to generate hydride");
-                return true;
-            }
-
-            comps.Add(list[Utils.roll(list.Count)].copy());
-            return false;
-        }
-
-        private bool pickNonmetal(ref List<Component> comps)
-        {
-            Component[] c = { 
-                Comps.N_OXIDE,
-                Comps.N_DIOXIDE,
-                Comps.S_DIOXIDE,
-                Comps.C_DISULFIDE,
-                Comps.CARBONYL_S,
-                Comps.C_MONOXIDE,
-                Comps.C_DIOXIDE,
-                Comps.CYANOGEN
-            };
-
-            List<Component> list = new List<Component>();
-
-            Utils.writeLog("                    Picking nonmetal");
-
-            for (int i = 0; i < c.Length; i++)
-            {
-                if (!Utils.contains(comps, c[i]))
-                {
-                    Utils.writeLog(String.Format("                        {0} has not already been picked", c[i].name));
-                    list.Add(c[i]);
-                }
-                else
-                    Utils.writeLog(String.Format("                        {0} has already been picked", c[i].name));
-            }
-
-            if (list.Count == 0)
-            {
-                Utils.writeLog("                    Failed to generate nonmetal");
-                return true;
-            }
-
-            comps.Add(list[Utils.roll(list.Count)].copy());
-            return false;
-        }
-        
-        private bool pickNoble(ref List<Component> comps, Planet planet)
-        {            
-            Component[] c = { 
-                Comps.NEON,
-                Comps.ARGON,
-                Comps.KRYPTON
-            };
-
-            List<Component> list = new List<Component>();
-
-            Utils.writeLog("                    Picking noble gas");
-
-            for (int i = 0; i < c.Length; i++)
-            {
-                if (!Utils.contains(comps, c[i]))
-                {
-                    Utils.writeLog(String.Format("                        {0} has not already been picked", c[i].name));
-                    list.Add(c[i]);
-                }
-                else
-                    Utils.writeLog(String.Format("                        {0} has already been picked", c[i].name));
-            }
-
-            if (list.Count == 0)
-            {
-                Utils.writeLog("                    Failed to generate noble gas");
-                return true;
-            }
-
-            int die = Utils.roll(list.Count);
-
-            if (list[die] == Comps.KRYPTON && planet.isGiant)
-                pickNoble(ref comps, planet);
-            else
-                comps.Add(list[die].copy());
-            return true;
         }
 
         private void genMinorType(ref Planet planet)
@@ -591,6 +201,14 @@ namespace SystemGenerator.Generation
                 400.0 <= planet.t && planet.t < 1000.0, //Sulfolian
                 550.0 <= planet.t && planet.t < 1000.0  //Aithalian
             };
+            
+            string[] names = { "Cryoazurian", "Frigidian", "Neonean", "Borean", "Methanean", "Mesoazurian", "Tholian", "Sulfanian", "Ammonian", "Hydronian", "Acidian", "Pyroazurian", "Sulfolian", "Aithalian" };
+
+            Utils.writeLog("            Picking minor class");
+            for (int i = 0; i < names.Count(); i++)
+            {
+                Utils.writeLog(String.Format("                    {0,-12} allowed: {1}", names[i], allowed[i]));
+            }
 
             //Pick one
             int minorClass;
@@ -946,15 +564,8 @@ namespace SystemGenerator.Generation
 
         private double albedoFromRGB(double color)
         {
-            double r = (double)((int)(color / (double)0x10000));
-            double g = (double)((int)((color - (r*(double)0x10000)) / (double)0x100));
-            double b = color - (r*(double)0x10000) - (g*(double)0x100);
-
-            r /= 255.0;
-            g /= 255.0;
-            b /= 255.0;
-
-            return (Math.Pow(r, 2.2) + Math.Pow(g, 2.2) + Math.Pow(b, 2.2)) / 3.0;
+            Color c = Utils.UI.colorFromHex((int)color);
+            return (Math.Pow(c.R/255.0, 2.2) + Math.Pow(c.G/255.0, 2.2) + Math.Pow(c.B/255.0, 2.2)) / 3.0;
         }
 
         private double colorLookup(Planet planet, string color)
@@ -981,6 +592,7 @@ namespace SystemGenerator.Generation
                 case "bronze"         : return 0xCD7F32;
 
                 case "tan"            : return 0xD2B48C;
+                case "pale tan"       : return 0xF8E8CA;
                 case "dark tan"       : return 0x918151;
                 case "beige"          : return 0xF5F5DC;
 
@@ -1032,6 +644,10 @@ namespace SystemGenerator.Generation
                 case "deep blue"      : return 0x0F52BA;
                 case "dark blue"      : return 0x0000CC;
                 case "cobalt blue"    : return 0x0047AB;
+
+                case "very close to the rest of the atmosphere":
+                    colorLookup(planet, planet.atmo.colorName);
+                    break;
 
                 default:
                     if (color != planet.atmo.colorName)
@@ -1273,6 +889,8 @@ namespace SystemGenerator.Generation
                     surface.coverWater = (1.0 - landCover) * (1.0 - surface.coverIce);
                     surface.coverIce   = (1.0 - landCover) *        surface.coverIce ;
 
+                    surface.coverIce = Math.Abs( surface.coverIce );
+
                     surface.albedoWater = Utils.randDouble(Gen.Planet.Terrestrial.MIN_WATER_ALBEDO, Gen.Planet.Terrestrial.MAX_WATER_ALBEDO);
                     surface.albedoIce   = Utils.randDouble(Gen.Planet.Terrestrial.MIN_ICE_ALBEDO  , Gen.Planet.Terrestrial.MAX_ICE_ALBEDO  );
 
@@ -1322,11 +940,13 @@ namespace SystemGenerator.Generation
                     genAlbedo(star, ref planet);
                 }
 
+                /*
                 if (planet.isHab && (planet.t < Const.KELVIN)) //If a habitable planet is freezing, redo
                 {
                     Utils.writeLog("                Planet is habitable and has freezing temp, rerandomizing");
                     genAlbedo(star, ref planet);
                 }
+                */
             }
         }
 
@@ -1342,7 +962,31 @@ namespace SystemGenerator.Generation
 
             if (this.density > 0.0)
             {
-                this.pressure = Utils.randDouble(Gen.Atmo.MIN_SURFACE_PRESSURE, Gen.Atmo.MAX_SURFACE_PRESSURE);
+                if (planet.isGiant)
+                    this.pressure = 1.0;
+                else
+                {
+                    //Each number of digits should have the same probability for surface pressure
+                    int digits_min = (int)Math.Floor(Math.Log10(Gen.Atmo.MIN_SURFACE_PRESSURE)) + 1;
+                    int digits_max = (int)Math.Floor(Math.Log10(Gen.Atmo.MAX_SURFACE_PRESSURE)) + 1;
+
+                    int roll = Utils.roll(digits_max-digits_min);
+
+                    double min = Math.Min(digits_min, Math.Pow(10.0, roll+1));
+                    double max = Math.Min(digits_max, Math.Pow(10.0, roll+2));
+
+                    this.pressure = Utils.randDouble(
+                        Math.Max(
+                            Gen.Atmo.MIN_SURFACE_PRESSURE,
+                            min
+                        ),
+                        Math.Max(
+                            Gen.Atmo.MAX_SURFACE_PRESSURE,
+                            max
+                        )
+                    );
+                }
+
                 this.height   = (planet.t * Const.GAS_CONST) / (planet.g * Const.Earth.GRAVITY * this.density);
                 this.density *= (this.pressure * 101325) / (planet.t * Const.GAS_CONST);
             
@@ -1353,30 +997,274 @@ namespace SystemGenerator.Generation
             }
         }
 
+        public class Major
+        {
+            public char   ID;
+            public string name;
+
+            public bool allowedTerres;
+            public bool allowedGiant;
+
+            public List<Atmosphere.Component> primary;
+            public List<int>                  primaryWeight;
+            public List<Atmosphere.Component> secondary;
+            public List<int>                  secondaryWeight;
+            public List<Atmosphere.Component> tertiary;
+            public List<int>                  tertiaryWeight;
+            public List<Atmosphere.Component> minor;
+            public List<int>                  minorWeight;
+
+            public Major()
+            {
+                this.name = "";
+                this.primary         = new List<Component>();
+                this.primaryWeight   = new List<int>();
+                this.secondary       = new List<Component>();
+                this.secondaryWeight = new List<int>();
+                this.tertiary        = new List<Component>();
+                this.tertiaryWeight  = new List<int>();
+                this.minor           = new List<Component>();
+                this.minorWeight     = new List<int>();
+            }
+
+            public Major(char iD, string name, bool aT, bool aG, List<Atmosphere.Component> p, List<int> pW, List<Atmosphere.Component> s, List<int> sW, List<Atmosphere.Component> t, List<int> tW, List<Atmosphere.Component> m, List<int> mW)
+            {
+                this.ID              = iD;
+                this.name            = name;
+                this.allowedTerres   = aT;
+                this.allowedGiant    = aG;
+                this.primary         = p;
+                this.primaryWeight   = pW;
+                this.secondary       = s;
+                this.secondaryWeight = sW;
+                this.tertiary        = t;
+                this.tertiaryWeight  = tW;
+                this.minor           = m;
+                this.minorWeight     = mW;
+            }
+
+            public bool isAllowed(Planet planet)
+            {
+                if (planet.isBelt || planet.isDwarf || (!this.allowedGiant && planet.isGiant) || (!this.allowedTerres && !planet.isBelt && !planet.isDwarf && !planet.isGiant))
+                    return false;
+
+                Component lightest = this.primary[0];
+
+                for (int i = 0; i < this.primary.Count; i++)
+                {
+                    if (this.primary[i].m < lightest.m)
+                        lightest = this.primary[i];
+                }
+
+                if (Utils.canRetain(lightest.m, planet) && ((this.allowedGiant && planet.isGiant) || (this.allowedTerres && !(planet.isBelt || planet.isDwarf || planet.isGiant))))
+                    return true;
+
+                return false;
+            }
+
+            public List<Atmosphere.Component> genAtmoComp()
+            {
+                List<Atmosphere.Component> list = new List<Atmosphere.Component>();
+                Atmosphere.Component pick;
+                int[] sW = this.secondaryWeight.ToArray();
+                int[] tW = this.tertiaryWeight.ToArray();
+                int[] mW = this.minorWeight.ToArray();
+
+                double remain = 1.0;
+
+                Utils.writeLog("                    Picking primary component");
+
+                //Add primary component
+                list.Add(this.primary[Utils.rollWeighted(this.primary.Count, this.primaryWeight.ToArray())].copy());
+                list[0].quantity = Utils.randDouble(Gen.Atmo.MIN_MAJORITY_COMP, Gen.Atmo.MAX_MAJORITY_COMP);
+                remain -= list[0].quantity;
+                Utils.writeLogAtmo(list[0], remain);
+
+                //Increment the probabilities of related substances
+                for (int i = 0; i < list[0].props.Length; i++)
+                {
+                    if (list[0].props[i])
+                    {
+                        //Increment same property in secondary
+                        for (int j = 0; j < this.secondary.Count; j++)
+                        {
+                            if (this.secondary[j].props[i])
+                                sW[j]++;
+                        }
+
+                        //Increment same property in tertiary
+                        for (int j = 0; j < this.tertiary.Count; j++)
+                        {
+                            if (this.tertiary[j].props[i])
+                                tW[j]++;
+                        }
+
+                        //Increment same property in minor
+                        for (int j = 0; j < this.minor.Count; j++)
+                        {
+                            if (this.minor[j].props[i])
+                                mW[j]++;
+                        }
+                    }
+                }
+
+                //Add secondary component
+                Utils.writeLog("                    Picking secondary component");
+                do
+                {
+                     pick = this.secondary[Utils.rollWeighted(this.secondary.Count, sW)];
+                }
+                while (Utils.contains(list, pick));
+                list.Add(pick.copy());
+                list[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
+                remain -= list[1].quantity;
+                Utils.writeLogAtmo(list[1], remain);
+
+                //Increment the probabilities of related substances
+                for (int i = 0; i < list[1].props.Length; i++)
+                {
+                    if (list[1].props[i])
+                    {
+                        //Increment same property in tertiary
+                        for (int j = 0; j < this.tertiary.Count; j++)
+                        {
+                            if (this.tertiary[j].props[i])
+                                tW[j]++;
+                        }
+
+                        //Increment same property in minor
+                        for (int j = 0; j < this.minor.Count; j++)
+                        {
+                            if (this.minor[j].props[i])
+                                mW[j]++;
+                        }
+                    }
+                }
+
+                //Add tertiary component
+                Utils.writeLog("                    Picking tertiary component");
+                do
+                {
+                     pick = this.tertiary[Utils.rollWeighted(this.tertiary.Count, tW)];
+                }
+                while (Utils.contains(list, pick));
+                list.Add(pick.copy());
+                list[2].quantity = Utils.fudge(0.01);
+                remain -= list[2].quantity;
+                Utils.writeLogAtmo(list[2], remain);
+
+                //Increment the probabilities of related substances
+                if (this.tertiary.Count > 1)
+                {
+                    for (int i = 0; i < list[2].props.Length; i++)
+                    {
+                        if (list[2].props[i])
+                        {
+                            //Increment same property in minor
+                            for (int j = 0; j < this.minor.Count; j++)
+                            {
+                                if (this.minor[j].props[i])
+                                    mW[j]++;
+                            }
+                        }
+                    }
+                }
+
+                if (remain > Gen.Atmo.MINOR_FRACTION)
+                {
+                    list[0].quantity += remain-Gen.Atmo.MINOR_FRACTION;
+                    remain -= Gen.Atmo.MINOR_FRACTION;
+                }
+
+                //Add minor components
+                for (int m = 0; m < 4; m++)
+                {            
+                    Utils.writeLog("                    Picking minor component " + m);        
+                    do
+                    {
+                         pick = this.minor[Utils.rollWeighted(this.minor.Count, mW)];
+                    }
+                    while (Utils.contains(list, pick));
+                    list.Add(pick.copy());
+                    list[m+3].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
+                    remain -= list[m+3].quantity;
+                    Utils.writeLogAtmo(list[m+3], remain);
+
+                    //Increment the probabilities of related substances
+                    for (int i = 0; i < list[m+3].props.Length; i++)
+                    {
+                        if (list[m+3].props[i])
+                        {
+                            //Increment same property in minor
+                            for (int j = 0; j < this.minor.Count; j++)
+                            {
+                                if (this.minor[j].props[i])
+                                    mW[j]++;
+                            }
+                        }
+                    }
+                }
+
+                //Sort list
+                for (int i = 0; i < list.Count-1; i++)
+                {
+                    for (int j = 0; j < list.Count-i-1; j++)
+                    {
+                        if (list[j].quantity < list[j+1].quantity)
+                        {
+                            Component temp = list[j+1].copy();
+                            list[j+1] = list[j];
+                            list[j] = temp;
+                        }
+                    }
+                }
+
+
+                if (remain < 0)
+                    return this.genAtmoComp();
+                else
+                    return list;
+            }
+        }
+
         public class Component
         {
             public string name;
             public double quantity; //(%)
             public double m;        //(kg/mol)
             public int    color;    //(hex)
+
+            public bool[] props; 
+            /*
+                isNoble
+                isHydride
+                isNitride
+                isOxide
+                isHCarbon
+                isSulfur
+                isExotic
+            */
             
-            public Component(string n, double m, int c)
+            public Component(string n, double m, int c, bool[] p)
             {
-                this.name     = n;
-                this.m        = m;
-                this.color    = c;
+                this.name  = n;
+                this.m     = m;
+                this.color = c;
+                this.props = p;
             }
-            public Component(string n, double q, double m, int c)
+
+            public Component(string n, double q, double m, int c, bool[] p)
             {
                 this.name     = n;
                 this.quantity = q;
                 this.m        = m;
                 this.color    = c;
+                this.props    = p;
             }
 
             public Component copy()
             {
-                return new Component(this.name, this.quantity, this.m, this.color);
+                return new Component(this.name, this.quantity, this.m, this.color, this.props);
             }
         }
 
