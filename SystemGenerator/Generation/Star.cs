@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
@@ -45,6 +46,8 @@ namespace SystemGenerator.Generation
 
         public List<double> orbits;
         public string flavortext;
+
+        public Bitmap image;
 
         public Star()
         {
@@ -120,6 +123,60 @@ namespace SystemGenerator.Generation
             this.flavortext = flavor;
         }
 
+
+        public void genImage(int x, int y)
+        {
+            this.image = new Bitmap(x,y);
+
+            Graphics g = Graphics.FromImage(this.image);
+            Pen p = new Pen(Color.Black);
+            PathGradientBrush pgb;
+            GraphicsPath path = new GraphicsPath();
+            Point center = new Point(x/2, y/2);
+            Rectangle rect;
+            Color h;
+
+            g.Clear(Color.Black);
+
+            p.Width = 1;
+
+            int radius = (int)Math.Round(this.r * Const.SUN_RADIUS * UI.SCALE_STAR);
+            int atmoHeight = (int)Math.Round(this.r * Const.SUN_RADIUS * UI.SCALE_STAR * 0.25); //Extra radius of the corona
+
+            //Draw the star
+
+            rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
+            path.AddEllipse(rect);
+
+            pgb = new PathGradientBrush(path);
+            
+            if (this.bv <= 0.6)
+                h = Utils.UI.colorFromHex((int)Atmosphere.colorLookup("white"));
+            else if (this.bv <= 0.8)
+                h = Utils.UI.colorFromHex((int)Atmosphere.colorLookup("pale tan"));
+            else if (this.bv <= 1.4)
+                h = Utils.UI.colorFromHex((int)Atmosphere.colorLookup("pale yellow"));
+            else
+                h = Utils.UI.colorFromHex((int)Atmosphere.colorLookup("pale orange"));
+            pgb.CenterColor = h;
+            pgb.SurroundColors = new Color[]{Color.Black};
+
+            PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
+            
+            pgb.FocusScales = scale;
+
+            g.FillEllipse(pgb, rect);
+
+            path.Dispose();
+            pgb.Dispose();
+
+            g.Dispose();
+            p.Dispose();
+
+            if (pgb != null)
+                pgb.Dispose();
+        }
+
         /**
          * This function returns a list of orbital distances in AU based on this star.
          */
@@ -191,7 +248,14 @@ namespace SystemGenerator.Generation
                 }
 
                 //Find the frost index
-                this.indexFrost = orbits.IndexOf(frost);
+                for (int i = 0; i < orbits.Count; i++)
+                {
+                    if (this.zoneFrost - 1.2 < orbits[i] && orbits[i] < this.zoneFrost + 1.2)
+                    {
+                        this.indexFrost = i;
+                        break;
+                    }
+                }
 
                 //Make sure a habitable planet exists
                 habitable = false;
@@ -311,9 +375,15 @@ namespace SystemGenerator.Generation
 
                     //Otherwise create a planet
                     else if (Utils.flip() < oceanDecay.getDecayedChance(i))
+                    {
+                        Utils.writeLog("            Ocean chance: " + oceanDecay.getDecayedChance(i));
                         types.Add(ID.Planet.WATER_OCEAN);
+                    }
                     else
+                    {
+                        Utils.writeLog("            Ocean chance: " + oceanDecay.getDecayedChance(i));
                         types.Add(ID.Planet.ROCK_DESERT);
+                    }
                 
                     Utils.writeLog("        Orbit " + i + " (" + this.orbits[i] + " AU): " + Utils.getDescription(types[i]).ToLower() + " (mid orbit)");
                 }
@@ -353,6 +423,8 @@ namespace SystemGenerator.Generation
                     while (true)
                     {
                         roll = Utils.flip();
+                        Utils.writeLog("            Ice giant chance: " + iceDecay.getDecayedChance(i));
+                        Utils.writeLog("            Gas dwarf chance: " + dwarfDecay.getDecayedChance(i));
 
                         if (roll < ice_chance)
                         {
@@ -360,7 +432,7 @@ namespace SystemGenerator.Generation
                             giantsFinished = true;
                             break;
                         }
-                        else if (roll > dwarf_chance)
+                        else if (roll > (1.0-dwarf_chance))
                         {
                             types.Add(ID.Planet.ICE_DWARF);
                             giantsFinished = true;
@@ -379,6 +451,8 @@ namespace SystemGenerator.Generation
                 //If there are more types than orbits, redo
             }
             while (false); //!(( belt_dwarf && types.Count > this.orbits.Count+1) || (!belt_dwarf && types.Count > this.orbits.Count ) )
+
+            this.indexFrost = indexF;
 
             //Finally decide whether to generate a kuiper belt
             if (Utils.flip() < Gen.Belt.KUIPER_BELT_CHANCE)
@@ -427,7 +501,7 @@ namespace SystemGenerator.Generation
         {
             int kuipIndex = 0, mig = 0;
             bool giantMax = false;
-            double dist, maxMass = 0;
+            double dist, maxMass = Gen.Planet.Giant.MAX_GIANT_MASS;
 
             //First create the star
             List<char> types      = this.genTypes();
@@ -471,7 +545,7 @@ namespace SystemGenerator.Generation
                     case ID.Planet.GAS_HOT:
                         controller = null;
                         dist       = this.orbits[i];
-                        goto case ID.Planet.GAS_SUPER;
+                        break;
                     case ID.Planet.GAS_GIANT:
                     case ID.Planet.GAS_SUPER:
                         controller = null;
@@ -530,7 +604,7 @@ namespace SystemGenerator.Generation
                 Utils.updateProgress();
 
                 //Generate composition
-                if (maxMass > 0.0)
+                if (maxMass <= 0.0)
                     p.genPlanetProperties();
                 else
                     p.genPlanetProperties(maxMass);
@@ -538,8 +612,9 @@ namespace SystemGenerator.Generation
                 if (p.type == ID.Belt.DWARF)
                     maxMass = Gen.Planet.Giant.MAX_GIANT_MASS;
 
-                if (p.isGiant && !giantMax)
+                if (p.isGiant && !giantMax && maxMass <= 0.0)
                 {
+                    Utils.writeLog("            Maximum giant planet mass set to " + p.m);
                     maxMass = p.m;
                     giantMax = true;
                 }
@@ -657,7 +732,7 @@ namespace SystemGenerator.Generation
             this.genFlavorText();
             foreach (Planet p in planets)
             {
-                p.genFlavorText(planets);
+                p.genFlavorText(this, planets);
 
                 if (p.moons != null)
                 {

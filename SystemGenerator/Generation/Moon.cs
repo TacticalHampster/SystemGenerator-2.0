@@ -21,6 +21,9 @@ namespace SystemGenerator.Generation
 
         public int num;
 
+        public Atmosphere atmo;
+        public double     albedo;
+
         public double bulkMetal  ;
         public double bulkRock   ;
         public double bulkIces   ;
@@ -30,10 +33,19 @@ namespace SystemGenerator.Generation
         public double day  ;
         public double tilt ;
 
+        public double t;
         public string flavortext;
 
         public bool isMajor;
         public bool isIcy;
+        public bool hasAir;
+
+        public Moon()
+        {
+            this.atmo       = new Atmosphere();
+            this.orbit      = new Orbit();
+            this.flavortext = "";
+        }
 
         public Moon(Star star, Planet host, bool major, bool icy, double dist)
         {
@@ -41,6 +53,7 @@ namespace SystemGenerator.Generation
             this.orbit = new Orbit();
             this.orbit.genOrbit(star, this, host, dist);
             this.spin(host);
+            this.atmo = new Atmosphere();
             this.flavortext = "";
         }
         
@@ -50,6 +63,7 @@ namespace SystemGenerator.Generation
             this.orbit = new Orbit();
             this.orbit.genOrbit(star, this, host, dist);
             this.spin(host);
+            this.atmo = new Atmosphere();
             this.flavortext = "";
         }
         
@@ -58,6 +72,7 @@ namespace SystemGenerator.Generation
             this.genProperties(host, massMax, major, icy);
             this.orbit = new Orbit();
             this.spin(host);
+            this.atmo = new Atmosphere();
             this.flavortext = "";
         }
         
@@ -66,6 +81,7 @@ namespace SystemGenerator.Generation
             this.genProperties(host, major, icy);
             this.orbit = new Orbit();
             this.spin(host);
+            this.atmo = new Atmosphere();
             this.flavortext = "";
         }
 
@@ -73,13 +89,16 @@ namespace SystemGenerator.Generation
         {
             Utils.writeLog("        Generating satellite system");
             List<Moon> moons = new List<Moon>();
+            Moon moon = new Moon();
 
             int index = star.orbits.IndexOf(host.orbit.a);
 
             if (host.isHab) //Habitable planets get one rocky major moon
             {
                 Utils.writeLog("            Generating rocky major moon for habitable planet");
-                moons.Add(new Moon(star, host, true, false, 0.0));
+                moon = new Moon(star, host, true, false, 0.0);
+                moon.atmo.genAtmo(star, host, ref moon, false);
+                moons.Add(moon);
             }
             else if (host.isGiant) //Giants have complex satellite systems
             {
@@ -134,7 +153,10 @@ namespace SystemGenerator.Generation
                 {
                     //Create
                     Utils.writeLog("                Generating moon " + i + " as type-B major moon (a = " + a + ")");
-                    moons.Add(new Moon(star, host, host.m*0.0001, true, !(Utils.flip() < rockyDecay.getDecayedChance(index)), a));
+                    moon = new Moon(star, host, host.m*0.0001, true, !(Utils.flip() < rockyDecay.getDecayedChance(index)), a);
+                    moon.atmo.genAtmo(star, host, ref moon, Utils.flip() < Gen.Sat.MOON_ATMO_CHANCE);
+                    moons.Add(moon);
+
                     moons[i].type = ID.Sat.MOONB;
 
                     //Add ring gap if applicable
@@ -314,7 +336,7 @@ namespace SystemGenerator.Generation
                 //Decide major moon
                 if (Utils.flip() < Gen.Sat.MAJOR_DWARF_MOON_CHANCE)
                 {
-                    Moon moon = new Moon(host, true, true);
+                    moon = new Moon(host, true, true);
                     hillMin = 2.44 * host.r * Math.Pow( host.bulkDensity / moon.bulkDensity, (1.0/3.0) );
                     dist = Utils.fudge(hillMin + (hillMin*Gen.FUDGE_FACTOR));
                     Utils.writeLog("                Generating moon 0 as major moon (a = " + dist + ")");
@@ -332,7 +354,7 @@ namespace SystemGenerator.Generation
                 //Decide the minor moons
                 for (int i = mjr; i < numMoons; i++)
                 {
-                    Moon moon = new Moon(host, true, true);
+                    moon = new Moon(host, true, true);
 
                     if (mjr == 0 && i == mjr)
                     {
@@ -565,10 +587,11 @@ namespace SystemGenerator.Generation
                         else
                             flavor += "There is a major gap in the rings at its 1:2 mean motion resonance.";
                     }
+
+                    if (this.hasAir)
+                        flavor += "It is massive enough to support a structured atmosphere.";
                     else
-                    {
                         flavor += "There is nothing particularly interesting about it.";
-                    }
                     break;
             }
 

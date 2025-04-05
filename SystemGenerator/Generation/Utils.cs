@@ -190,7 +190,7 @@ namespace SystemGenerator.Generation
 
             return result;
         }
-
+        
         /**
          * Determines whether or not the given planet can retain a substance with the given molar weight in its atmosphere.
          */
@@ -204,6 +204,23 @@ namespace SystemGenerator.Generation
                 Utils.writeLog("                    Planet can retain substance (rms=" + rms + ", lim=" + lim + ", div=" + (rms / lim) + ")");
             else
                 Utils.writeLog("                    Planet cannot retain substance (rms=" + rms + ", lim=" + lim + ", div=" + (rms / lim) + ")");
+
+            return rms / lim < 1.0;
+        }
+
+        /**
+         * Determines whether or not the given moon can retain a substance with the given molar weight in its atmosphere.
+         */
+        public static bool canRetain(double mass, Moon moon)
+        {
+            //Formula comes from Artifexian's earth-like atmospheres spreadsheet
+            double rms = Math.Sqrt((3.0 * Const.GAS_CONST * ( moon.t / Const.Earth.TEMP ) * 1500.0) / mass);
+            double lim = moon.escV / Gen.Atmo.RETENTION_FACTOR;
+
+            if (rms / lim < 1.0)
+                Utils.writeLog("                    Moon can retain substance (rms=" + rms + ", lim=" + lim + ", div=" + (rms / lim) + ")");
+            else
+                Utils.writeLog("                    Moon cannot retain substance (rms=" + rms + ", lim=" + lim + ", div=" + (rms / lim) + ")");
 
             return rms / lim < 1.0;
         }
@@ -436,7 +453,7 @@ namespace SystemGenerator.Generation
          */
         public static void writeLogAtmo(Atmosphere.Component comp, double remain)
         {
-            Utils.writeLog(String.Format("                    Generated {0}% {1,-15} ({2,7:5}% remaining)", comp.quantity*100.0, comp.name, remain*100.0));
+            Utils.writeLog(String.Format("                    Generated {0,8:N5}% {1,-20} ({2,8:N5}% remaining)", comp.quantity*100.0, comp.name, remain*100.0));
         }
 
         public static void updateProgress()

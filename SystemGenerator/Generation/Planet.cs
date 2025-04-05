@@ -55,6 +55,7 @@ namespace SystemGenerator.Generation
 
         //Flags
         public bool isGiant;
+        public bool isRocky;
         public bool isIcy  ;
         public bool isWater;
         public bool isHab  ;
@@ -90,6 +91,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.ROCK_DENSE:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = true ;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -107,6 +109,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.ROCK_DESERT:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = true ;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -124,6 +127,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.ROCK_GREEN:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = true ;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = true;
@@ -141,6 +145,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.WATER_OCEAN:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = true ;
                     this.isIcy   = false;
                     this.isWater = true ;
                     this.isHab   = false;
@@ -181,6 +186,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.WATER_GREEN:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = true ;
                     this.isIcy   = false;
                     this.isWater = true ;
                     this.isHab   = true ;
@@ -201,6 +207,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.GAS_GIANT:
                     //Set flags
                     this.isGiant = true;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -209,7 +216,7 @@ namespace SystemGenerator.Generation
 
                     //Set composition
                     this.subtype = "1";
-                    this.m = Utils.randDouble(Gen.Planet.Giant.MIN_GIANT_MASS, Math.Min(mass_max, Gen.Planet.Giant.MAX_GIANT_MASS));
+                    this.m = Utils.randDouble(Math.Min(mass_max, Gen.Planet.Giant.MIN_GIANT_MASS), Math.Min(mass_max, Gen.Planet.Giant.MAX_GIANT_MASS));
                     this.r = Gen.Planet.Giant.GAS_RADIUS_NORM * Utils.fudge(1.0);
 
                     if (this.m >= (Gen.Planet.Giant.GAS_RADIUS_LIM*(1.0+Gen.FUDGE_FACTOR)))
@@ -224,6 +231,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.GAS_PUFFY:
                     //Set flags
                     this.isGiant = true;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -235,7 +243,7 @@ namespace SystemGenerator.Generation
 
                     do
                     {
-                        this.m = Utils.randDouble(Gen.Planet.Giant.MIN_GIANT_MASS , Gen.Planet.Giant.GAS_RADIUS_LIM);
+                        this.m = Utils.randDouble(Math.Min(mass_max, Gen.Planet.Giant.MIN_GIANT_MASS), Math.Min(mass_max, Gen.Planet.Giant.GAS_RADIUS_LIM));
                         this.r = Utils.randDouble(Gen.Planet.Giant.GAS_RADIUS_NORM, Gen.Planet.Giant.GAS_RADIUS_MAX);
                         propsGiant();
                     }
@@ -246,6 +254,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.GAS_HOT:
                     //Set flags
                     this.isGiant = true;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -257,7 +266,7 @@ namespace SystemGenerator.Generation
 
                     do
                     {
-                        this.m = Utils.randDouble(Gen.Planet.Giant.MIN_GIANT_MASS , Gen.Planet.Giant.GAS_RADIUS_LIM);
+                        this.m = Utils.randDouble(Math.Min(mass_max, Gen.Planet.Giant.MIN_GIANT_MASS), Math.Min(mass_max, Gen.Planet.Giant.GAS_RADIUS_LIM));
                         this.r = Utils.randDouble(Gen.Planet.Giant.GAS_RADIUS_NORM, Gen.Planet.Giant.GAS_RADIUS_MAX);
                         propsGiant();
                     }
@@ -268,6 +277,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.ICE_DWARF:
                     //Set flags
                     this.isGiant = true;
+                    this.isRocky = false;
                     this.isIcy   = true;
                     this.isWater = false;
                     this.isHab   = false;
@@ -283,6 +293,7 @@ namespace SystemGenerator.Generation
                 case ID.Planet.ICE_GIANT:
                     //Set flags
                     this.isGiant = true;
+                    this.isRocky = false;
                     this.isIcy   = true;
                     this.isWater = false;
                     this.isHab   = false;
@@ -302,6 +313,7 @@ namespace SystemGenerator.Generation
                 case ID.Belt.BELT_INNER:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -323,6 +335,7 @@ namespace SystemGenerator.Generation
                 case ID.Belt.BELT_KUIPER:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -344,6 +357,7 @@ namespace SystemGenerator.Generation
                 case ID.Belt.DWARF:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -368,6 +382,7 @@ namespace SystemGenerator.Generation
                 case ID.Belt.SEDNOID:
                     //Set flags
                     this.isGiant = false;
+                    this.isRocky = false;
                     this.isIcy   = false;
                     this.isWater = false;
                     this.isHab   = false;
@@ -388,7 +403,7 @@ namespace SystemGenerator.Generation
                 default:
                     break;
             }
-            Utils.writeLog("            Mass: " + this.m);
+            Utils.writeLog("            Mass: " + this.m + " (Max: " + mass_max + ")");
 
             if (this.m < 0)
                 genPlanetProperties(mass_max);
@@ -667,7 +682,7 @@ namespace SystemGenerator.Generation
             if (this.isGiant)
             {
                 //Assign tilt
-                this.tilt = Utils.randExpo(Gen.Planet.Giant.MIN_TILT, Gen.Planet.Giant.MAX_TILT, 0.01);
+                this.tilt = Utils.randExpo(Gen.Planet.Giant.MIN_TILT, Gen.Planet.Giant.MAX_TILT, 0.1);
 
                 //Giant planets have fast spins since they're not rigid
                 this.day = Utils.randDouble(Gen.Planet.Giant.MIN_DAY_LENGTH, Gen.Planet.Giant.MAX_DAY_LENGTH);
@@ -794,7 +809,7 @@ namespace SystemGenerator.Generation
                 this.feature = features[Utils.randInt(0, features.Count-1)];
         }
     
-        public void genFlavorText(List<Planet> planets)
+        public void genFlavorText(Star star, List<Planet> planets)
         {
             string flavor = "";
 
@@ -802,126 +817,19 @@ namespace SystemGenerator.Generation
             {
                 flavor += "This planet is " + Utils.getLongDesc(this) + ". ";
 
+                if (planets.IndexOf(this) == star.indexFrost)
+                    flavor += "This planet formed at the frost line, making it the largest planet in this system. ";
+
                 if (this.hasAir)
                 {
-                    flavor += "It has a";
-                    switch (this.atmo.typeMinor)
-                    {
-                        case ID.Atmo.MNR_CRYOAZURIAN:
-                            flavor += " cryoazuri";
-                            break;
-                        case ID.Atmo.MNR_FRIGIDIAN:
-                            flavor += " frigi";
-                            break;
-                        case ID.Atmo.MNR_NEONEAN:
-                            flavor += " neono";
-                            break;
-                        case ID.Atmo.MNR_BOREAN:
-                            flavor += " boreo";
-                            break;
-                        case ID.Atmo.MNR_METHANEAN:
-                            flavor += " metho";
-                            break;
-                        case ID.Atmo.MNR_MESOAZURIAN:
-                            flavor += " mesoazuri";
-                            break;
-                        case ID.Atmo.MNR_THOLIAN:
-                            flavor += " tholi";
-                            break;
-                        case ID.Atmo.MNR_SULFANIAN:
-                            flavor += " sulfa";
-                            break;
-                        case ID.Atmo.MNR_AMMONIAN:
-                            flavor += "n ammo";
-                            break;
-                        case ID.Atmo.MNR_HYDRONIAN:
-                            flavor += " hydro";
-                            break;
-                        case ID.Atmo.MNR_ACIDIAN:
-                            flavor += "n acidi";
-                            break;
-                        case ID.Atmo.MNR_PYROAZURIAN:
-                            flavor += " pyroazuri";
-                            break;
-                        case ID.Atmo.MNR_SULFOLIAN:
-                            flavor += " sulfoli";
-                            break;
-                        case ID.Atmo.MNR_AITHALIAN:
-                            flavor += "n aithali";
-                            break;
-                    }
+                    flavor += "It has " + this.atmo.classMinor.prefix + "-" + this.atmo.classMajor.name.ToLower() + " atmosphere, largely composed of " + this.atmo.classMajor.flavor + ". ";
+                    
+                    if (this.atmo.classMinor.cloudColorNames != null)
+                        flavor += String.Format(this.atmo.classMinor.flavor, this.atmo.colorName, this.atmo.colorCloudName);
+                    else
+                        flavor += String.Format(this.atmo.classMinor.flavor, this.atmo.colorName);
 
-                    flavor += "-";
-
-                    switch (this.atmo.classMajor.ID)
-                    {
-                        case ID.Atmo.MJR_JOTUNNIAN:
-                            flavor += "jotunnian atmosphere, largely composed of hydrogen and helium. ";
-                            break;
-                        case ID.Atmo.MJR_HELIAN:
-                            flavor += "helian atmosphere, largely composed of helium. ";
-                            break;
-                        case ID.Atmo.MJR_YDATRIAN:
-                            flavor += "ydatrian atmosphere, largely composed of simple hydride compounds. ";
-                            break;
-                        case ID.Atmo.MJR_RHEAN:
-                            flavor += "rhean atmosphere, largely composed of nitrogen. ";
-                            break;
-                        case ID.Atmo.MJR_MINERVAN:
-                            flavor += "minervan atmosphere, largely composed of compounds of nonmetals. ";
-                            break;
-                        case ID.Atmo.MJR_EDELIAN:
-                            flavor += "edelian atmosphere, largely composed of neon and argon. ";
-                            break;
-                    }
-
-                    switch (this.atmo.typeMinor)
-                    {
-                        case ID.Atmo.MNR_CRYOAZURIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with thin, hydrocarbon-based hazes.";
-                            break;
-                        case ID.Atmo.MNR_FRIGIDIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of condensed hydrogen.";
-                            break;
-                        case ID.Atmo.MNR_NEONEAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of neon.";
-                            break;
-                        case ID.Atmo.MNR_BOREAN:
-                            flavor += "Hazes have made the sky " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of nitrogen and carbon monoxide.";
-                            break;
-                        case ID.Atmo.MNR_METHANEAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " hazes of organic chemicals.";
-                            break;
-                        case ID.Atmo.MNR_MESOAZURIAN:
-                            flavor += "The sky is a clear " + this.atmo.colorName + ", with slight " + this.atmo.colorCloudName + " hazes.";
-                            break;
-                        case ID.Atmo.MNR_THOLIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " hazes of hydrocarbons and organosulfurs.";
-                            break;
-                        case ID.Atmo.MNR_SULFANIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of hydrogen and ammonium sulfide.";
-                            break;
-                        case ID.Atmo.MNR_AMMONIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of ammonia and hydrogen sulfde.";
-                            break;
-                        case ID.Atmo.MNR_HYDRONIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of water vapor.";
-                            break;
-                        case ID.Atmo.MNR_ACIDIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with " + this.atmo.colorCloudName + " clouds of sulfuric acid.";
-                            break;
-                        case ID.Atmo.MNR_PYROAZURIAN:
-                            flavor += "The clouds on this planet are very thin, making the atmosphere " + this.atmo.colorName + ".";
-                            break;
-                        case ID.Atmo.MNR_SULFOLIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with sulfurous " + this.atmo.colorCloudName + " clouds.";
-                            break;
-                        case ID.Atmo.MNR_AITHALIAN:
-                            flavor += "The sky is " + this.atmo.colorName + ", with carbonaceous " + this.atmo.colorCloudName + " clouds.";
-                            break;
-                    }
-
-                    if (this.atmo.typeMinor != ID.Atmo.MNR_CRYOAZURIAN && this.atmo.typeMinor != ID.Atmo.MNR_PYROAZURIAN && this.surface.coverCloudThick + this.surface.coverCloudThin > 0.0)
+                    if (this.atmo.classMinor.ID != ID.Atmo.MNR_CRYOAZURIAN && this.atmo.classMinor.ID != ID.Atmo.MNR_PYROAZURIAN && this.surface.coverCloudThick + this.surface.coverCloudThin > 0.0)
                         flavor += String.Format(" They cover about {0:N0}% of the planet.", (this.surface.coverCloudThick + this.surface.coverCloudThin) * 100.0);
                 }
                 else
@@ -1076,7 +984,6 @@ namespace SystemGenerator.Generation
         {
             this.image = new Bitmap(x,y);
 
-            
             Graphics g = Graphics.FromImage(this.image);
             Pen p = new Pen(Color.Black);
             PathGradientBrush pgb = null;
@@ -1098,9 +1005,11 @@ namespace SystemGenerator.Generation
             int radius; //Radius of the planet
 
             if (this.isDwarf)
-                radius = (int)Math.Round(this.r * UI.SCALE);
+                radius = (int)Math.Round(this.r * UI.SCALE_SMALL);
+            else if (this.isGiant && (this.r/Gen.Planet.Giant.GAS_RADIUS_NORM) > 1.1)
+                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE_BIG);
             else
-                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE);
+                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE_MID);
 
             p.Width = 1;
 
@@ -1120,7 +1029,8 @@ namespace SystemGenerator.Generation
                 //Otherwise draw the planet and atmosphere separately
                 if (this.hasAir)
                 {
-                    int atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE); //Extra radius of the atmosphere
+                    int atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MID); //Extra radius of the atmosphere
+                    double transparency = 0.9;
 
                     rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
                     path.AddEllipse(rect);
@@ -1128,8 +1038,8 @@ namespace SystemGenerator.Generation
                     pgb = new PathGradientBrush(path);
 
                     Color h = Utils.UI.colorFromHex((int)this.atmo.color);
-                    pgb.CenterColor = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
-                    pgb.SurroundColors = new Color[]{Color.Black};
+                    pgb.CenterColor = Color.FromArgb((int)Math.Round(transparency * Color.White.R), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                    pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(transparency * Color.White.R), 0, 0, 0)};
 
                     PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
 
@@ -1137,6 +1047,7 @@ namespace SystemGenerator.Generation
 
                     g.FillEllipse(pgb, rect);
 
+                    pgb.Dispose();
                     path.Dispose();
                 }
             
@@ -1166,19 +1077,25 @@ namespace SystemGenerator.Generation
                 //Draw the bands and jets
                 int l = (int)Math.Round(Utils.fudge(30));
                 int sweep, A, R, G, B, mn, mx;
+                Color h;
 
-                //Start at 60°N and end at 60°S
-
-                for (int i = 0; l < 90; i++)
+                for (int i = 0; l < 100; i++)
                 {
                     mn = (int)Math.Abs(Math.Round(1.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
-                    mx = (int)Math.Abs(Math.Round(3.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
+                    mx = (int)Math.Abs(Math.Round(2.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
 
                     sweep = Utils.randInt(mn, mx);
 
                     if (i%2!=0)
                     {
-                        Color h = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+                        if (this.atmo.colorCloud != 0)
+                            h = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+                        else
+                        {
+                            h = Utils.UI.colorFromHex((int)this.atmo.color);
+                            int lightness = Utils.randInt(Color.White.R/7, Color.White.R/6) * (int)Utils.randSign();
+                            h = Color.FromArgb(Math.Max(0, Math.Min(h.R+lightness, 255)), Math.Max(0, Math.Min(h.G+lightness, 255)), Math.Max(0, Math.Min(h.B+lightness, 255)));
+                        }
 
                         //Draw the upper hemisphere band
                         path = new GraphicsPath();
@@ -1193,8 +1110,8 @@ namespace SystemGenerator.Generation
                         G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
                         B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
 
-                        if (this.atmo.typeMinor == ID.Atmo.MNR_CRYOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_MESOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_PYROAZURIAN)
-                            A = Utils.randInt(Color.White.R/7, Color.White.R/5);
+                        if (this.atmo.classMinor.cloudColorNames == null)
+                            A = Utils.randInt(Color.White.R/7, Color.White.R/3);
                         else
                             A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
                         
@@ -1211,8 +1128,8 @@ namespace SystemGenerator.Generation
 
                         path = new GraphicsPath();
 
-                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90+l      -(float)this.tilt, -sweep);
-                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90-l+sweep-(float)this.tilt, -sweep);
+                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90+l      -(float)this.tilt, sweep);
+                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90-l-sweep-(float)this.tilt, sweep);
                         path.CloseFigure();
 
                         pgb = new PathGradientBrush(path);
@@ -1221,7 +1138,7 @@ namespace SystemGenerator.Generation
                         G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
                         B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
 
-                        if (this.atmo.typeMinor == ID.Atmo.MNR_CRYOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_MESOAZURIAN || this.atmo.typeMinor == ID.Atmo.MNR_PYROAZURIAN)
+                        if (this.atmo.classMinor.cloudColorNames == null)
                             A = Utils.randInt(Color.White.R/7, Color.White.R/5);
                         else
                             A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
@@ -1302,7 +1219,78 @@ namespace SystemGenerator.Generation
                     g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
                 }
 
-                //Lastly give a light sheen of atmo color
+                //Add clouds
+                /*
+                int q = Utils.randInt(5, 20);
+                for (int f = -radius+q; f < radius-q; f++)
+                {
+                    if (Utils.flip() > this.surface.coverCloudThin)
+                        continue;
+
+                    path = new GraphicsPath();
+                    r = (int)Math.Floor(Math.Sqrt((radius*radius) - (f*f)));
+                    int height = (int)Math.Round(r * Math.Tan(10.0 * (Math.PI/180.0)));
+
+                    Rectangle arcrect = new Rectangle(
+                        center.X - (int)r,
+                        center.Y + f - height/2,
+                        (int)r * 2,
+                        height
+                    );
+
+                    if (arcrect.Height < 1 || arcrect.Width < 1)
+                    {
+                        path.Dispose();
+                        continue;
+                    }
+
+                    int theta1, theta2 = (int)Utils.randInt( 0, 90);
+                    int roll = Utils.roll(3);
+                    switch (roll)
+                    {
+                        case 0:
+                            theta1 = (int)Utils.randInt(0, 90) + 90;
+                            break;
+                        case 1:
+                            theta1 = (int)Utils.fudge(45);
+                            break;
+                        default:
+                            theta1 = (int)Utils.randInt(0, 90);
+                            break;
+                    }
+
+                    theta1 = 90;
+                    theta2 = 270;
+                    
+                    path.AddArc(arcrect, theta1 - theta2/2, theta2);
+
+                    try
+                    {
+                        pgb = new PathGradientBrush(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        path.Dispose();
+                        pgb.Dispose();
+                        continue;
+                    }
+
+                    if (this.atmo.colorCloud < 1)
+                        surf = Utils.UI.colorFromHex((int)this.atmo.color);
+                    else
+                        surf = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+
+                    pgb.CenterColor = surf;
+                    pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(Color.White.R*0.1), surf)};
+                    
+                    g.FillPath(pgb, path);
+
+                    pgb.Dispose();
+                    path.Dispose();
+                }
+                */
+
+                //Give a light sheen of atmo color
                 Color h = Utils.UI.colorFromHex((int)this.atmo.color);
                 p.Color = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure)/(int)Gen.Atmo.RETENTION_FACTOR, h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
                     

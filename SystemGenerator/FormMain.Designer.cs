@@ -265,6 +265,7 @@
             propsPhysicalMoonLabelRadii = new Label();
             genProgressBar = new ProgressBar();
             drawingGroupBox = new GroupBox();
+            scaleLabel = new Label();
             pictureBox = new PictureBox();
             blankGroupBox1 = new GroupBox();
             blankGroupBox2 = new GroupBox();
@@ -308,6 +309,7 @@
             systemListBox.Size = new Size(416, 326);
             systemListBox.TabIndex = 0;
             systemListBox.SelectedIndexChanged += systemListBox_SelectedIndexChanged;
+            systemListBox.KeyDown += systemListBox_KeyDown;
             // 
             // optionListBox
             // 
@@ -321,6 +323,7 @@
             optionListBox.Size = new Size(416, 349);
             optionListBox.TabIndex = 1;
             optionListBox.SelectedIndexChanged += optionListBox_SelectedIndexChanged;
+            optionListBox.KeyDown += optionListBox_KeyDown;
             // 
             // propsPhysicalPlanetGroup
             // 
@@ -1571,7 +1574,7 @@
             // textGroupBox
             // 
             textGroupBox.Controls.Add(flavorTextLabel);
-            textGroupBox.Location = new Point(12, 762);
+            textGroupBox.Location = new Point(12, 756);
             textGroupBox.Name = "textGroupBox";
             textGroupBox.Size = new Size(1900, 224);
             textGroupBox.TabIndex = 7;
@@ -3375,19 +3378,29 @@
             // 
             // drawingGroupBox
             // 
+            drawingGroupBox.Controls.Add(scaleLabel);
             drawingGroupBox.Controls.Add(pictureBox);
-            drawingGroupBox.Location = new Point(434, 0);
+            drawingGroupBox.Location = new Point(434, -2);
             drawingGroupBox.Name = "drawingGroupBox";
-            drawingGroupBox.Size = new Size(1097, 756);
+            drawingGroupBox.Size = new Size(1097, 758);
             drawingGroupBox.TabIndex = 14;
             drawingGroupBox.TabStop = false;
             // 
+            // scaleLabel
+            // 
+            scaleLabel.AutoSize = true;
+            scaleLabel.Dock = DockStyle.Bottom;
+            scaleLabel.Location = new Point(3, 735);
+            scaleLabel.Name = "scaleLabel";
+            scaleLabel.Size = new Size(117, 20);
+            scaleLabel.TabIndex = 1;
+            scaleLabel.Text = "X/XXXX Scale";
+            // 
             // pictureBox
             // 
-            pictureBox.Dock = DockStyle.Fill;
-            pictureBox.Location = new Point(3, 23);
+            pictureBox.Location = new Point(3, 14);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(1091, 730);
+            pictureBox.Size = new Size(1091, 741);
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
             // 
@@ -3423,7 +3436,6 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = SystemColors.WindowText;
             ClientSize = new Size(1924, 1055);
-            Controls.Add(blankGroupBox3);
             Controls.Add(blankGroupBox4);
             Controls.Add(blankGroupBox2);
             Controls.Add(drawingGroupBox);
@@ -3433,12 +3445,13 @@
             Controls.Add(propsOrbitStarGroup);
             Controls.Add(textGroupBox);
             Controls.Add(propsBulkGroup);
-            Controls.Add(propsAtmoGroup);
             Controls.Add(propsOrbitPlanetGroup);
             Controls.Add(optionListBox);
             Controls.Add(systemListBox);
             Controls.Add(genProgressBar);
             Controls.Add(genButton);
+            Controls.Add(blankGroupBox3);
+            Controls.Add(propsAtmoGroup);
             Controls.Add(blankGroupBox1);
             Controls.Add(propsPhysicalBeltGroup);
             Controls.Add(propsPhysicalStarGroup);
@@ -3485,6 +3498,7 @@
             propsPhysicalMoonTable.ResumeLayout(false);
             propsPhysicalMoonTable.PerformLayout();
             drawingGroupBox.ResumeLayout(false);
+            drawingGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ResumeLayout(false);
         }
@@ -3731,6 +3745,7 @@
         private GroupBox blankGroupBox2;
         private GroupBox blankGroupBox4;
         private PictureBox pictureBox;
+        private Label scaleLabel;
         public static ProgressBar genProgressBar;
     }
 }

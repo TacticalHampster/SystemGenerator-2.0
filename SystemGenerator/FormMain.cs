@@ -54,6 +54,7 @@ namespace SystemGenerator
 
             genProgressBar.Hide();
             genButton.Show();
+            scaleLabel.Hide();
 
             this.Show();
             int height = Screen.PrimaryScreen.Bounds.Height;
@@ -109,6 +110,7 @@ namespace SystemGenerator
 
             genProgressBar.Hide();
             genButton.Show();
+            scaleLabel.Show();
         }
 
         private void systemListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -143,6 +145,22 @@ namespace SystemGenerator
             else
                 showMoonProps(planets[systemListBox.SelectedIndex - 1].moons[optionListBox.SelectedIndex - 1]);
         }
+        
+        private void systemListBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+                systemListBox.SelectedIndex--;
+            else if (e.KeyCode == Keys.Down)
+                systemListBox.SelectedIndex++;
+        }
+
+        private void optionListBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left)
+                systemListBox.SelectedIndex--;
+            else if (e.KeyCode == Keys.Right)
+                systemListBox.SelectedIndex++;
+        }
 
         private void showPlanetProps(Planet planet)
         {
@@ -172,7 +190,7 @@ namespace SystemGenerator
             //Physical
             if (!planet.isDwarf && planet.m > 317.8 * (1.0 - Gen.FUDGE_FACTOR))
             {
-                propsPhysicalPlanetValueMass.Text = String.Format(UI.FORMAT, planet.m / 317.8);
+                propsPhysicalPlanetValueMass.Text = String.Format(UI.FORMAT, planet.m / Const.EARTHMASS_PER_JOVEMASS);
                 propsPhysicalPlanetUnitMass.Text = "M♃";
             }
             else if (!planet.isDwarf && planet.m > 0.001)
@@ -182,7 +200,7 @@ namespace SystemGenerator
             }
             else
             {
-                propsPhysicalPlanetValueMass.Text = String.Format(UI.FORMAT, planet.m * 5972200.0);
+                propsPhysicalPlanetValueMass.Text = String.Format(UI.FORMAT, planet.m * Const.ZETTAGRAMS_PER_EARTHMASS);
                 propsPhysicalPlanetUnitMass.Text = "Zg";
             }
 
@@ -259,7 +277,18 @@ namespace SystemGenerator
 
                 propsAtmoValueHeight.Text = String.Format(UI.FORMAT, planet.atmo.height / 1000.0);
                 propsAtmoValueWeight.Text = String.Format(UI.FORMAT, planet.atmo.density);
-                propsAtmoValuePressure.Text = String.Format(UI.FORMAT, planet.atmo.pressure);
+
+                if (planet.isGiant)
+                {
+                    propsAtmoValuePressure.Text = "N/A   ";
+                    propsAtmoUnitPressure.Text = "";
+                }
+                else
+                {
+                    propsAtmoValuePressure.Text = String.Format(UI.FORMAT, planet.atmo.pressure);
+                    propsAtmoUnitPressure.Text = "atm";
+                }
+
             }
             else
             {
@@ -345,12 +374,12 @@ namespace SystemGenerator
             propsOrbitBeltSigmaP.Text = String.Format(UI.FORMAT, belt.orbit.pSigma);
 
             //Flavor text
-            if (belt.flavortext == "")
-            {
-
-            }
 
             flavorTextLabel.Text = belt.flavortext;
+
+            //Draw planet
+
+            drawPlanet(belt);
         }
 
         private void showStarProps(Star star)
@@ -400,6 +429,10 @@ namespace SystemGenerator
 
             //Flavor text
             flavorTextLabel.Text = star.flavortext;
+
+            //Draw planet
+
+            drawStar(star);
         }
 
         private void showMoonProps(Moon moon)
@@ -407,6 +440,7 @@ namespace SystemGenerator
             //Switch to the right groups
             blankGroupBox1.Hide();
             blankGroupBox2.Hide();
+            blankGroupBox3.Hide();
             blankGroupBox4.Hide();
 
             propsPhysicalStarGroup.Hide();
@@ -421,7 +455,7 @@ namespace SystemGenerator
 
             propsPhysicalMoonGroup.Show();
             propsBulkGroup.Show();
-            blankGroupBox3.Show();
+            propsAtmoGroup.Show();
             propsOrbitPlanetGroup.Show();
             propsOrbitBeltGroup.Show();
 
@@ -451,6 +485,57 @@ namespace SystemGenerator
             propsBulkLabelWater.Text = propsBulkValueWater.Text = propsBulkUnitWater.Text = "";
             propsBulkLabelHydrogen.Text = propsBulkValueHydrogen.Text = propsBulkUnitHydrogen.Text = "";
             propsBulkValueDensity.Text = String.Format(UI.FORMAT, moon.bulkDensity);
+
+            //Atmo
+            if (moon.hasAir)
+            {
+                Label[][] labels = new Label[][]{
+                    new Label[]{ propsAtmoLabelComp1, propsAtmoLabelComp2, propsAtmoLabelComp3, propsAtmoLabelComp4, propsAtmoLabelComp5 },
+                    new Label[]{ propsAtmoValueComp1, propsAtmoValueComp2, propsAtmoValueComp3, propsAtmoValueComp4, propsAtmoValueComp5 },
+                    new Label[]{ propsAtmoUnitComp1 , propsAtmoUnitComp2 , propsAtmoUnitComp3 , propsAtmoUnitComp4 , propsAtmoUnitComp5  }
+                };
+
+                for (int i = 0; i < labels[0].Length; i++)
+                {
+                    labels[0][i].ForeColor = Color.FromArgb(moon.atmo.comps[i].color);
+                    labels[1][i].ForeColor = Color.FromArgb(moon.atmo.comps[i].color);
+                    labels[2][i].ForeColor = Color.FromArgb(moon.atmo.comps[i].color);
+
+                    labels[0][i].Text = moon.atmo.comps[i].name;
+
+                    if (moon.atmo.comps[i].quantity * 100.0 >= 0.1)
+                    {
+                        labels[1][i].Text = String.Format(UI.FORMAT, moon.atmo.comps[i].quantity * 100.0);
+                    }
+                    else if (moon.atmo.comps[i].quantity * 100.0 < 0.1)
+                    {
+                        labels[1][i].Text = String.Format(UI.FORMAT, moon.atmo.comps[i].quantity * 10000);
+                        labels[2][i].Text = "ppm";
+                    }
+                    else if (moon.atmo.comps[3].quantity * 100000.0 < 0.1)
+                    {
+                        labels[1][i].Text = String.Format(UI.FORMAT, moon.atmo.comps[i].quantity * 10000000);
+                        labels[2][i].Text = "ppb";
+                    }
+                    else
+                    {
+                        labels[1][i].Text = String.Format(UI.FORMAT, moon.atmo.comps[i].quantity * 10000000000);
+                        labels[2][i].Text = "ppt";
+                    }
+                }
+
+                propsAtmoValueHeight.Text = String.Format(UI.FORMAT, moon.atmo.height / 1000.0);
+                propsAtmoValueWeight.Text = String.Format(UI.FORMAT, moon.atmo.density);
+
+                propsAtmoValuePressure.Text = String.Format(UI.FORMAT, moon.atmo.pressure);
+                propsAtmoUnitPressure.Text = "atm";
+
+            }
+            else
+            {
+                blankGroupBox3.Show();
+                propsAtmoGroup.Hide();
+            }
 
 
             //Orbit
@@ -534,6 +619,28 @@ namespace SystemGenerator
                 planet.genImage(pictureBox.Width, pictureBox.Height);
 
             pictureBox.Image = planet.image;
+
+            if (planet.isGiant && (planet.r / Gen.Planet.Giant.GAS_RADIUS_NORM) > 1.1)
+                scaleLabel.Text = String.Format("1/{0:D} Scale", (int)Math.Round(1.0 / UI.SCALE_BIG));
+            else if (planet.isDwarf)
+                scaleLabel.Text = String.Format("1/{0:D} Scale", (int)Math.Round(1.0 / UI.SCALE_SMALL));
+            else
+                scaleLabel.Text = String.Format("1/{0:D} Scale", (int)Math.Round(1.0 / UI.SCALE_MID));
+
+
+            pictureBox.Show();
+        }
+
+        private void drawStar(Star star)
+        {
+            pictureBox.Hide();
+
+            if (star.image == null)
+                star.genImage(pictureBox.Width, pictureBox.Height);
+
+            pictureBox.Image = star.image;
+
+            scaleLabel.Text = String.Format("1/{0:D} Scale", (int)Math.Round(1.0 / UI.SCALE_STAR));
 
             pictureBox.Show();
         }

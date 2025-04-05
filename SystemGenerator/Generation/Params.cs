@@ -11,6 +11,7 @@ namespace SystemGenerator.Generation
     {
         public const double SUN_TEMP   = 5772.0;    //(K)
         public const double SUN_LUMIN  = 3.828e26;
+        public const double SUN_RADIUS = 109.0 * Const.Earth.RADIUS;
 
         public const double GAS_CONST  = 8.3144598;
         public const double GRAV_CONST = 6.6743015e-11;
@@ -22,6 +23,7 @@ namespace SystemGenerator.Generation
         public const double ROCK_DENS  = 3.25;
         public const double WATER_DENS = 0.93;
 
+        public const double EARTHMASS_PER_JOVEMASS   = 317.8;
         public const double ZETTAGRAMS_PER_EARTHMASS = 5972200.0;
         public const double AU_PER_EARTHRADIUS       = 6378000.0/149597870700.0;
 
@@ -40,8 +42,11 @@ namespace SystemGenerator.Generation
 
     public class UI
     {
-        public const string FORMAT = "{0,7:N4}";
-        public const double SCALE  = 1.0/200.0;
+        public const string FORMAT      = "{0,7:N4}";
+        public const double SCALE_SMALL = 1.0/2.0;
+        public const double SCALE_MID   = 1.0/200.0;
+        public const double SCALE_BIG   = 1.0/400.0;
+        public const double SCALE_STAR  = 1.0/1600.0;
     }
 
     public class Gen
@@ -62,8 +67,8 @@ namespace SystemGenerator.Generation
             //Probability distributions of planet types
             public const double DENSE_CHANCE             = 0.4;
             public const double OCEAN_CHANCE             = 0.6;
-            public const double ICE_GIANT_CHANCE         = 0.5;
-            public const double ICE_DWARF_CHANCE         = 0.5;
+            public const double ICE_GIANT_CHANCE         = 0.6;
+            public const double ICE_DWARF_CHANCE         = 0.4;
 
             public const Decay.DecayType OCEAN_DECAY     = Decay.DecayType.LINEAR;
             public const Decay.DecayType DENSE_DECAY     = Decay.DecayType.EXP;
@@ -341,7 +346,6 @@ namespace SystemGenerator.Generation
 
             public const double MAX_MOON_SPACING = 4.0;
 
-
             public const double MIN_TILT =  0.0;
             public const double MAX_TILT = 90.0;
 
@@ -350,6 +354,11 @@ namespace SystemGenerator.Generation
 
             public const double MIN_RETRO_DAY_LENGTH = 1500.0;
             public const double RETRO_DAY_CHANCE     =    0.1;
+
+            public const double MIN_MOON_ALBEDO = 0.1;
+            public const double MAX_MOON_ALBEDO = 0.8;
+
+            public const double MOON_ATMO_CHANCE = 0.07;
         }
     
         public class Atmo
@@ -367,76 +376,525 @@ namespace SystemGenerator.Generation
 
             public const double MIN_SURFACE_PRESSURE =   0.001;
             public const double MAX_SURFACE_PRESSURE = 100.0;
+
+            public static readonly Atmosphere.MajorClass JOTUNNIAN = new Atmosphere.MajorClass(
+                ID.Atmo.MJR_JOTUNNIAN,
+                "Jotunnian", "hydrogen and helium",
+                false, true, false,
+                -1.0,
+                1.0,
+                1.0,
+                new Atmosphere.Component[]{ Comps.HYDROGEN },
+                new int                 []{ 1              },
             
-            public const double MIN_CRYOAZURIAN_CLOUD_COVER       = 0.0;
-            public const double MAX_CRYOAZURIAN_CLOUD_COVER       = 0.2;
-            public const double MIN_CRYOAZURIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_CRYOAZURIAN_THICK_CLOUD_COVER = 0.0;
+                new Atmosphere.Component[]{ Comps.HELIUM   },
+                new int                 []{ 1              },
             
-            public const double MIN_FRIGIDIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_FRIGIDIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_FRIGIDIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_FRIGIDIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE     },
+                new int                 []{ 2            , 1              , 2              , 1                , 1               , 2                , 1               , 2                 },
             
-            public const double MIN_NEONEAN_CLOUD_COVER       = 0.1;
-            public const double MAX_NEONEAN_CLOUD_COVER       = 0.7;
-            public const double MIN_NEONEAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_NEONEAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
+                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.AMMONIA, Comps.PHOSPHINE, Comps.NITROGEN , Comps.THOLINS                                                                               },
+                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            56           , 56             , 56             , 56                                                                                          }
+            );
+
+            public static readonly Atmosphere.MajorClass HELIAN = new Atmosphere.MajorClass(
+                ID.Atmo.MJR_HELIAN,
+                "Helian", "helium",
+                true, false, false,
+                300.0,
+                0.001,
+                1.000,
+                new Atmosphere.Component[]{ Comps.HELIUM },
+                new int                 []{ 1            },
             
-            public const double MIN_BOREAN_CLOUD_COVER       = 0.1;
-            public const double MAX_BOREAN_CLOUD_COVER       = 0.7;
-            public const double MIN_BOREAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_BOREAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.METHANE , Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NITROGEN, Comps.NEON                                                                                                                    },
+                new int                 []{ 1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               ,
+                                            1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               ,
+                                            32            , 32                                                                                                                            },
             
-            public const double MIN_METHANEAN_CLOUD_COVER       = 0.25;
-            public const double MAX_METHANEAN_CLOUD_COVER       = 0.85;
-            public const double MIN_METHANEAN_THICK_CLOUD_COVER = 0.1;
-            public const double MAX_METHANEAN_THICK_CLOUD_COVER = 0.4;
+                new Atmosphere.Component[]{ Comps.ARGON },
+                new int                 []{ 1           },
             
-            public const double MIN_MESOAZURIAN_CLOUD_COVER       = 0.15;
-            public const double MAX_MESOAZURIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_MESOAZURIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_MESOAZURIAN_THICK_CLOUD_COVER = 0.1;
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
+                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                           },
+                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
+                                            11           , 11             , 11             , 56               , 56                                                                        }
+            );
+
+            public static readonly Atmosphere.MajorClass YDATRIAN = new Atmosphere.MajorClass(
+                ID.Atmo.MJR_YDATRIAN,
+                "Ydatrian", "simple hydride compounds",
+                true, false, false,
+                300.0,
+                0.001,
+                10.0,
+                new Atmosphere.Component[]{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.METHANE, Comps.METHYLENE },
+                new int                 []{ 3             , 2              , 3              , 2                , 3            , 1               },
             
-            public const double MIN_THOLIAN_CLOUD_COVER       = 0.5;
-            public const double MAX_THOLIAN_CLOUD_COVER       = 1.0;
-            public const double MIN_THOLIAN_THICK_CLOUD_COVER = 0.25;
-            public const double MAX_THOLIAN_THICK_CLOUD_COVER = 0.85;
+                new Atmosphere.Component[]{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.METHANE, Comps.METHYLENE },
+                new int                 []{ 3             , 2              , 3              , 2                , 3            , 1               },
             
-            public const double MIN_SULFANIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_SULFANIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_SULFANIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_SULFANIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.ARGON },
+                new int                 []{ 1           },
             
-            public const double MIN_AMMONIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_AMMONIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_AMMONIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_AMMONIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
+                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
+                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
+                                            11           , 11             , 11             , 56               , 56                                                                       }
+            );
+
+            public static readonly Atmosphere.MajorClass RHEAN = new Atmosphere.MajorClass(
+                ID.Atmo.MJR_RHEAN,
+                "Rhean", "nitrogen",
+                true, false, true,
+                550.0,
+                0.001,
+                100.0,
+                new Atmosphere.Component[]{ Comps.NITROGEN },
+                new int                 []{ 1              },
+
+                new Atmosphere.Component[]{ Comps.METHANE  , Comps.METHYLENE  , Comps.ETHANE    , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.N_OXIDE   , Comps.N_DIOXIDE,
+                                            Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN                                        },
+                new int                 []{ 1              , 1                , 1               , 1                , 1               , 1                , 1               , 1              ,
+                                            1              , 1                , 1               , 1                , 1               , 1                                                     },
+
+                new Atmosphere.Component[]{ Comps.ARGON },
+                new int                 []{ 1           },
+
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
+                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
+                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
+                                            11           , 11             , 11             , 56               , 56                                                                       }
+            );
+
+            public static readonly Atmosphere.MajorClass MINERVAN = new Atmosphere.MajorClass(
+                ID.Atmo.MJR_MINERVAN,
+                "Minervan", "compounds of nonmetals",
+                true, false, false,
+                -1.0,
+                0.001,
+                100.0,
+                new Atmosphere.Component[]{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_MONOXIDE , Comps.C_DIOXIDE },
+                new int                 []{ 1            , 2              , 2              , 1                , 1                , 2               },
             
-            public const double MIN_HYDRONIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_HYDRONIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_HYDRONIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_HYDRONIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN },
+                new int                 []{ 1            , 2              , 2              , 1                , 1               , 1                , 2               , 1              },
             
-            public const double MIN_ACIDIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_ACIDIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_ACIDIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_ACIDIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.ARGON },
+                new int                 []{ 1           },
             
-            public const double MIN_PYROAZURIAN_CLOUD_COVER       = 0.0;
-            public const double MAX_PYROAZURIAN_CLOUD_COVER       = 0.2;
-            public const double MIN_PYROAZURIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_PYROAZURIAN_THICK_CLOUD_COVER = 0.0;
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
+                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
+                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
+                                            11           , 11             , 11             , 56               , 56                                                                       }
+            );
+
+            public static readonly Atmosphere.MajorClass EDELIAN = new Atmosphere.MajorClass(
+                ID.Atmo.MJR_EDELIAN,
+                "Edelian", "neon and argon",
+                true, false, false,
+                300.0,
+                0.001,
+                1.000,
+                new Atmosphere.Component[]{ Comps.NEON, Comps.ARGON },
+                new int                 []{ 1         , 1           },
             
-            public const double MIN_SULFOLIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_SULFOLIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_SULFOLIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_SULFOLIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.NEON, Comps.ARGON },
+                new int                 []{ 1         , 1           },
             
-            public const double MIN_AITHALIAN_CLOUD_COVER       = 0.1;
-            public const double MAX_AITHALIAN_CLOUD_COVER       = 0.7;
-            public const double MIN_AITHALIAN_THICK_CLOUD_COVER = 0.0;
-            public const double MAX_AITHALIAN_THICK_CLOUD_COVER = 0.3;
+                new Atmosphere.Component[]{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE,
+                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NITROGEN                                                                                                                                },
+                new int                 []{ 1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            24                                                                                                                                            },
+            
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
+                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
+                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
+                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
+                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
+                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
+                                            21           , 21             , 21             , 56               , 56                                                                       }
+            );
+        
+            public static readonly Atmosphere.MajorClass[] MAJOR_CLASSES = new Atmosphere.MajorClass[]{ JOTUNNIAN, HELIAN, YDATRIAN, RHEAN, MINERVAN, EDELIAN };
+            public static readonly int[]                   MAJOR_WEIGHTS = new int                  []{         1,      1,        1,     1,        1,       1 };        
+
+            public static readonly Atmosphere.MinorClass CRYOAZURIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_CRYOAZURIAN, "Cryoazurian", "a cryoazuri",
+                "The sky is {0}, with thin, hydrocarbon-based hazes.",
+                0.0, 90.0,
+                0.0,  0.2,
+                0.0,  0.0,
+                new string[] { "dull blue"       ,
+                               "dull cyan"       ,
+                               "sand blue"       ,
+                               "steel blue"      ,
+                               "slate gray"      ,
+                               "grayish-blue"    ,
+                               "cornflower-blue" },
+                null
+            );
+
+            public static readonly Atmosphere.MinorClass FRIGIDIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_FRIGIDIAN, "Frigidian", "a frigi",
+                "The sky is {0}, with {1} clouds of condensed hydrogen.",
+                5.0, 20.0,
+                0.1,  0.7,
+                0.0,  0.3,
+                new string[] { "gray"            ,
+                               "grayish-blue"    ,
+                               "slate gray"      ,
+                               "pewter brown"    },
+                new string[] { "light gray"      ,
+                               "white"           ,
+                               "washed-out blue" }
+            );
+
+            public static readonly Atmosphere.MinorClass NEONEAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_NEONEAN, "Neonean", "a neono",
+                "The sky is {0}, with {1} clouds of neon.",
+                15.0, 35.0,
+                 0.1,  0.7,
+                 0.0,  0.3,
+                new string[] { "pink"            ,
+                               "pale pink"       ,
+                               "primrose"        ,
+                               "light pink"      },
+                new string[] { "light gray"      ,
+                               "white"           ,
+                               "washed-out pink" }
+            );
+
+            public static readonly Atmosphere.MinorClass BOREAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_BOREAN, "Borean", "a boreo",
+                "Hazes have made the sky {0}, with {1} clouds of nitrogen and carbon monoxide.",
+                35.0, 60.0,
+                 0.1,  0.7,
+                 0.0,  0.3,
+                new string[] { "pink"                   ,
+                               "pale pink"              ,
+                               "primrose"               ,
+                               "pale purple"            ,
+                               "magenta"                ,
+                               "peach"                  ,
+                               "burnt orange"           },
+                new string[] { "gray"                   ,
+                               "white"                  ,
+                               "washed-out pink"        ,
+                               "barely-distringuishable",
+                               "washed-out pink"        ,
+                               "pale orange"            ,
+                               "tan"                    }
+            );
+
+            public static readonly Atmosphere.MinorClass METHANEAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_METHANEAN, "Methanean", "a metho",
+                "The sky is {0}, with {1} hazes of organic chemicals.",
+                60.00, 90.00,
+                 0.25,  0.85,
+                 0.10,  0.40,
+                new string[] { "cyan"       ,
+                               "turquoise"  ,
+                               "aqua"       ,
+                               "teal"       ,
+                               "pale blue"  ,
+                               "light blue" ,
+                               "blue-green" ,
+                               "dull green" },
+                new string[] { "white"      ,
+                               "pale blue"  ,
+                               "pale green" }
+            );
+
+            public static readonly Atmosphere.MinorClass MESOAZURIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_MESOAZURIAN, "Mesoazurian", "a mesoazuri",
+                "The sky is a clear {0}, with slight {1} hazes.",
+                90.00, 550.00,
+                 0.15,   0.70,
+                 0.00,   0.10,
+                new string[] { "azure"      ,
+                               "steel blue" ,
+                               "teal"       ,
+                               "smalt"      ,
+                               "blue-green" ,
+                               "turquoise"  ,
+                               "blue"       },
+                new string[] { "teal"       ,
+                               "smalt"      ,
+                               "turqoise"   ,
+                               "pale blue"  ,
+                               "pale green" }
+            );
+
+            public static readonly Atmosphere.MinorClass THOLIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_THOLIAN, "Tholian", "a tholi",
+                "The sky is {0}, with {1} hazes of hydrocarbons and organosulfurs.",
+                60.00, 550.00,
+                 0.50,   1.00,
+                 0.25,   0.85,
+                new string[] { "pale yellow" ,
+                               "pale orange" ,
+                               "yellow"      ,
+                               "orange"      ,
+                               "peach"       ,
+                               "burnt orange",
+                               "brown"       },
+                new string[] { "gray"        ,
+                               "tan"         ,
+                               "pale yellow" ,
+                               "pale brown"  }
+            );
+
+            public static readonly Atmosphere.MinorClass SULFANIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_SULFANIAN, "Sulfanian", "a sulfa",
+                "The sky is {0}, with {1} clouds of hydrogen and ammonium sulfide.",
+                80.00, 180.00,
+                 0.10,   0.70,
+                 0.00,   0.30,
+                new string[] { "pale yellow" ,
+                               "pale orange" ,
+                               "yellow"      ,
+                               "orange"      ,
+                               "dull yellow" ,
+                               "gold"        ,
+                               "tan"         },
+                new string[] { "gray"        ,
+                               "white"       ,
+                               "pale yellow" ,
+                               "pale tan"    }
+            );
+
+            public static readonly Atmosphere.MinorClass AMMONIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_AMMONIAN, "Ammonian", "an ammo",
+                "The sky is {0}, with {1} clouds of ammonia and hydrogen sulfde.",
+                80.00, 190.00,
+                 0.10,   0.70,
+                 0.00,   0.30,
+                new string[] { "orange"      ,
+                               "pale orange" ,
+                               "peach"       ,
+                               "burnt orange",
+                               "brown"       ,
+                               "dark gray"   ,
+                               "dark tan"    },
+                new string[] { "gray"        ,
+                               "white"       ,
+                               "pale yellow" ,
+                               "pale brown"  }
+            );
+        
+            public static readonly Atmosphere.MinorClass HYDRONIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_HYDRONIAN, "Hydronian", "a hydro",
+                "The sky is {0}, with {1} clouds of water vapor.",
+                170.00, 350.00,
+                  0.10,   0.70,
+                  0.00,   0.30,
+                new string[] { "white"       ,
+                               "light gray"  ,
+                               "gray"        ,
+                               "pale yellow" ,
+                               "pale orange" ,
+                               "pale green"  },
+                new string[] { "light gray"  ,
+                               "white"       ,
+                               "gray"        ,
+                               "pale yellow" }
+            );
+        
+            public static readonly Atmosphere.MinorClass ACIDIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_ACIDIAN, "Acidian", "an acidi",
+                "The sky is {0}, with {1} clouds of sulfuric acid.",
+                250.00, 500.00,
+                  0.10,   0.70,
+                  0.00,   0.30,
+                new string[] { "pale yellow" ,
+                               "dull yellow" ,
+                               "yellow"      ,
+                               "peach"       ,
+                               "tan"         ,
+                               "light brown" ,
+                               "beige"       },
+                new string[] { "light gray"  ,
+                               "white"       ,
+                               "pale yellow" ,
+                               "pale brown"  }
+            );
+        
+            public static readonly Atmosphere.MinorClass PYROAZURIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_PYROAZURIAN, "Pyroazurian", "a pyroazuri",
+                "The clouds on this planet are very thin, making the atmosphere {0}.",
+                550.00, 1300.00,
+                  0.00,    0.20,
+                  0.00,    0.00,
+                new string[] { "azure"       ,
+                               "blue"        ,
+                               "deep blue"   ,
+                               "dark blue"   ,
+                               "cobalt blue" ,
+                               "smalt"       },
+                null
+            );
+        
+            public static readonly Atmosphere.MinorClass SULFOLIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_SULFOLIAN, "Sulfolian", "a sulfoli",
+                "The sky is {0}, with sulfurous {1} clouds.",
+                400.00, 1000.00,
+                  0.10,    0.70,
+                  0.00,    0.30,
+                new string[] { "yellow"       ,
+                               "yellow-green" ,
+                               "light green"  ,
+                               "bronze"       ,
+                               "gold"         ,
+                               "dull yellow"  ,
+                               "dull green"   },
+                new string[] { "tan"          ,
+                               "dull green"   ,
+                               "pale yellow"  ,
+                               "pale green"   }
+            );
+        
+            public static readonly Atmosphere.MinorClass AITHALIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_AITHALIAN, "Aithalian", "an aithali",
+                "The sky is {0}, with carbonaceous {1} clouds.",
+                550.00, 1000.00,
+                  0.10,    0.70,
+                  0.00,    0.30,
+                new string[] { "brown"        ,
+                               "dark brown"   ,
+                               "dark gray"    ,
+                               "hazel"        ,
+                               "walnut"       ,
+                               "burnt orange" ,
+                               "olive"        },
+                new string[] { "gray"         ,
+                               "light brown"  ,
+                               "pale brown"   }
+            );
+
+            public static readonly Atmosphere.MinorClass ALKALINEAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_ALKALINEAN, "Alkalinean", "an alkali",
+                "The sky is {0}, with {1} clouds of alkaline chlorides.",
+                700.00, 850.00,
+                  0.50,   0.70,
+                  0.30,   0.60,
+                new string[] { "brown"        ,
+                               "dark brown"   ,
+                               "dark green"   ,
+                               "hazel"        ,
+                               "walnut"       ,
+                               "olive"        ,
+                               "dark olive"   },
+                new string[] { "brown"        ,
+                               "burnt orange" ,
+                               "olive"        }
+            );
+
+            public static readonly Atmosphere.MinorClass HYPERPYROAZURIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_HYPERPYRO, "Hyperpyroazurian", "a hyperpyro",
+                "On the day-side, the sky is {0}, but the night-side is visibly glowing from the extreme temperature.",
+                1300.00,   -1.00,
+                   0.00,    0.20,
+                   0.00,    0.00,
+                new string[] { "azure"       ,
+                               "blue"        ,
+                               "deep blue"   ,
+                               "dark blue"   ,
+                               "cobalt blue" ,
+                               "smalt"       },
+                null
+            );
+
+            public static readonly Atmosphere.MinorClass ENSTATIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_ENSTATIAN, "Enstatian", "an enstato",
+                "On the day-side, the sky is {0}; but the night-side is visibly glowing from the extreme temperature, and common solids like silicon, magnesium and iron compounds have vaporized to form {1} cloud decks.",
+                1300.00, 1900.00,
+                   0.10,    0.70,
+                   0.00,    0.30,
+                new string[] { "gray"        ,
+                               "dark gray"   ,
+                               "dull blue"   ,
+                               "dull green"  ,
+                               "pale brown"  ,
+                               "pewter brown"},
+                new string[] { "light gray"  ,
+                               "pale blue"   ,
+                               "slate gray"  ,
+                               "light brown" }
+            );
+
+            public static readonly Atmosphere.MinorClass REFRACTIAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_REFRACTIAN, "Refractian", "a refra",
+                "On the day-side, the sky is {0}; but the night-side is visibly glowing from the extreme temperature, and oxides of aluminum, titanium, and calcium have vaporized to form {1} cloud decks.",
+                1800.00, 2300.00,
+                   0.10,    0.70,
+                   0.00,    0.30,
+                new string[] { "orange"      ,
+                               "burnt orange",
+                               "bronze"      ,
+                               "dark tan"    ,
+                               "beige"       },
+                new string[] { "pale orange" ,
+                               "peach"       ,
+                               "tan"         ,
+                               "beige"       ,
+                               "light brown" }
+            );
+
+            public static readonly Atmosphere.MinorClass CARBEAN = new Atmosphere.MinorClass(
+                ID.Atmo.MNR_CARBEAN, "Carbean", "a carbo",
+                "On the day-side, the sky is {0}; but the night-side is visibly glowing from the extreme temperature, and silicon, titanium, and vanadium carbides have vaporized to form {1} cloud decks.",
+                2000.00, 2900.00,
+                   0.50,    0.70,
+                   0.30,    0.60,
+                new string[] { "brown"        ,
+                               "dark brown"   ,
+                               "dark green"   ,
+                               "hazel"        ,
+                               "walnut"       ,
+                               "olive"        ,
+                               "dark olive"   },
+                new string[] { "brown"        ,
+                               "burnt orange" ,
+                               "olive"        }
+            );
+
+            public static readonly Atmosphere.MinorClass[] MINOR_CLASSES = new Atmosphere.MinorClass[]{ CRYOAZURIAN, FRIGIDIAN, NEONEAN   , BOREAN          , METHANEAN, MESOAZURIAN,
+                                                                                                        THOLIAN    , SULFANIAN, AMMONIAN  , HYDRONIAN       , ACIDIAN  , PYROAZURIAN,
+                                                                                                        SULFOLIAN  , AITHALIAN, ALKALINEAN, HYPERPYROAZURIAN, ENSTATIAN, REFRACTIAN ,
+                                                                                                        CARBEAN                                                                     };
+            public static readonly int[]                   MINOR_WEIGHTS = new int                  []{           1,         1,          1,                1,         1,           1,
+                                                                                                                  1,         1,          1,                1,         1,           1,
+                                                                                                                  1,         1,          1,                1,         1,           1,
+                                                                                                                  1                                                                 };
+
         }
     }
 
@@ -491,7 +949,7 @@ namespace SystemGenerator.Generation
             public const char MJR_MINERVAN  = 'M'; //Primarily covalent compounts
             public const char MJR_EDELIAN   = 'E'; //Primarily neon
 
-            public const char MNR_CRYOAZURIAN = 'Y'; //Cold, dull blue
+            public const char MNR_CRYOAZURIAN = 'R'; //Cold, dull blue
             public const char MNR_FRIGIDIAN   = 'F'; //Cold, grey-blue
             public const char MNR_NEONEAN     = 'N'; //Cold, pinkish
             public const char MNR_BOREAN      = 'B'; //Cold, pink-purple
@@ -507,211 +965,56 @@ namespace SystemGenerator.Generation
             public const char MNR_PYROAZURIAN = 'P'; //Hot, blue
             public const char MNR_SULFOLIAN   = 'U'; //Hot, gold-green
             public const char MNR_AITHALIAN   = 'L'; //Hot, grey-brown
+            public const char MNR_ALKALINEAN  = 'K'; //Hot, green-brown
+
+            public const char MNR_HYPERPYRO   = 'p'; //Glowing, blue
+            public const char MNR_ENSTATIAN   = 'e'; //Glowing, grey
+            public const char MNR_REFRACTIAN  = 'r'; //Glowing, orange
+            public const char MNR_CARBEAN     = 'c'; //Glowing, brown
         }
     }
 
     public class Comps
     {
-        public static readonly Atmosphere.Component HYDROGEN    = new Atmosphere.Component("Hydrogen"         , 0.00201588, Color.HYDROGEN, new bool[]{ false, true , false, false, false, false, false });
-        public static readonly Atmosphere.Component HELIUM      = new Atmosphere.Component("Helium"           , 0.0040026 , Color.HYDROGEN, new bool[]{ true , false, false, false, false, false, false });
+        public static readonly Atmosphere.Component HYDROGEN    = new Atmosphere.Component("Hydrogen"         , 0.00201588, Color.HYDROGEN, new bool[]{ true , false, false, false, false, false });
+        public static readonly Atmosphere.Component HELIUM      = new Atmosphere.Component("Helium"           , 0.0040026 , Color.HYDROGEN, new bool[]{ false, false, false, false, false, false });
         
-        public static readonly Atmosphere.Component NITROGEN    = new Atmosphere.Component("Nitrogen"         , 0.028014  , Color.NITROGEN, new bool[]{ false, false, true , false, false, false, false });
-        public static readonly Atmosphere.Component AMMONIA     = new Atmosphere.Component("Ammonia"          , 0.017031  , Color.NITROGEN, new bool[]{ false, true , true , false, false, false, false });
-        public static readonly Atmosphere.Component H_CYANIDE   = new Atmosphere.Component("Hydrogen Cyanide" , 0.027026  , Color.NITROGEN, new bool[]{ false, true , true , false, false, false, false });
-        public static readonly Atmosphere.Component N_OXIDE     = new Atmosphere.Component("Nitric Oxide"     , 0.030006  , Color.NITROGEN, new bool[]{ false, false, true , true , false, false, false });
-        public static readonly Atmosphere.Component N_DIOXIDE   = new Atmosphere.Component("Nitrogen Dioxide" , 0.046005  , Color.NITROGEN, new bool[]{ false, false, true , true , false, false, false });
-        public static readonly Atmosphere.Component CYANOGEN    = new Atmosphere.Component("Cyanogen"         , 0.052036  , Color.NITROGEN, new bool[]{ false, false, true , false, true , false, false });
+        public static readonly Atmosphere.Component NITROGEN    = new Atmosphere.Component("Nitrogen"         , 0.028014  , Color.NITROGEN, new bool[]{ false, true , false, false, false, false });
+        public static readonly Atmosphere.Component AMMONIA     = new Atmosphere.Component("Ammonia"          , 0.017031  , Color.NITROGEN, new bool[]{ true , true , false, false, false, false });
+        public static readonly Atmosphere.Component H_CYANIDE   = new Atmosphere.Component("Hydrogen Cyanide" , 0.027026  , Color.NITROGEN, new bool[]{ true , true , false, false, false, false });
+        public static readonly Atmosphere.Component N_OXIDE     = new Atmosphere.Component("Nitric Oxide"     , 0.030006  , Color.NITROGEN, new bool[]{ false, true , true , false, false, false });
+        public static readonly Atmosphere.Component N_DIOXIDE   = new Atmosphere.Component("Nitrogen Dioxide" , 0.046005  , Color.NITROGEN, new bool[]{ false, true , true , false, false, false });
+        public static readonly Atmosphere.Component CYANOGEN    = new Atmosphere.Component("Cyanogen"         , 0.052036  , Color.NITROGEN, new bool[]{ false, true , false, true , false, false });
          
-        public static readonly Atmosphere.Component C_MONOXIDE  = new Atmosphere.Component("Carbon Monoxide"  , 0.02801   , Color.CARBON  , new bool[]{ false, false, false, true , true , false, false });
-        public static readonly Atmosphere.Component C_DIOXIDE   = new Atmosphere.Component("Carbon Dioxide"   , 0.044009  , Color.CARBON  , new bool[]{ false, false, false, true , true , false, false });
-        public static readonly Atmosphere.Component C_DISULFIDE = new Atmosphere.Component("Carbon Disulfide" , 0.07613   , Color.CARBON  , new bool[]{ false, false, false, false, true , true , false });
-        public static readonly Atmosphere.Component METHANE     = new Atmosphere.Component("Methane"          , 0.01604   , Color.CARBON  , new bool[]{ false, true , false, false, true , false, false });
-        public static readonly Atmosphere.Component METHYLENE   = new Atmosphere.Component("Methylene"        , 0.0140266 , Color.CARBON  , new bool[]{ false, true , false, false, true , false, false });
-        public static readonly Atmosphere.Component ETHANE      = new Atmosphere.Component("Ethane"           , 0.03007   , Color.CARBON  , new bool[]{ false, true , false, false, true , false, false });
-        public static readonly Atmosphere.Component ETHYLENE    = new Atmosphere.Component("Ethylene"         , 0.028054  , Color.CARBON  , new bool[]{ false, true , false, false, true , false, false });
-        public static readonly Atmosphere.Component ACETYLENE   = new Atmosphere.Component("Acetylene"        , 0.026038  , Color.CARBON  , new bool[]{ false, false, false, false, true , false, false });
-        public static readonly Atmosphere.Component DIACETYLENE = new Atmosphere.Component("Diacetylene"      , 0.05006   , Color.CARBON  , new bool[]{ false, false, false, false, true , false, false });
-        public static readonly Atmosphere.Component PROPANE     = new Atmosphere.Component("Propane"          , 0.0441    , Color.CARBON  , new bool[]{ false, false, false, false, true , false, false });
-        public static readonly Atmosphere.Component PROPYNE     = new Atmosphere.Component("Propyne"          , 0.040065  , Color.CARBON  , new bool[]{ false, false, false, false, true , false, false });
-        public static readonly Atmosphere.Component THOLINS     = new Atmosphere.Component("Tholins"          , 0.0       , Color.CARBON  , new bool[]{ false, false, false, false, true , false, false });
+        public static readonly Atmosphere.Component C_MONOXIDE  = new Atmosphere.Component("Carbon Monoxide"  , 0.02801   , Color.CARBON  , new bool[]{ false, false, true , true , false, false });
+        public static readonly Atmosphere.Component C_DIOXIDE   = new Atmosphere.Component("Carbon Dioxide"   , 0.044009  , Color.CARBON  , new bool[]{ false, false, true , true , false, false });
+        public static readonly Atmosphere.Component C_DISULFIDE = new Atmosphere.Component("Carbon Disulfide" , 0.07613   , Color.CARBON  , new bool[]{ false, false, false, true , true , false });
+        public static readonly Atmosphere.Component METHANE     = new Atmosphere.Component("Methane"          , 0.01604   , Color.CARBON  , new bool[]{ true , false, false, true , false, false });
+        public static readonly Atmosphere.Component METHYLENE   = new Atmosphere.Component("Methylene"        , 0.0140266 , Color.CARBON  , new bool[]{ true , false, false, true , false, false });
+        public static readonly Atmosphere.Component ETHANE      = new Atmosphere.Component("Ethane"           , 0.03007   , Color.CARBON  , new bool[]{ true , false, false, true , false, false });
+        public static readonly Atmosphere.Component ETHYLENE    = new Atmosphere.Component("Ethylene"         , 0.028054  , Color.CARBON  , new bool[]{ true , false, false, true , false, false });
+        public static readonly Atmosphere.Component ACETYLENE   = new Atmosphere.Component("Acetylene"        , 0.026038  , Color.CARBON  , new bool[]{ false, false, false, true , false, false });
+        public static readonly Atmosphere.Component DIACETYLENE = new Atmosphere.Component("Diacetylene"      , 0.05006   , Color.CARBON  , new bool[]{ false, false, false, true , false, false });
+        public static readonly Atmosphere.Component PROPANE     = new Atmosphere.Component("Propane"          , 0.0441    , Color.CARBON  , new bool[]{ false, false, false, true , false, false });
+        public static readonly Atmosphere.Component PROPYNE     = new Atmosphere.Component("Propyne"          , 0.040065  , Color.CARBON  , new bool[]{ false, false, false, true , false, false });
+        public static readonly Atmosphere.Component THOLINS     = new Atmosphere.Component("Tholins"          , 0.0       , Color.CARBON  , new bool[]{ false, false, false, true , false, false });
         
-        public static readonly Atmosphere.Component H_SULFIDE   = new Atmosphere.Component("Hydrogen Sulfide" , 0.03408   , Color.SULFUR  , new bool[]{ false, true , false, false, false, true , false });
-        public static readonly Atmosphere.Component S_DIOXIDE   = new Atmosphere.Component("Sulfur Dioxide"   , 0.06406   , Color.SULFUR  , new bool[]{ false, false, false, true , false, true , false });
-        public static readonly Atmosphere.Component CARBONYL_S  = new Atmosphere.Component("Carbonyl Sulfide" , 0.06007   , Color.SULFUR  , new bool[]{ false, false, false, true , false, true , false });
+        public static readonly Atmosphere.Component H_SULFIDE   = new Atmosphere.Component("Hydrogen Sulfide" , 0.03408   , Color.SULFUR  , new bool[]{ true , false, false, false, true , false });
+        public static readonly Atmosphere.Component S_DIOXIDE   = new Atmosphere.Component("Sulfur Dioxide"   , 0.06406   , Color.SULFUR  , new bool[]{ false, false, true , false, true , false });
+        public static readonly Atmosphere.Component CARBONYL_S  = new Atmosphere.Component("Carbonyl Sulfide" , 0.06007   , Color.SULFUR  , new bool[]{ false, false, true , false, true , false });
 
-        public static readonly Atmosphere.Component OXYGEN      = new Atmosphere.Component("Oxygen"           , 0.031998  , Color.OXYGEN  , new bool[]{ false, false, false, true , false, false, false });
-        public static readonly Atmosphere.Component WATER       = new Atmosphere.Component("Water"            , 0.018015  , Color.WATER   , new bool[]{ false, true , false, true , false, false, false });
-        public static readonly Atmosphere.Component PHOSPHINE   = new Atmosphere.Component("Phosphine"        , 0.033998  , Color.PHOSPHOR, new bool[]{ false, true , false, false, false, false, true  });
-        public static readonly Atmosphere.Component SILANE      = new Atmosphere.Component("Silane"           , 0.032117  , Color.SILICON , new bool[]{ false, true , false, false, false, false, true  });
-        public static readonly Atmosphere.Component H_FLUORIDE  = new Atmosphere.Component("Hydrogen Fluoride", 0.020006  , Color.FLUORINE, new bool[]{ false, true , false, false, false, false, true  });
-        public static readonly Atmosphere.Component H_CHLORIDE  = new Atmosphere.Component("Hydrogen Chloride", 0.03646   , Color.CHLORINE, new bool[]{ false, true , false, false, false, false, true  });
+        public static readonly Atmosphere.Component OXYGEN      = new Atmosphere.Component("Oxygen"           , 0.031998  , Color.OXYGEN  , new bool[]{ false, false, true , false, false, false });
+        public static readonly Atmosphere.Component WATER       = new Atmosphere.Component("Water"            , 0.018015  , Color.WATER   , new bool[]{ true , false, true , false, false, false });
+        public static readonly Atmosphere.Component PHOSPHINE   = new Atmosphere.Component("Phosphine"        , 0.033998  , Color.PHOSPHOR, new bool[]{ true , false, false, false, false, true  });
+        public static readonly Atmosphere.Component SILANE      = new Atmosphere.Component("Silane"           , 0.032117  , Color.SILICON , new bool[]{ true , false, false, false, false, true  });
+        public static readonly Atmosphere.Component H_FLUORIDE  = new Atmosphere.Component("Hydrogen Fluoride", 0.020006  , Color.FLUORINE, new bool[]{ true , false, false, false, false, true  });
+        public static readonly Atmosphere.Component H_CHLORIDE  = new Atmosphere.Component("Hydrogen Chloride", 0.03646   , Color.CHLORINE, new bool[]{ true , false, false, false, false, true  });
 
-        public static readonly Atmosphere.Component NEON        = new Atmosphere.Component("Neon"             , 0.0201797 , Color.NEON    , new bool[]{ true , false, false, false, false, false, false });
-        public static readonly Atmosphere.Component ARGON       = new Atmosphere.Component("Argon"            , 0.039948  , Color.ARGON   , new bool[]{ true , false, false, false, false, false, false });
-        public static readonly Atmosphere.Component KRYPTON     = new Atmosphere.Component("Krypton"          , 0.083798  , Color.KRYPTON , new bool[]{ true , false, false, false, false, false, false });
+        public static readonly Atmosphere.Component NEON        = new Atmosphere.Component("Neon"             , 0.0201797 , Color.NEON    , new bool[]{ false, false, false, false, false, false });
+        public static readonly Atmosphere.Component ARGON       = new Atmosphere.Component("Argon"            , 0.039948  , Color.ARGON   , new bool[]{ false, false, false, false, false, false });
+        public static readonly Atmosphere.Component KRYPTON     = new Atmosphere.Component("Krypton"          , 0.083798  , Color.KRYPTON , new bool[]{ false, false, false, false, false, false });
 
-        public static readonly Atmosphere.Major JOTUNNIAN = new Atmosphere.Major(
-            ID.Atmo.MJR_JOTUNNIAN,
-            "Jotunnian",
-            false,
-            true,
-            
-            new List<Atmosphere.Component>{ Comps.HYDROGEN },
-            new List<int>                 { 1              },
-            
-            new List<Atmosphere.Component>{ Comps.HELIUM   },
-            new List<int>                 { 1              },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE     },
-            new List<int>                 { 2            , 1              , 2              , 1                , 1               , 2                , 1               , 2                 },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.AMMONIA, Comps.PHOSPHINE, Comps.NITROGEN , Comps.THOLINS                                                                               },
-            new List<int>                 { 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            56           , 56             , 56             , 56                                                                                          }
-        );
-
-        public static readonly Atmosphere.Major HELIAN = new Atmosphere.Major(
-            ID.Atmo.MJR_HELIAN,
-            "Helian",
-            true,
-            false,
-            
-            new List<Atmosphere.Component>{ Comps.HELIUM },
-            new List<int>                 { 1            },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE , Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NITROGEN, Comps.NEON                                                                                                                    },
-            new List<int>                 { 1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               ,
-                                            1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               ,
-                                            32            , 32                                                                                                                            },
-            
-            new List<Atmosphere.Component>{ Comps.ARGON },
-            new List<int>                 { 1           },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                           },
-            new List<int>                 { 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            21           , 21             , 21             , 56               , 56                                                                        }
-        );
-
-        public static readonly Atmosphere.Major YDATRIAN = new Atmosphere.Major(
-            ID.Atmo.MJR_YDATRIAN,
-            "Ydatrian",
-            true,
-            false,
-
-            new List<Atmosphere.Component>{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.METHANE, Comps.METHYLENE },
-            new List<int>                 { 3             , 2              , 3              , 2                , 3            , 1               },
-            
-            new List<Atmosphere.Component>{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.METHANE, Comps.METHYLENE },
-            new List<int>                 { 3             , 2              , 3              , 2                , 3            , 1               },
-            
-            new List<Atmosphere.Component>{ Comps.ARGON },
-            new List<int>                 { 1           },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-            new List<int>                 { 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            21           , 21             , 21             , 56               , 56                                                                       }
-        );
-
-        public static readonly Atmosphere.Major RHEAN = new Atmosphere.Major(
-            ID.Atmo.MJR_RHEAN,
-            "Rhean",
-            true,
-            false,
-
-            new List<Atmosphere.Component>{ Comps.NITROGEN },
-            new List<int>                 { 1              },
-
-            new List<Atmosphere.Component>{ Comps.METHANE  , Comps.METHYLENE  , Comps.ETHANE    , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.N_OXIDE   , Comps.N_DIOXIDE,
-                                            Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN                                        },
-            new List<int>                 { 1              , 1                , 1               , 1                , 1               , 1                , 1               , 1              ,
-                                            1              , 1                , 1               , 1                , 1               , 1                                                     },
-
-            new List<Atmosphere.Component>{ Comps.ARGON },
-            new List<int>                 { 1           },
-
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-            new List<int>                 { 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            21           , 21             , 21             , 56               , 56                                                                       }
-        );
-
-        public static readonly Atmosphere.Major MINERVAN = new Atmosphere.Major(
-            ID.Atmo.MJR_MINERVAN,
-            "Minervan",
-            true,
-            false,
-
-            new List<Atmosphere.Component>{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_MONOXIDE , Comps.C_DIOXIDE },
-            new List<int>                 { 1            , 2              , 2              , 1                , 1                , 2               },
-            
-            new List<Atmosphere.Component>{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN },
-            new List<int>                 { 1            , 2              , 2              , 1                , 1               , 1                , 2               , 1              },
-            
-            new List<Atmosphere.Component>{ Comps.ARGON },
-            new List<int>                 { 1           },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-            new List<int>                 { 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            21           , 21             , 21             , 56               , 56                                                                       }
-        );
-
-        public static readonly Atmosphere.Major EDELIAN = new Atmosphere.Major(
-            ID.Atmo.MJR_EDELIAN,
-            "Edelian",
-            true,
-            false,
-
-            new List<Atmosphere.Component>{ Comps.NEON, Comps.ARGON },
-            new List<int>                 { 1         , 1           },
-            
-            new List<Atmosphere.Component>{ Comps.NEON, Comps.ARGON },
-            new List<int>                 { 1         , 1           },
-            
-            new List<Atmosphere.Component>{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE,
-                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NITROGEN                                                                                                                                },
-            new List<int>                 { 1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            24                                                                                                                                            },
-            
-            new List<Atmosphere.Component>{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-            new List<int>                 { 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            21           , 21             , 21             , 56               , 56                                                                       }
-        );
         
-        public static readonly List<Atmosphere.Major> MAJOR_CLASSES = new List<Atmosphere.Major>{ JOTUNNIAN, HELIAN, YDATRIAN, RHEAN, MINERVAN, EDELIAN };
-
         public class Color
         {
             public        const    int HYDROGEN = 0xFFFFFF;
