@@ -116,7 +116,7 @@ namespace SystemGenerator
         private void systemListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             optionListBox.Items.Clear();
-            if (systemListBox.SelectedIndex == 0)
+            if (systemListBox.SelectedIndex <= 0)
                 showStarProps(star);
             else if (planets[systemListBox.SelectedIndex - 1].isBelt)
                 showBeltProps(planets, planets[systemListBox.SelectedIndex - 1]);
@@ -136,30 +136,58 @@ namespace SystemGenerator
                     }
                 }
             }
+
+            if (optionListBox.Items.Count != 0)
+                optionListBox.SelectedIndex = 0;
         }
 
         private void optionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (optionListBox.SelectedIndex == 0)
+            if (optionListBox.SelectedIndex <= 0)
                 showPlanetProps(planets[systemListBox.SelectedIndex - 1]);
             else
                 showMoonProps(planets[systemListBox.SelectedIndex - 1].moons[optionListBox.SelectedIndex - 1]);
         }
-        
+
         private void systemListBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up)
-                systemListBox.SelectedIndex--;
-            else if (e.KeyCode == Keys.Down)
-                systemListBox.SelectedIndex++;
+            int iSystemSelectedIndex = systemListBox.SelectedIndex;
+            int iOptionSelectedIndex = optionListBox.SelectedIndex;
+
+            //Control system listbox index
+            if (e.KeyCode == Keys.W)
+                iSystemSelectedIndex--;
+            else if (e.KeyCode == Keys.S)
+                iSystemSelectedIndex++;
+
+            //Control option listbox index
+            if (e.KeyCode == Keys.A)
+                iOptionSelectedIndex--;
+            else if (e.KeyCode == Keys.D)
+                iOptionSelectedIndex++;
+
+            //Handle rollover
+            if (iSystemSelectedIndex >= systemListBox.Items.Count)
+                iSystemSelectedIndex = 0;
+            if (iSystemSelectedIndex < 0)
+                iSystemSelectedIndex = systemListBox.Items.Count - 1;
+
+            if (iOptionSelectedIndex >= optionListBox.Items.Count)
+                iOptionSelectedIndex = 0;
+            if (iOptionSelectedIndex < 0)
+                iOptionSelectedIndex = optionListBox.Items.Count - 1;
+
+            //Update indices
+            if (systemListBox.Items.Count != 0)
+                systemListBox.SelectedIndex = iSystemSelectedIndex;
+
+            if (optionListBox.Items.Count != 0)
+                optionListBox.SelectedIndex = iOptionSelectedIndex;
         }
 
         private void optionListBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left)
-                systemListBox.SelectedIndex--;
-            else if (e.KeyCode == Keys.Right)
-                systemListBox.SelectedIndex++;
+            systemListBox_KeyDown(sender, e);
         }
 
         private void showPlanetProps(Planet planet)
@@ -472,11 +500,11 @@ namespace SystemGenerator
                 propsPhysicalMoonValueMass.Text = String.Format(UI.FORMAT, moon.m);
                 propsPhysicalMoonUnitMass.Text = "M🜨";
             }
-            propsPhysicalMoonValueRadA.Text = String.Format(UI.FORMAT, moon.rA);
-            propsPhysicalMoonValueRadB.Text = String.Format(UI.FORMAT, moon.rB);
-            propsPhysicalMoonValueRadC.Text = String.Format(UI.FORMAT, moon.rC);
+            propsPhysicalMoonValueRadA.Text = String.Format(UI.FORMAT, (moon.rA + moon.rB + moon.rC) / 3.0);
             propsPhysicalMoonValueGravity.Text = String.Format(UI.FORMAT, moon.g * Const.Earth.GRAVITY);
             propsPhysicalMoonValueEscV.Text = String.Format(UI.FORMAT, moon.escV / 1000.0);
+            propsPhysicalMoonValueTemp.Text = String.Format(UI.FORMAT, moon.t - Const.KELVIN);
+            propsPhysicalMoonValueAlbedo.Text = String.Format(UI.FORMAT, moon.albedo * 100.0);
 
             //Bulk
             propsBulkValueRock.Text = String.Format(UI.FORMAT, moon.bulkRock * 100.0);
@@ -609,6 +637,9 @@ namespace SystemGenerator
 
             //Flavor text
             flavorTextLabel.Text = moon.flavortext;
+
+            //Draw moon
+            drawMoon(moon);
         }
 
         private void drawPlanet(Planet planet)
@@ -631,6 +662,23 @@ namespace SystemGenerator
             pictureBox.Show();
         }
 
+        private void drawMoon(Moon moon)
+        {
+            pictureBox.Hide();
+
+            if (moon.image == null)
+                moon.genImage(pictureBox.Width, pictureBox.Height);
+
+            pictureBox.Image = moon.image;
+
+            if (moon.isMajor)
+                scaleLabel.Text = String.Format("1/{0:D} Scale", (int)Math.Round(1.0 / UI.SCALE_MAJOR));
+            else
+                scaleLabel.Text = String.Format("1/{0:D} Scale", (int)Math.Round(1.0 / UI.SCALE_SMALL));
+
+            pictureBox.Show();
+        }
+
         private void drawStar(Star star)
         {
             pictureBox.Hide();
@@ -644,5 +692,6 @@ namespace SystemGenerator
 
             pictureBox.Show();
         }
+
     }
 }

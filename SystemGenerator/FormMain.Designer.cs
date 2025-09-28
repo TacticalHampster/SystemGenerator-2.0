@@ -249,20 +249,20 @@
             propsPhysicalMoonTable = new TableLayoutPanel();
             propsPhysicalMoonUnitMass = new Label();
             propsPhysicalMoonValueEscV = new Label();
-            propsPhysicalMoonValueRadB = new Label();
+            propsPhysicalMoonValueTemp = new Label();
             propsPhysicalMoonValueGravity = new Label();
             propsPhysicalMoonValueRadA = new Label();
-            propsPhysicalMoonValueRadC = new Label();
+            propsPhysicalMoonValueAlbedo = new Label();
             propsPhysicalMoonValueMass = new Label();
             propsPhysicalMoonLabelEscV = new Label();
             propsPhysicalMoonLabelGravity = new Label();
             propsPhysicalMoonLabelMass = new Label();
             propsPhysicalMoonUnitRadA = new Label();
-            propsPhysicalMoonUnitRadB = new Label();
-            propsPhysicalMoonUnitRadC = new Label();
+            propsPhysicalMoonUnitTemp = new Label();
+            propsPhysicalMoonUnitAlbedo = new Label();
             propsPhysicalMoonUnitGravity = new Label();
             propsPhysicalMoonUnitEscV = new Label();
-            propsPhysicalMoonLabelRadii = new Label();
+            propsPhysicalMoonLabelRadius = new Label();
             genProgressBar = new ProgressBar();
             drawingGroupBox = new GroupBox();
             scaleLabel = new Label();
@@ -270,6 +270,8 @@
             blankGroupBox1 = new GroupBox();
             blankGroupBox2 = new GroupBox();
             blankGroupBox4 = new GroupBox();
+            propsPhysicalMoonLabelTemp = new Label();
+            propsPhysicalMoonLabelAlbedo = new Label();
             propsPhysicalPlanetGroup.SuspendLayout();
             propsPhysicalPlanetTable.SuspendLayout();
             propsOrbitPlanetGroup.SuspendLayout();
@@ -3147,22 +3149,24 @@
             propsPhysicalMoonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 215F));
             propsPhysicalMoonTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 105F));
             propsPhysicalMoonTable.ColumnStyles.Add(new ColumnStyle());
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelAlbedo, 0, 5);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelTemp, 0, 4);
             propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitMass, 2, 0);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueEscV, 1, 5);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueRadB, 1, 2);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueGravity, 1, 4);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueEscV, 1, 3);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueTemp, 1, 4);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueGravity, 1, 2);
             propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueRadA, 1, 1);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueRadC, 1, 3);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueAlbedo, 1, 5);
             propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonValueMass, 1, 0);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelEscV, 0, 5);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelGravity, 0, 4);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelEscV, 0, 3);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelGravity, 0, 2);
             propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelMass, 0, 0);
             propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitRadA, 2, 1);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitRadB, 2, 2);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitRadC, 2, 3);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitGravity, 2, 4);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitEscV, 2, 5);
-            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelRadii, 0, 1);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitTemp, 2, 4);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitAlbedo, 2, 5);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitGravity, 2, 2);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonUnitEscV, 2, 3);
+            propsPhysicalMoonTable.Controls.Add(propsPhysicalMoonLabelRadius, 0, 1);
             propsPhysicalMoonTable.Dock = DockStyle.Top;
             propsPhysicalMoonTable.Location = new Point(3, 23);
             propsPhysicalMoonTable.Name = "propsPhysicalMoonTable";
@@ -3193,31 +3197,31 @@
             propsPhysicalMoonValueEscV.AutoSize = true;
             propsPhysicalMoonValueEscV.Dock = DockStyle.Right;
             propsPhysicalMoonValueEscV.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonValueEscV.Location = new Point(218, 100);
+            propsPhysicalMoonValueEscV.Location = new Point(218, 60);
             propsPhysicalMoonValueEscV.Name = "propsPhysicalMoonValueEscV";
-            propsPhysicalMoonValueEscV.Size = new Size(99, 24);
+            propsPhysicalMoonValueEscV.Size = new Size(99, 20);
             propsPhysicalMoonValueEscV.TabIndex = 11;
             propsPhysicalMoonValueEscV.Text = "X,XXX.XXXX";
             propsPhysicalMoonValueEscV.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // propsPhysicalMoonValueRadB
+            // propsPhysicalMoonValueTemp
             // 
-            propsPhysicalMoonValueRadB.AutoSize = true;
-            propsPhysicalMoonValueRadB.Dock = DockStyle.Right;
-            propsPhysicalMoonValueRadB.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonValueRadB.Location = new Point(218, 40);
-            propsPhysicalMoonValueRadB.Name = "propsPhysicalMoonValueRadB";
-            propsPhysicalMoonValueRadB.Size = new Size(99, 20);
-            propsPhysicalMoonValueRadB.TabIndex = 10;
-            propsPhysicalMoonValueRadB.Text = "X,XXX.XXXX";
-            propsPhysicalMoonValueRadB.TextAlign = ContentAlignment.MiddleLeft;
+            propsPhysicalMoonValueTemp.AutoSize = true;
+            propsPhysicalMoonValueTemp.Dock = DockStyle.Right;
+            propsPhysicalMoonValueTemp.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonValueTemp.Location = new Point(218, 80);
+            propsPhysicalMoonValueTemp.Name = "propsPhysicalMoonValueTemp";
+            propsPhysicalMoonValueTemp.Size = new Size(99, 20);
+            propsPhysicalMoonValueTemp.TabIndex = 10;
+            propsPhysicalMoonValueTemp.Text = "X,XXX.XXXX";
+            propsPhysicalMoonValueTemp.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // propsPhysicalMoonValueGravity
             // 
             propsPhysicalMoonValueGravity.AutoSize = true;
             propsPhysicalMoonValueGravity.Dock = DockStyle.Right;
             propsPhysicalMoonValueGravity.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonValueGravity.Location = new Point(218, 80);
+            propsPhysicalMoonValueGravity.Location = new Point(218, 40);
             propsPhysicalMoonValueGravity.Name = "propsPhysicalMoonValueGravity";
             propsPhysicalMoonValueGravity.Size = new Size(99, 20);
             propsPhysicalMoonValueGravity.TabIndex = 9;
@@ -3236,17 +3240,17 @@
             propsPhysicalMoonValueRadA.Text = "X,XXX.XXXX";
             propsPhysicalMoonValueRadA.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // propsPhysicalMoonValueRadC
+            // propsPhysicalMoonValueAlbedo
             // 
-            propsPhysicalMoonValueRadC.AutoSize = true;
-            propsPhysicalMoonValueRadC.Dock = DockStyle.Right;
-            propsPhysicalMoonValueRadC.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonValueRadC.Location = new Point(218, 60);
-            propsPhysicalMoonValueRadC.Name = "propsPhysicalMoonValueRadC";
-            propsPhysicalMoonValueRadC.Size = new Size(99, 20);
-            propsPhysicalMoonValueRadC.TabIndex = 7;
-            propsPhysicalMoonValueRadC.Text = "X,XXX.XXXX";
-            propsPhysicalMoonValueRadC.TextAlign = ContentAlignment.MiddleLeft;
+            propsPhysicalMoonValueAlbedo.AutoSize = true;
+            propsPhysicalMoonValueAlbedo.Dock = DockStyle.Right;
+            propsPhysicalMoonValueAlbedo.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonValueAlbedo.Location = new Point(218, 100);
+            propsPhysicalMoonValueAlbedo.Name = "propsPhysicalMoonValueAlbedo";
+            propsPhysicalMoonValueAlbedo.Size = new Size(99, 24);
+            propsPhysicalMoonValueAlbedo.TabIndex = 7;
+            propsPhysicalMoonValueAlbedo.Text = "X,XXX.XXXX";
+            propsPhysicalMoonValueAlbedo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // propsPhysicalMoonValueMass
             // 
@@ -3266,7 +3270,7 @@
             propsPhysicalMoonLabelEscV.AutoSize = true;
             propsPhysicalMoonLabelEscV.Dock = DockStyle.Top;
             propsPhysicalMoonLabelEscV.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonLabelEscV.Location = new Point(3, 100);
+            propsPhysicalMoonLabelEscV.Location = new Point(3, 60);
             propsPhysicalMoonLabelEscV.Name = "propsPhysicalMoonLabelEscV";
             propsPhysicalMoonLabelEscV.Size = new Size(209, 20);
             propsPhysicalMoonLabelEscV.TabIndex = 5;
@@ -3278,7 +3282,7 @@
             propsPhysicalMoonLabelGravity.AutoSize = true;
             propsPhysicalMoonLabelGravity.Dock = DockStyle.Fill;
             propsPhysicalMoonLabelGravity.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonLabelGravity.Location = new Point(3, 80);
+            propsPhysicalMoonLabelGravity.Location = new Point(3, 40);
             propsPhysicalMoonLabelGravity.Name = "propsPhysicalMoonLabelGravity";
             propsPhysicalMoonLabelGravity.Size = new Size(209, 20);
             propsPhysicalMoonLabelGravity.TabIndex = 4;
@@ -3309,36 +3313,36 @@
             propsPhysicalMoonUnitRadA.Text = "km";
             propsPhysicalMoonUnitRadA.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // propsPhysicalMoonUnitRadB
+            // propsPhysicalMoonUnitTemp
             // 
-            propsPhysicalMoonUnitRadB.AutoSize = true;
-            propsPhysicalMoonUnitRadB.Dock = DockStyle.Fill;
-            propsPhysicalMoonUnitRadB.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonUnitRadB.Location = new Point(323, 40);
-            propsPhysicalMoonUnitRadB.Name = "propsPhysicalMoonUnitRadB";
-            propsPhysicalMoonUnitRadB.Size = new Size(45, 20);
-            propsPhysicalMoonUnitRadB.TabIndex = 14;
-            propsPhysicalMoonUnitRadB.Text = "km";
-            propsPhysicalMoonUnitRadB.TextAlign = ContentAlignment.MiddleLeft;
+            propsPhysicalMoonUnitTemp.AutoSize = true;
+            propsPhysicalMoonUnitTemp.Dock = DockStyle.Fill;
+            propsPhysicalMoonUnitTemp.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonUnitTemp.Location = new Point(323, 80);
+            propsPhysicalMoonUnitTemp.Name = "propsPhysicalMoonUnitTemp";
+            propsPhysicalMoonUnitTemp.Size = new Size(45, 20);
+            propsPhysicalMoonUnitTemp.TabIndex = 14;
+            propsPhysicalMoonUnitTemp.Text = "°C";
+            propsPhysicalMoonUnitTemp.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // propsPhysicalMoonUnitRadC
+            // propsPhysicalMoonUnitAlbedo
             // 
-            propsPhysicalMoonUnitRadC.AutoSize = true;
-            propsPhysicalMoonUnitRadC.Dock = DockStyle.Fill;
-            propsPhysicalMoonUnitRadC.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonUnitRadC.Location = new Point(323, 60);
-            propsPhysicalMoonUnitRadC.Name = "propsPhysicalMoonUnitRadC";
-            propsPhysicalMoonUnitRadC.Size = new Size(45, 20);
-            propsPhysicalMoonUnitRadC.TabIndex = 15;
-            propsPhysicalMoonUnitRadC.Text = "km";
-            propsPhysicalMoonUnitRadC.TextAlign = ContentAlignment.MiddleLeft;
+            propsPhysicalMoonUnitAlbedo.AutoSize = true;
+            propsPhysicalMoonUnitAlbedo.Dock = DockStyle.Fill;
+            propsPhysicalMoonUnitAlbedo.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonUnitAlbedo.Location = new Point(323, 100);
+            propsPhysicalMoonUnitAlbedo.Name = "propsPhysicalMoonUnitAlbedo";
+            propsPhysicalMoonUnitAlbedo.Size = new Size(45, 24);
+            propsPhysicalMoonUnitAlbedo.TabIndex = 15;
+            propsPhysicalMoonUnitAlbedo.Text = "%";
+            propsPhysicalMoonUnitAlbedo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // propsPhysicalMoonUnitGravity
             // 
             propsPhysicalMoonUnitGravity.AutoSize = true;
             propsPhysicalMoonUnitGravity.Dock = DockStyle.Fill;
             propsPhysicalMoonUnitGravity.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonUnitGravity.Location = new Point(323, 80);
+            propsPhysicalMoonUnitGravity.Location = new Point(323, 40);
             propsPhysicalMoonUnitGravity.Name = "propsPhysicalMoonUnitGravity";
             propsPhysicalMoonUnitGravity.Size = new Size(45, 20);
             propsPhysicalMoonUnitGravity.TabIndex = 16;
@@ -3350,23 +3354,23 @@
             propsPhysicalMoonUnitEscV.AutoSize = true;
             propsPhysicalMoonUnitEscV.Dock = DockStyle.Fill;
             propsPhysicalMoonUnitEscV.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonUnitEscV.Location = new Point(323, 100);
+            propsPhysicalMoonUnitEscV.Location = new Point(323, 60);
             propsPhysicalMoonUnitEscV.Name = "propsPhysicalMoonUnitEscV";
-            propsPhysicalMoonUnitEscV.Size = new Size(45, 24);
+            propsPhysicalMoonUnitEscV.Size = new Size(45, 20);
             propsPhysicalMoonUnitEscV.TabIndex = 17;
             propsPhysicalMoonUnitEscV.Text = "m/s";
             propsPhysicalMoonUnitEscV.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // propsPhysicalMoonLabelRadii
+            // propsPhysicalMoonLabelRadius
             // 
-            propsPhysicalMoonLabelRadii.AutoSize = true;
-            propsPhysicalMoonLabelRadii.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonLabelRadii.Location = new Point(3, 20);
-            propsPhysicalMoonLabelRadii.Name = "propsPhysicalMoonLabelRadii";
-            propsPhysicalMoonLabelRadii.Size = new Size(54, 20);
-            propsPhysicalMoonLabelRadii.TabIndex = 1;
-            propsPhysicalMoonLabelRadii.Text = "Radii";
-            propsPhysicalMoonLabelRadii.TextAlign = ContentAlignment.MiddleLeft;
+            propsPhysicalMoonLabelRadius.AutoSize = true;
+            propsPhysicalMoonLabelRadius.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonLabelRadius.Location = new Point(3, 20);
+            propsPhysicalMoonLabelRadius.Name = "propsPhysicalMoonLabelRadius";
+            propsPhysicalMoonLabelRadius.Size = new Size(135, 20);
+            propsPhysicalMoonLabelRadius.TabIndex = 1;
+            propsPhysicalMoonLabelRadius.Text = "Average Radius";
+            propsPhysicalMoonLabelRadius.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // genProgressBar
             // 
@@ -3427,6 +3431,30 @@
             blankGroupBox4.Size = new Size(375, 215);
             blankGroupBox4.TabIndex = 3;
             blankGroupBox4.TabStop = false;
+            // 
+            // propsPhysicalMoonLabelTemp
+            // 
+            propsPhysicalMoonLabelTemp.AutoSize = true;
+            propsPhysicalMoonLabelTemp.Dock = DockStyle.Fill;
+            propsPhysicalMoonLabelTemp.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonLabelTemp.Location = new Point(3, 80);
+            propsPhysicalMoonLabelTemp.Name = "propsPhysicalMoonLabelTemp";
+            propsPhysicalMoonLabelTemp.Size = new Size(209, 20);
+            propsPhysicalMoonLabelTemp.TabIndex = 18;
+            propsPhysicalMoonLabelTemp.Text = "Blackbody Temperature";
+            propsPhysicalMoonLabelTemp.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // propsPhysicalMoonLabelAlbedo
+            // 
+            propsPhysicalMoonLabelAlbedo.AutoSize = true;
+            propsPhysicalMoonLabelAlbedo.Dock = DockStyle.Fill;
+            propsPhysicalMoonLabelAlbedo.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonLabelAlbedo.Location = new Point(3, 100);
+            propsPhysicalMoonLabelAlbedo.Name = "propsPhysicalMoonLabelAlbedo";
+            propsPhysicalMoonLabelAlbedo.Size = new Size(209, 24);
+            propsPhysicalMoonLabelAlbedo.TabIndex = 19;
+            propsPhysicalMoonLabelAlbedo.Text = "Bond Albedo";
+            propsPhysicalMoonLabelAlbedo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // FormMain
             // 
@@ -3724,20 +3752,20 @@
         private TableLayoutPanel propsPhysicalMoonTable;
         private Label propsPhysicalMoonUnitMass;
         private Label propsPhysicalMoonValueEscV;
-        private Label propsPhysicalMoonValueRadB;
+        private Label propsPhysicalMoonValueTemp;
         private Label propsPhysicalMoonValueGravity;
         private Label propsPhysicalMoonValueRadA;
-        private Label propsPhysicalMoonValueRadC;
+        private Label propsPhysicalMoonValueAlbedo;
         private Label propsPhysicalMoonValueMass;
         private Label propsPhysicalMoonLabelEscV;
         private Label propsPhysicalMoonLabelGravity;
         private Label propsPhysicalMoonLabelMass;
         private Label propsPhysicalMoonUnitRadA;
-        private Label propsPhysicalMoonUnitRadB;
-        private Label propsPhysicalMoonUnitRadC;
+        private Label propsPhysicalMoonUnitTemp;
+        private Label propsPhysicalMoonUnitAlbedo;
         private Label propsPhysicalMoonUnitGravity;
         private Label propsPhysicalMoonUnitEscV;
-        private Label propsPhysicalMoonLabelRadii;
+        private Label propsPhysicalMoonLabelRadius;
         private Label flavorTextLabel;
         private GroupBox drawingGroupBox;
         private GroupBox blankGroupBox1;
@@ -3747,5 +3775,7 @@
         private PictureBox pictureBox;
         private Label scaleLabel;
         public static ProgressBar genProgressBar;
+        private Label propsPhysicalMoonLabelAlbedo;
+        private Label propsPhysicalMoonLabelTemp;
     }
 }

@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.VisualStyles;
+using static SystemGenerator.Generation.Atmosphere;
 
 namespace SystemGenerator.Generation
 {
@@ -93,6 +94,7 @@ namespace SystemGenerator.Generation
             
             Utils.writeLog("        Atmospheric generation complete");
         }
+        
         public void genAtmo(Star star, Planet host, ref Moon moon, bool gen)
         {
             Utils.writeLog("        Generating atmosphere");
@@ -190,6 +192,7 @@ namespace SystemGenerator.Generation
 
             Utils.writeLog("            Major class generation complete");
         }
+        
         public void genMajorType(ref Moon moon)
         {
             //Determine what types of atmospheres are allowed
@@ -628,12 +631,45 @@ namespace SystemGenerator.Generation
                 }
             }
         }
-        private void genAlbedo(Star star, Planet host, ref Moon moon)
+        
+        public void genAlbedo(Star star, Planet host, ref Moon moon)
         {
-            //Moons get the same basic approximations that ice giants do
-            moon.albedo = Utils.randDouble(Gen.Sat.MIN_MOON_ALBEDO, Gen.Sat.MAX_MOON_ALBEDO);
+            //Moons get basic approximations
+
+            Surface moonSurf = new Surface();
+            moonSurf.coverWater      = 0;
+            moonSurf.coverCloudThick = 0;
+            moonSurf.coverCloudThin  = 0;
+
+            if (moon.bulkIces > 0.5)
+            {
+                moonSurf.coverIce        = Utils.randDouble(moon.bulkIces, 1.0);
+                moonSurf.coverRockBright = Utils.randDouble(0, moonSurf.coverIce);
+                moonSurf.coverRockDull   = 1.0 - moonSurf.coverRockBright - moonSurf.coverIce;
+            }
+            else
+            {
+                moonSurf.coverRockBright = Utils.randDouble(0, moon.bulkRock + moon.bulkMetal);
+                moonSurf.coverRockDull   = Utils.randDouble(moon.bulkMetal, moonSurf.coverRockBright);
+                moonSurf.coverIce        = 1.0 - moonSurf.coverRockBright - moonSurf.coverRockDull;
+            }
+
+            moonSurf.albedoWater      = 0;
+            moonSurf.albedoCloudThick = 0;
+            moonSurf.albedoCloudThin  = 0;
+            moonSurf.albedoIce        = Utils.randDouble(Gen.Planet.Terrestrial.MIN_ICE_ALBEDO   , Gen.Planet.Terrestrial.MAX_ICE_ALBEDO   );
+            moonSurf.albedoRockBright = Utils.randDouble(Gen.Planet.Terrestrial.MIN_BRIGHT_ALBEDO, Gen.Planet.Terrestrial.MAX_BRIGHT_ALBEDO);
+            moonSurf.albedoRockDull   = Utils.randDouble(Gen.Planet.Terrestrial.MIN_DULL_ALBEDO  , Gen.Planet.Terrestrial.MAX_DULL_ALBEDO  );
+
+            moon.albedo = moonSurf.getAlbedo();
             moon.t = 65.0 * Math.Pow((1.0 - moon.albedo) * 340.0 * (star.lumin / Math.Pow(host.orbit.a, 2.0)), 0.25);
-            Utils.writeLog("                Calculated temp: " + moon.t);
+            Utils.writeLog("                Calculated albedo: " + moon.albedo);
+            Utils.writeLog("                Calculated temp:   " + moon.t);
+
+            //Sanity check
+            if (Double.IsNaN(moon.t))
+                genAlbedo(star, host, ref moon);
+
         }
 
         private void genMolarWeight(double t, double g, bool isGiant)

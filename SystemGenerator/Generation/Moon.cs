@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +41,8 @@ namespace SystemGenerator.Generation
         public bool isMajor;
         public bool isIcy;
         public bool hasAir;
+
+        public Bitmap image;
 
         public Moon()
         {
@@ -97,7 +101,7 @@ namespace SystemGenerator.Generation
             {
                 Utils.writeLog("            Generating rocky major moon for habitable planet");
                 moon = new Moon(star, host, true, false, 0.0);
-                moon.atmo.genAtmo(star, host, ref moon, false);
+                moon.atmo.genAlbedo(star, host, ref moon);
                 moons.Add(moon);
             }
             else if (host.isGiant) //Giants have complex satellite systems
@@ -131,6 +135,7 @@ namespace SystemGenerator.Generation
                     Utils.writeLog("                Generating moon " + i + " as type-A minor moon (a = " + a + ")");
                     moons.Add(new Moon(star, host, false, !(Utils.flip() < rockyDecay.getDecayedChance(index)), a));
                     moons[i].type = ID.Sat.MOONA;
+                    moons[i].atmo.genAlbedo(star, host, ref moon);
 
                     //Add a ring gap if applicable
                     if (a < ringsMax)
@@ -286,8 +291,7 @@ namespace SystemGenerator.Generation
                     distr = Utils.getDistribution(Gen.Sat.MIN_DAY_LENGTH, Gen.Sat.MAX_DAY_LENGTH);
                     moons[i].day = distr[0];
                     
-                    
-
+                    moons[i].atmo.genAlbedo(star, host, ref moon);
 
                     i++;
 
@@ -341,6 +345,7 @@ namespace SystemGenerator.Generation
                     dist = Utils.fudge(hillMin + (hillMin*Gen.FUDGE_FACTOR));
                     Utils.writeLog("                Generating moon 0 as major moon (a = " + dist + ")");
                     moon.orbit.genOrbit(star, moon, host, dist);
+                    moon.atmo.genAlbedo(star, host, ref moon);
                     moons.Add(moon);
 
                     mjr++;
@@ -365,6 +370,7 @@ namespace SystemGenerator.Generation
                     Utils.writeLog("                Generating moon " + i + " as minor moon (a = " + dist + ")");
                     moons.Add(new Moon(host, false, Utils.flip() < rockyDecay.getDecayedChance(index)));
                     moons[i].orbit.genOrbit(star, moons[i], host, dist);
+                    moons[i].atmo.genAlbedo(star, host, ref moon);
 
                     dist = Utils.randDouble(
                         moons[i].orbit.a + (host.r*10.0), 
@@ -390,6 +396,7 @@ namespace SystemGenerator.Generation
                     for (int i = 0; i < numMoons; i++)
                     {
                         moons.Add(new Moon(star, host, false, Utils.flip() <= icyDecay.getDecayedChance(index), 0.0));
+                        moons[i].atmo.genAlbedo(star, host, ref moon);
                         Utils.writeLog("                Generated moon " + i + " as minor moon (a = " + moons[i].orbit.a + ")");
                     }
                 }
@@ -512,9 +519,9 @@ namespace SystemGenerator.Generation
                 case ID.Sat.MAJOR:
                 case ID.Sat.MOONB:
                     if (this.isIcy)
-                        flavor += "This moon is an icy minor moon. ";
+                        flavor += "This moon is an icy major moon. ";
                     else
-                        flavor += "This moon is a rocky minor moon. ";
+                        flavor += "This moon is a rocky major moon. ";
                     break;
                 case ID.Sat.MOONC:
                     if (this.isIcy)
@@ -596,6 +603,144 @@ namespace SystemGenerator.Generation
             }
 
             this.flavortext = flavor;
+        }
+    
+        public void genImage(int x, int y)
+        {
+            this.image = new Bitmap(x,y);
+
+            Graphics g = Graphics.FromImage(this.image);
+            Pen p = new Pen(Color.Black);
+            PathGradientBrush pgb = null;
+
+            g.Clear(Color.Black);
+
+            GraphicsPath path = new GraphicsPath();
+            Point center = new Point(x/2, y/2);
+            Rectangle rect;
+            Color surf;
+
+            int radius = (int)Math.Round(( this.rA + this.rB + this.rC ) / 3.0); //Radius of the planet
+            
+            if (this.isMajor)
+                radius = (int)Math.Round(radius * UI.SCALE_MAJOR);
+            else
+                radius = (int)Math.Round(radius * UI.SCALE_SMALL);
+
+            p.Width = 1;
+
+            if (this.hasAir)
+            {
+                int atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MID); //Extra radius of the atmosphere
+                double transparency = 0.9;
+
+                rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
+                path.AddEllipse(rect);
+
+                pgb = new PathGradientBrush(path);
+
+                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
+                pgb.CenterColor = Color.FromArgb((int)Math.Round(transparency * Color.White.R), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(transparency * Color.White.R), 0, 0, 0)};
+
+                PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
+
+                pgb.FocusScales = scale;
+
+                g.FillEllipse(pgb, rect);
+
+                pgb.Dispose();
+                path.Dispose();
+            }
+            
+            double hue;
+            double saturation = Utils.randDouble(0, 0.5);
+            double lightness  = this.albedo;
+
+            hue = Utils.randDouble(0.0, 60.0);
+            
+            if (this.type == ID.Planet.ROCK_DENSE)
+                hue = Utils.randDouble(0.0, 1.0/5.0);
+
+            p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
+            surf = p.Color;
+
+            rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+
+            g.FillEllipse(p.Brush, rect);
+            
+
+            //Now draw the planet's surfaces
+            
+            //Draw random geographic features
+            double theta, r;
+            int rad;
+
+            
+            int light = Utils.randInt(Color.White.R/10, Color.White.R/5);
+            
+            if (this.albedo < 0.15)
+                p.Color = Color.FromArgb(p.Color.R+light, p.Color.G+light, p.Color.B+light);
+            else
+                p.Color = Color.FromArgb(Math.Abs(p.Color.R-light), Math.Abs(p.Color.G-light), Math.Abs(p.Color.B-light));
+            
+                
+            Point[] points;
+
+            double numFeatures = Utils.randDouble(100.0, 150.0);
+
+            //For each feature
+            for (int f = 0; f < numFeatures; f++)
+            {
+                points = new Point[2];
+
+                theta = Utils.randDouble(2.0 * Math.PI * (((double)f)/3.0), 2.0 * Math.PI * (((double)f+1.0)/3.0));
+                r = Utils.randDouble(radius/4.0, radius);
+                points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
+
+                rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
+                points[1] = new Point(rad, rad);
+
+                g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+            }
+
+            //Switch back to surface color
+            p.Color = surf;
+            
+            double numPoints = Utils.randDouble(6.0, 12.0);
+
+            //Pepper on some extra circles so the interior isn't boring
+            for (int f = 0; f < numPoints; f++)
+            {
+                points = new Point[2];
+
+                theta = Utils.randDouble(0.0, 2.0 * Math.PI);
+                r = Utils.randDouble(radius/4.0, radius);
+                points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
+
+                rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
+                points[1] = new Point(rad, rad);
+
+                g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+            }
+
+            //Give a light sheen of atmo color
+            if (this.hasAir)
+            {
+                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
+                p.Color = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure)/(int)Gen.Atmo.RETENTION_FACTOR, h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                
+                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+
+                g.FillEllipse(p.Brush, rect);      
+            }
+            
+
+            g.Dispose();
+            p.Dispose();
+
+            if (pgb != null)
+                pgb.Dispose();
         }
     }
 }
