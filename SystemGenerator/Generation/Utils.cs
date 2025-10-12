@@ -10,6 +10,7 @@ using System.IO;
 using SystemGenerator.Generation;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using static SystemGenerator.Generation.Gen;
+using static SystemGenerator.Generation.UI;
 using System.Diagnostics.Eventing.Reader;
 using System.Numerics;
 
@@ -511,6 +512,215 @@ namespace SystemGenerator.Generation
                 return c;
             }
 
+            public static Bitmap expandBitmap(Bitmap bmp)
+            { 
+                //Expand dimensions of b
+                Bitmap bitmap = new Bitmap(bmp.Width+2, bmp.Height+2);
+
+                //Copy b into bitmap
+                for (int y = 0; y < bmp.Height; y++)
+                    for (int x = 0; x < bmp.Width; x++)
+                        bitmap.SetPixel(x+1, y+1, bmp.GetPixel(x, y));
+
+                //Duplicate horizontal edges
+                for (int x = 1; x < bitmap.Width-1; x++)
+                {
+                    bitmap.SetPixel(x, 0, bitmap.GetPixel(x, 1));
+                    bitmap.SetPixel(x, bitmap.Height-1, bitmap.GetPixel(x, bitmap.Height-2));    
+                }
+
+                //Duplicate vertical edges
+                for (int y = 1; y < bitmap.Height-1; y++)
+                {
+                    bitmap.SetPixel(0, y, bitmap.GetPixel(1, y));
+                    bitmap.SetPixel(bitmap.Width-1, y, bitmap.GetPixel(bitmap.Width-2, y));    
+                }
+
+                //Duplicate corners
+                bitmap.SetPixel(0             , 0              , bitmap.GetPixel(1             , 1              ));
+                bitmap.SetPixel(0             , bitmap.Height-1, bitmap.GetPixel(1             , bitmap.Height-2));
+                bitmap.SetPixel(bitmap.Width-1, 0              , bitmap.GetPixel(bitmap.Width-2, 0              ));
+                bitmap.SetPixel(bitmap.Width-1, bitmap.Height-1, bitmap.GetPixel(bitmap.Width-2, bitmap.Height-2));
+
+                return bitmap;
+            }
+
+            public static Bitmap blur(Bitmap bmp, int stddev)
+            {
+                Bitmap bitmap = bmp;
+                Bitmap result = new Bitmap(bmp.Width, bmp.Height);
+
+                //Create the kernel
+                int radius = 3*stddev;
+                int kwidth = (2*radius) +1;
+                double[][] kernel = new double[kwidth][];
+                double total = 0, d, q = 2.0*stddev*stddev;
+
+                //Expand dimensions of bitmap
+                for (int i = 0; i < radius; i++)
+                    bitmap = expandBitmap(bitmap);
+
+                //Zero the kernel
+                for (int x = 0; x < kwidth; x++)
+                {
+                    kernel[x] = new double[kwidth];
+                    for (int y = 0; y < kwidth; y++)
+                        kernel[x][y] = 0;
+                }
+
+                //Calculate the kernel values
+                for (int x = -radius; x <= radius; x++)
+                {
+                    for (int y = -radius; y <= radius; y++)
+                    {
+                        if (kernel[x+radius][y+radius] != 0)
+                            continue;
+
+                        d = (x * x) + (y * y);
+                        kernel[ x+radius][ y+radius] = (1.0 / (Math.PI*q)) * Math.Exp(-d / q);
+                        kernel[-x+radius][ y+radius] = kernel[x + radius][y + radius];
+                        kernel[ x+radius][-y+radius] = kernel[x + radius][y + radius];
+                        kernel[-x+radius][-y+radius] = kernel[x + radius][y + radius];
+                        
+                        total += kernel[x + radius][y + radius];
+                    }
+                }
+
+                Utils.writeLog("Calculated Convolution kernel:");
+                string s;
+                for (int i = 0; i < kwidth; i++)
+                {
+                    s = "";
+
+                    for (int j = 0; j < kwidth; j++)
+                        s += string.Format("{0,7:N4}  ", kernel[i][j]);
+
+                    Utils.writeLog(s);
+                }
+
+                Utils.writeLog("Total: " + total);
+
+                double r, g, b;
+                bool start = false;
+                int overlaps, backtrack;
+
+                //Convolve
+                for (int y = 0; y < result.Height; y++)
+                {
+                    for (int x = 0; x < result.Width; x++)
+                    { 
+                        overlaps   = 0;
+                        backtrack  = 0;
+
+                        //If color enters the kernel, stop skipping forward and start convolving
+                        if (!start)
+                        {
+                            if (bitmap.GetPixel(Math.Min(x+radius, result.Width), Math.Min(y+radius, result.Height)).R > 0 || bitmap.GetPixel(Math.Min(x+radius, result.Width), Math.Min(y+radius, result.Height)).G > 0 || bitmap.GetPixel(Math.Min(x+radius, result.Width), Math.Min(y+radius, result.Height)).B > 0)
+                            {
+                                start     = true;
+                                backtrack = Math.Min(x+radius, result.Width) + 10*radius;
+                                //Utils.writeLog("Detected color at (" + Math.Min(x+radius, result.Width) + ", " + y + "), starting convolution (Setting backtrack marker at " + backtrack + ")");
+                                x -= radius;
+                            }
+                        }
+
+                        //If the entire kernel is black, we've passed the image and we can skip forward to the next row
+                        if (start && x > backtrack)
+                        {
+                            overlaps = 0;
+                            for (int kx = 0; kx < kwidth; kx++)
+                                for (int ky = 0; ky < kwidth; ky++)
+                                    if (bitmap.GetPixel(x+kx, y+ky).R == 0 && bitmap.GetPixel(x+kx, y+ky).G == 0 && bitmap.GetPixel(x+kx, y+ky).B == 0)
+                                        overlaps++;
+                            
+                            if (overlaps == kwidth*kwidth)
+                            {
+                                //Utils.writeLog("Kernel is entirely over black, skipping forward");
+                                start = false;
+                            }
+                        }
+                        
+                        if (!start)
+                        {
+                            continue;
+                        }
+
+                        r = 0;
+                        g = 0;
+                        b = 0;
+
+                        total = 0;
+                        for (int ky = 0; ky < kwidth; ky++)
+                        {
+                            for (int kx = 0; kx < kwidth; kx++)
+                            {
+                                //If any part of the kernel overlaps the black background, don't include it
+                                if (bitmap.GetPixel(x+kx, y+ky).R == 0 && bitmap.GetPixel(x+kx, y+ky).G == 0 && bitmap.GetPixel(x+kx, y+ky).B == 0)
+                                    continue;
+
+                                //Otherwise keep tallying the kernel
+                                r += bitmap.GetPixel(x+kx, y+ky).R*kernel[kx][ky];
+                                g += bitmap.GetPixel(x+kx, y+ky).G*kernel[kx][ky];
+                                b += bitmap.GetPixel(x+kx, y+ky).B*kernel[kx][ky];
+                                total += kernel[kx][ky];
+                            }
+                        }
+
+                        //Round and normalize
+                        r = Math.Round(r/total);
+                        g = Math.Round(g/total);
+                        b = Math.Round(b/total);
+                        
+                        if (r > 255)
+                        { 
+                            Utils.writeLog("Pixel red   value overflowed at (" + x + ", " + y + "): was " + r);
+                            r = 255;
+                        }
+                        else if (r < 0)
+                        {
+                            Utils.writeLog("Pixel red   value underflowed at (" + x + ", " + y + "): was " + r);
+                            r = 0;
+                        }
+
+                        if (g > 255)
+                        { 
+                            Utils.writeLog("Pixel green value overflowed at (" + x + ", " + y + "): was " + g);
+                            g = 255;
+                        }
+                        else if (g < 0)
+                        {
+                            Utils.writeLog("Pixel green value underflowed at (" + x + ", " + y + "): was " + g);
+                            g = 0;
+                        }
+
+                        if (b > 255)
+                        { 
+                            Utils.writeLog("Pixel blue  value overflowed at (" + x + ", " + y + "): was " + b);
+                            b = 255;
+                        }
+                        else if (b < 0)
+                        {
+                            Utils.writeLog("Pixel blue  value underflowed at (" + x + ", " + y + "): was " + b);
+                            b = 0;
+                        }
+
+                        result.SetPixel(
+                            x,
+                            y,
+                            Color.FromArgb(
+                                (int)Math.Round(r),
+                                (int)Math.Round(g),
+                                (int)Math.Round(b)
+                            )
+                        );
+                        
+                        xloop:
+                        for (;false;){ }
+                    }
+                }
+
+                return result;
+            }
         }
     }
 

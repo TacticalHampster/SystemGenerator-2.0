@@ -193,6 +193,8 @@ namespace SystemGenerator
         private void showPlanetProps(Planet planet)
         {
             //Switch to the right groups
+            pictureBox.Hide();
+
             blankGroupBox1.Hide();
             blankGroupBox2.Hide();
             blankGroupBox3.Hide();
@@ -351,6 +353,8 @@ namespace SystemGenerator
 
         private void showBeltProps(List<Planet> planets, Planet belt)
         {
+            pictureBox.Hide();
+
             blankGroupBox1.Hide();
             blankGroupBox2.Hide();
             blankGroupBox4.Hide();
@@ -412,6 +416,8 @@ namespace SystemGenerator
 
         private void showStarProps(Star star)
         {
+            pictureBox.Hide();
+
             blankGroupBox1.Hide();
             blankGroupBox2.Hide();
             blankGroupBox4.Hide();
@@ -466,6 +472,8 @@ namespace SystemGenerator
         private void showMoonProps(Moon moon)
         {
             //Switch to the right groups
+            pictureBox.Hide();
+
             blankGroupBox1.Hide();
             blankGroupBox2.Hide();
             blankGroupBox3.Hide();

@@ -7,7 +7,15 @@ Beginning system generation
     Star generation complete
 
     Generating orbital distances
-        Frost orbit: 5.688887760428998
+        Frost orbit: 2.051968486331426
+        Generating outer orbits
+        Generating inner orbits
+        Total orbits: 10
+        Habitable orbit exists: False
+            Rerandomizing orbits
+
+    Generating orbital distances
+        Frost orbit: 2.0505140992228936
         Generating outer orbits
         Generating inner orbits
         Total orbits: 10
@@ -16,74 +24,62 @@ Beginning system generation
 
     Picking types of planets
             Dense chance: 0.4
-        Orbit 0 (0.2870274214358166 AU): rocky planet (inner orbit)
+        Orbit 0 (0.09770907858295466 AU): rocky planet (inner orbit)
             Dense chance: 0.14715177646857694
-        Orbit 1 (0.48061083665409166 AU): rocky planet (inner orbit)
+        Orbit 1 (0.2764407873103984 AU): dense rocky planet (inner orbit)
             Dense chance: 0.054134113294645084
-        Orbit 2 (0.9193066792565568 AU): rocky planet (inner orbit)
-        Orbit 3 (1.8262120315166428 AU): habitable rocky planet (hab orbit)
-        Orbit 4 (3.1151418265810635 AU): inner asteroid belt (mid orbit)
-        Orbit 5 (5.688887760428998 AU): gas giant (frost orbit)
+        Orbit 2 (0.4795550694193757 AU): rocky planet (inner orbit)
+        Orbit 3 (0.8188818728885288 AU): habitable rocky planet (hab orbit)
+            Ocean chance: 0.48
+        Orbit 4 (1.2352009049076198 AU): ocean planet (mid orbit)
+        Orbit 5 (2.0505140992228936 AU): gas giant (frost orbit)
             Ice giant chance: 0.12
             Gas dwarf chance: 0.007326255555493672
-        Orbit 6 (8.202141884243542 AU): gas giant (outer orbit)
+        Orbit 6 (3.218281409095331 AU): gas giant (outer orbit)
             Ice giant chance: 0.24
             Gas dwarf chance: 0.01991482734714558
-        Orbit 7 (11.79931585215632 AU): gas giant (outer orbit)
+        Orbit 7 (6.145189661980866 AU): gas giant (outer orbit)
             Ice giant chance: 0.36
             Gas dwarf chance: 0.054134113294645084
-        Orbit 8 (19.286182349029005 AU): gas giant (outer orbit)
+        Orbit 8 (11.028174968204024 AU): gas giant (outer orbit)
             Ice giant chance: 0.48
             Gas dwarf chance: 0.14715177646857694
-        Orbit 9 (32.63137950171337 AU): gas giant (outer orbit)
-        Orbit 10 ( X AU): kuiper asteroid belt (kuiper orbit)
-            Generating 1 plutinos, 0 cubewanos, 1 twotinos, 0 SDOs, and 0 sednoids
-        Orbit 11: plutino dwarf (kuiper orbit)
-        Orbit 12: twotino dwarf (kuiper orbit)
+        Orbit 9 (21.876218076920328 AU): ice giant (outer orbit)
     Type generation complete
 
     Generating a rocky planet for orbit 0
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 6.519162664597795 (Max: 4131.769)
+            Mass: 8.170923882566077 (Max: 4131.769)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 634.5336144592897
+            Estimated temperature: 731.0099535067463
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=1715.527935399574, lim=2804.181583708752, div=0.6117749097869235)
+                    Planet can retain substance (rms=1841.3320933458417, lim=2961.86357769634, div=0.6216802513159575)
                 Jotunnian allowed: False
                 Helian    allowed: False
                 Ydatrian  allowed: False
                 Rhean     allowed: False
                 Minervan  allowed: True
                 Edelian   allowed: False
+                    Picked class 5 (allowed: False)
                     Picked class 2 (allowed: False)
+                    Picked class 3 (allowed: False)
                     Picked class 4 (allowed: True)
                 Major class: Minervan
                     Picking primary component
-                    Generated 90.67961% Carbon Dioxide       ( 9.32039% remaining)
+                    Generated 87.02149% Carbon Disulfide     (12.97851% remaining)
                     Picking secondary component
-                    Generated  8.43255% Nitric Oxide         ( 0.88784% remaining)
+                    Generated 11.77040% Nitrogen Dioxide     ( 1.20811% remaining)
                     Picking tertiary component
-                    Generated  1.01199% Argon                (-0.12415% remaining)
+                    Generated  1.01599% Argon                ( 0.19213% remaining)
                     Picking minor components
-                    Generated -0.11718% Oxygen               (-0.00697% remaining)
-                    Generated -0.00597% Ethane               (-0.00100% remaining)
-                    Generated -0.00094% Neon                 (-0.00006% remaining)
-                    Generated -0.00006% Nitrogen             (-0.00001% remaining)
-                    Picking primary component
-                    Generated 89.91166% Carbon Disulfide     (10.08834% remaining)
-                    Picking secondary component
-                    Generated  9.03258% Sulfur Dioxide       ( 1.05576% remaining)
-                    Picking tertiary component
-                    Generated  0.97218% Argon                ( 0.08359% remaining)
-                    Picking minor components
-                    Generated  0.07206% Carbonyl Sulfide     ( 0.01153% remaining)
-                    Generated  0.01089% Neon                 ( 0.00064% remaining)
-                    Generated  0.00058% Nitrogen             ( 0.00005% remaining)
-                    Generated  0.00004% Oxygen               ( 0.00001% remaining)
+                    Generated  0.16992% Oxygen               ( 0.02221% remaining)
+                    Generated  0.01975% Water                ( 0.00246% remaining)
+                    Generated  0.00214% Nitrogen             ( 0.00032% remaining)
+                    Generated  0.00030% Carbon Monoxide      ( 0.00003% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -101,21 +97,21 @@ Beginning system generation
                     Pyroazurian      allowed: True
                     Sulfolian        allowed: True
                     Aithalian        allowed: True
-                    Alkalinean       allowed: False
+                    Alkalinean       allowed: True
                     Hyperpyroazurian allowed: False
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: cobalt blue (0x47AB)
-                Cloud      color:  (0x0)
+                Atmosphere color: yellow-green (0xD6E865)
+                Cloud      color: pale yellow (0xFFFFAA)
                 Calculating albedo
-                    Thin  clouds     cover  17.821217717787817% of the surface, contributing 0.17821217717787818 albedo
-                    Thick clouds     cover  0% of the surface, contributing 0 albedo
-                    Reflective land  covers 78.00850379567915% of the surface, contributing 0.25645607751512994 albedo
-                    Absorptive land  covers 21.99149620432085% of the surface, contributing 0.21289728032411098 albedo
+                    Thin  clouds     cover  45.83584470519543% of the surface, contributing 0.4583584470519543 albedo
+                    Thick clouds     cover  16.252475089214055% of the surface, contributing 0.16252475089214055 albedo
+                    Reflective land  covers 45.82901913720222% of the surface, contributing 0.3214034083538378 albedo
+                    Absorptive land  covers 54.17098086279778% of the surface, contributing 0.06854598255399774 albedo
                     The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.5385602634851575
-                Calculated temp: 574.7097548715916
+                    Total albedo: 0.4083493471856493
+                Calculated temp: 795.600685640216
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
@@ -123,19 +119,19 @@ Beginning system generation
             Generating moons for desert/water planet
         Satellite system generation complete
 
-    Generating a rocky planet for orbit 1
+    Generating a dense rocky planet for orbit 1
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 4.384614988832114 (Max: 4131.769)
+            Mass: 1.2184029807557706 (Max: 4131.769)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 490.3650953164261
+            Estimated temperature: 434.5999667063762
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=1507.9927178876408, lim=2438.8212883539204, div=0.618328503645898)
-                    Planet can retain substance (rms=1508.100389353837, lim=2438.8212883539204, div=0.6183726526234022)
-                    Planet can retain substance (rms=1507.9927178876408, lim=2438.8212883539204, div=0.618328503645898)
+                    Planet can retain substance (rms=1419.6598960792194, lim=1770.1416631452237, div=0.8020035490022527)
+                    Planet can retain substance (rms=1419.7612605358893, lim=1770.1416631452237, div=0.8020608124737478)
+                    Planet can retain substance (rms=1419.6598960792194, lim=1770.1416631452237, div=0.8020035490022527)
                 Jotunnian allowed: False
                 Helian    allowed: False
                 Ydatrian  allowed: False
@@ -145,27 +141,16 @@ Beginning system generation
                     Picked class 4 (allowed: True)
                 Major class: Minervan
                     Picking primary component
-                    Generated 88.97970% Carbon Dioxide       (11.02030% remaining)
+                    Generated 88.08199% Carbon Disulfide     (11.91801% remaining)
                     Picking secondary component
-                    Generated 10.10745% Cyanogen             ( 0.91285% remaining)
+                    Generated 10.92579% Carbon Dioxide       ( 0.99222% remaining)
                     Picking tertiary component
-                    Generated  1.00893% Argon                (-0.09608% remaining)
+                    Generated  0.96846% Argon                ( 0.02376% remaining)
                     Picking minor components
-                    Generated -0.08294% Propane              (-0.01313% remaining)
-                    Generated -0.01194% Ethane               (-0.00119% remaining)
-                    Generated -0.00104% Nitrogen             (-0.00015% remaining)
-                    Generated -0.00014% Acetylene            (-0.00001% remaining)
-                    Picking primary component
-                    Generated 89.67847% Sulfur Dioxide       (10.32153% remaining)
-                    Picking secondary component
-                    Generated  9.20016% Carbonyl Sulfide     ( 1.12138% remaining)
-                    Picking tertiary component
-                    Generated  1.01370% Argon                ( 0.10768% remaining)
-                    Picking minor components
-                    Generated  0.09777% Oxygen               ( 0.00991% remaining)
-                    Generated  0.00876% Nitrogen             ( 0.00115% remaining)
-                    Generated  0.00107% Krypton              ( 0.00008% remaining)
-                    Generated  0.00007% Methane              ( 0.00001% remaining)
+                    Generated  0.02097% Oxygen               ( 0.00279% remaining)
+                    Generated  0.00253% Nitrogen             ( 0.00026% remaining)
+                    Generated  0.00023% Diacetylene          ( 0.00003% remaining)
+                    Generated  0.00002% Water                ( 0.00000% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -188,16 +173,16 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: orange (0xFF8C00)
-                Cloud      color: pale brown (0xB99C80)
+                Atmosphere color: blue (0xFF)
+                Cloud      color: turqoise (0x0)
                 Calculating albedo
-                    Thin  clouds     cover  35.70545166802692% of the surface, contributing 0.35705451668026916 albedo
-                    Thick clouds     cover  50.684748975515014% of the surface, contributing 0.5068474897551501 albedo
-                    Reflective land  covers 48.91076641146444% of the surface, contributing 0.2173884980078255 albedo
-                    Absorptive land  covers 51.08923358853556% of the surface, contributing 0.07176902797537593 albedo
+                    Thin  clouds     cover  62.648843378558325% of the surface, contributing 0.6264884337855833 albedo
+                    Thick clouds     cover  3.1324252321554313% of the surface, contributing 0.031324252321554315 albedo
+                    Reflective land  covers 91.76782987757277% of the surface, contributing 0.3406820459227059 albedo
+                    Absorptive land  covers 8.23217012242724% of the surface, contributing 0.1469657784005194 albedo
                     The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.277968575908292
-                Calculated temp: 837.4604542346627
+                    Total albedo: 0.2923073305754761
+                Calculated temp: 737.5916894525768
                     Planet is outside temp range for minor class, rerandomizing
             Picking minor class
                     Cryoazurian      allowed: False
@@ -219,16 +204,16 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: walnut (0x59392B)
-                Cloud      color: burnt orange (0xBF5700)
+                Atmosphere color: dark blue (0xCC)
+                Cloud      color:  (0x0)
                 Calculating albedo
-                    Thin  clouds     cover  34.698082377230236% of the surface, contributing 0.3469808237723023 albedo
-                    Thick clouds     cover  24.701298101305184% of the surface, contributing 0.24701298101305183 albedo
-                    Reflective land  covers 88.13061733213782% of the surface, contributing 0.24105010325951196 albedo
-                    Absorptive land  covers 11.869382667862183% of the surface, contributing 0.20155781111844046 albedo
+                    Thin  clouds     cover  7.684402058074072% of the surface, contributing 0.07684402058074072 albedo
+                    Thick clouds     cover  0% of the surface, contributing 0 albedo
+                    Reflective land  covers 55.68535973780292% of the surface, contributing 0.25973790906812044 albedo
+                    Absorptive land  covers 44.31464026219708% of the surface, contributing 0.08893400340129143 albedo
                     The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.4124388784299845
-                Calculated temp: 760.234698531503
+                    Total albedo: 0.32263998001566796
+                Calculated temp: 705.6410056239724
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
@@ -239,16 +224,16 @@ Beginning system generation
     Generating a rocky planet for orbit 2
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 2.359670229911447 (Max: 4131.769)
+            Mass: 3.8226364490641043 (Max: 4131.769)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 354.5570463222304
+            Estimated temperature: 329.9677581731408
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=1282.2790009737153, lim=2115.598207289299, div=0.606107055940783)
-                    Planet can retain substance (rms=1282.3705563628557, lim=2115.598207289299, div=0.6061503323005497)
-                    Planet can retain substance (rms=1282.2790009737153, lim=2115.598207289299, div=0.606107055940783)
+                    Planet can retain substance (rms=1237.0157318897852, lim=2412.2681556611265, div=0.5128019159009121)
+                    Planet can retain substance (rms=1237.1040554579167, lim=2412.2681556611265, div=0.5128385302250386)
+                    Planet can retain substance (rms=1237.0157318897852, lim=2412.2681556611265, div=0.5128019159009121)
                 Jotunnian allowed: False
                 Helian    allowed: False
                 Ydatrian  allowed: False
@@ -256,142 +241,31 @@ Beginning system generation
                 Minervan  allowed: True
                 Edelian   allowed: False
                     Picked class 0 (allowed: False)
-                    Picked class 0 (allowed: False)
-                    Picked class 1 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 2 (allowed: False)
-                    Picked class 0 (allowed: False)
-                    Picked class 4 (allowed: True)
-                Major class: Minervan
-                    Picking primary component
-                    Generated 90.14243% Carbon Dioxide       ( 9.85757% remaining)
-                    Picking secondary component
-                    Generated  9.29163% Cyanogen             ( 0.56594% remaining)
-                    Picking tertiary component
-                    Generated  1.00547% Argon                (-0.43953% remaining)
-                    Picking minor components
-                    Generated -0.40985% Ethane               (-0.02968% remaining)
-                    Generated -0.02730% Neon                 (-0.00238% remaining)
-                    Generated -0.00207% Nitrogen             (-0.00031% remaining)
-                    Generated -0.00027% Ethylene             (-0.00004% remaining)
-                    Picking primary component
-                    Generated 89.73850% Carbon Disulfide     (10.26150% remaining)
-                    Picking secondary component
-                    Generated  9.42188% Cyanogen             ( 0.83962% remaining)
-                    Picking tertiary component
-                    Generated  1.00121% Argon                (-0.16159% remaining)
-                    Picking minor components
-                    Generated -0.15262% Krypton              (-0.00897% remaining)
-                    Generated -0.00825% Oxygen               (-0.00072% remaining)
-                    Generated -0.00062% Neon                 (-0.00009% remaining)
-                    Generated -0.00009% Ethane               (-0.00001% remaining)
-                    Picking primary component
-                    Generated 85.26233% Sulfur Dioxide       (14.73767% remaining)
-                    Picking secondary component
-                    Generated 13.23174% Nitrogen Dioxide     ( 1.50593% remaining)
-                    Picking tertiary component
-                    Generated  1.01770% Argon                ( 0.48823% remaining)
-                    Picking minor components
-                    Generated  0.44405% Krypton              ( 0.04418% remaining)
-                    Generated  0.04065% Nitric Oxide         ( 0.00354% remaining)
-                    Generated  0.00331% Oxygen               ( 0.00023% remaining)
-                    Generated  0.00020% Nitrogen             ( 0.00003% remaining)
-            Major class generation complete
-            Generating minor class for the atmosphere
-            Picking minor class
-                    Cryoazurian      allowed: False
-                    Frigidian        allowed: False
-                    Neonean          allowed: False
-                    Borean           allowed: False
-                    Methanean        allowed: False
-                    Mesoazurian      allowed: True
-                    Tholian          allowed: True
-                    Sulfanian        allowed: False
-                    Ammonian         allowed: False
-                    Hydronian        allowed: False
-                    Acidian          allowed: True
-                    Pyroazurian      allowed: False
-                    Sulfolian        allowed: False
-                    Aithalian        allowed: False
-                    Alkalinean       allowed: False
-                    Hyperpyroazurian allowed: False
-                    Enstatian        allowed: False
-                    Refractian       allowed: False
-                    Carbean          allowed: False
-                Atmosphere color: burnt orange (0xBF5700)
-                Cloud      color: tan (0xD2B48C)
-                Calculating albedo
-                    Thin  clouds     cover  37.293592752352886% of the surface, contributing 0.37293592752352883 albedo
-                    Thick clouds     cover  30.400340546431114% of the surface, contributing 0.30400340546431115 albedo
-                    Reflective land  covers 40.05184884663669% of the surface, contributing 0.38394812510088805 albedo
-                    Absorptive land  covers 59.94815115336331% of the surface, contributing 0.11699497567291368 albedo
-                    The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.3008296018785122
-                Calculated temp: 513.129015839586
-            Minor class generation complete
-            Calculating molar weight
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moons for desert/water planet
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6786400980027575
-                Calculated temp:   258.71680570735174
-                Generated moon 0 as minor moon (a = 193.95070969432885)
-        Satellite system generation complete
-
-    Generating a habitable rocky planet for orbit 3
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 3.9977917623270596 (Max: 4131.769)
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 251.55950338605848
-            Picking a major class for the atmosphere
-                    Planet cannot retain substance (rms=2857.4346103592575, lim=2266.8866575550387, div=1.2605105777282914)
-                    Planet can retain substance (rms=1526.4099563287884, lim=2266.8866575550387, div=0.6733508052736545)
-                    Planet can retain substance (rms=1080.0897238059122, lim=2266.8866575550387, div=0.4764639291542031)
-                    Planet can retain substance (rms=1080.1668427752588, lim=2266.8866575550387, div=0.47649794892713243)
-                    Planet can retain substance (rms=1272.5945046322615, lim=2266.8866575550387, div=0.561384267003814)
-                    Planet cannot retain substance (rms=2857.4346103592575, lim=2266.8866575550387, div=1.2605105777282914)
-                    Planet can retain substance (rms=1080.0897238059122, lim=2266.8866575550387, div=0.4764639291542031)
-                Jotunnian allowed: False
-                Helian    allowed: False
-                Ydatrian  allowed: False
-                Rhean     allowed: True
-                Minervan  allowed: False
-                Edelian   allowed: False
-                    Picked class 0 (allowed: False)
-                    Picked class 2 (allowed: False)
                     Picked class 5 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 4 (allowed: False)
                     Picked class 3 (allowed: True)
                 Major class: Rhean
                     Picking primary component
-                    Generated 88.44726% Nitrogen             (11.55274% remaining)
+                    Generated 87.48251% Nitrogen             (12.51749% remaining)
                     Picking secondary component
-                    Generated 10.65173% Carbonyl Sulfide     ( 0.90101% remaining)
+                    Generated 11.75607% Carbon Monoxide      ( 0.76142% remaining)
                     Picking tertiary component
-                    Generated  0.99249% Argon                (-0.09148% remaining)
+                    Generated  1.00098% Argon                (-0.23956% remaining)
                     Picking minor components
-                    Generated -0.08161% Oxygen               (-0.00987% remaining)
-                    Generated -0.00923% Nitrogen Dioxide     (-0.00064% remaining)
-                    Generated -0.00055% Krypton              (-0.00008% remaining)
-                    Generated -0.00007% Neon                 (-0.00001% remaining)
+                    Generated -0.21441% Oxygen               (-0.02514% remaining)
+                    Generated -0.02362% Neon                 (-0.00153% remaining)
+                    Generated -0.00141% Carbonyl Sulfide     (-0.00012% remaining)
+                    Generated -0.00011% Carbon Dioxide       (-0.00001% remaining)
                     Picking primary component
-                    Generated 90.55876% Nitrogen             ( 9.44124% remaining)
+                    Generated 85.12233% Nitrogen             (14.87767% remaining)
                     Picking secondary component
-                    Generated  8.40427% Nitrogen Dioxide     ( 1.03697% remaining)
+                    Generated 13.24931% Nitric Oxide         ( 1.62836% remaining)
                     Picking tertiary component
-                    Generated  0.98779% Argon                ( 0.04918% remaining)
+                    Generated  0.95124% Argon                ( 0.67712% remaining)
                     Picking minor components
-                    Generated  0.04350% Oxygen               ( 0.00569% remaining)
-                    Generated  0.00503% Nitric Oxide         ( 0.00066% remaining)
-                    Generated  0.00060% Carbonyl Sulfide     ( 0.00006% remaining)
-                    Generated  0.00005% Hydrogen Fluoride    ( 0.00001% remaining)
+                    Generated  0.62670% Oxygen               ( 0.05042% remaining)
+                    Generated  0.04533% Hydrogen Cyanide     ( 0.00509% remaining)
+                    Generated  0.00476% Ethane               ( 0.00033% remaining)
+                    Generated  0.00030% Silane               ( 0.00002% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -414,26 +288,101 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: pale orange (0xFFD381)
-                Cloud      color: pale brown (0xB99C80)
+                Atmosphere color: pale yellow (0xFFFFAA)
+                Cloud      color: barely-distringuishable (0x0)
                 Calculating albedo
-                    Thin  clouds     cover  12.125406986655205% of the surface, contributing 0.12125406986655206 albedo
-                    Thick clouds     cover  58.76974956654586% of the surface, contributing 0.5876974956654586 albedo
-                    Reflective land  covers 8.649277615584046% of the surface, contributing 0.23569141653321735 albedo
-                    Absorptive land  covers 27.71036967111274% of the surface, contributing 0.13816811657436417 albedo
-                    Reflective ice   covers 63.640352713303216% of the surface, contributing 0.7429797103094148 albedo
-                    Absorptive water covers 0% of the surface, contributing 0.07859085060866094 albedo
-                    Total albedo: 0.3783619741987915
-                Calculated temp: 282.362085307667
+                    Thin  clouds     cover  19.137790983956783% of the surface, contributing 0.19137790983956782 albedo
+                    Thick clouds     cover  51.39228707298143% of the surface, contributing 0.5139228707298144 albedo
+                    Reflective land  covers 30.86377327497738% of the surface, contributing 0.2806775648204696 albedo
+                    Absorptive land  covers 69.13622672502262% of the surface, contributing 0.2241080570244302 albedo
+                    The planet has no ice or water, contributing 0 albedo
+                    Total albedo: 0.07373289139711389
+                Calculated temp: 430.5311873276025
+            Minor class generation complete
+            Calculating molar weight
+        Atmospheric generation complete
+        Generating satellite system
+            Generating moons for desert/water planet
+        Satellite system generation complete
+
+    Generating a habitable rocky planet for orbit 3
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 8.976961438801773 (Max: 4131.769)
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 252.51089461876452
+            Picking a major class for the atmosphere
+                    Planet cannot retain substance (rms=2862.83288132362, lim=2820.5688911670936, div=1.0149842077209603)
+                    Planet can retain substance (rms=1529.2936529555075, lim=2820.5688911670936, div=0.5421933347363542)
+                    Planet can retain substance (rms=1082.1302313905092, lim=2820.5688911670936, div=0.38365672782512533)
+                    Planet can retain substance (rms=1082.2074960531609, lim=2820.5688911670936, div=0.38368412111549793)
+                    Planet can retain substance (rms=1274.9986926192264, lim=2820.5688911670936, div=0.45203600472657063)
+                    Planet cannot retain substance (rms=2862.83288132362, lim=2820.5688911670936, div=1.0149842077209603)
+                    Planet can retain substance (rms=1082.1302313905092, lim=2820.5688911670936, div=0.38365672782512533)
+                Jotunnian allowed: False
+                Helian    allowed: False
+                Ydatrian  allowed: False
+                Rhean     allowed: True
+                Minervan  allowed: False
+                Edelian   allowed: False
+                    Picked class 3 (allowed: True)
+                Major class: Rhean
+                    Picking primary component
+                    Generated 88.90720% Nitrogen             (11.09280% remaining)
+                    Picking secondary component
+                    Generated  9.65856% Diacetylene          ( 1.43424% remaining)
+                    Picking tertiary component
+                    Generated  0.99306% Argon                ( 0.44118% remaining)
+                    Picking minor components
+                    Generated  0.39642% Nitrogen Dioxide     ( 0.04476% remaining)
+                    Generated  0.04155% Krypton              ( 0.00322% remaining)
+                    Generated  0.00294% Neon                 ( 0.00028% remaining)
+                    Generated  0.00025% Oxygen               ( 0.00003% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+            Picking minor class
+                    Cryoazurian      allowed: False
+                    Frigidian        allowed: False
+                    Neonean          allowed: False
+                    Borean           allowed: False
+                    Methanean        allowed: False
+                    Mesoazurian      allowed: True
+                    Tholian          allowed: True
+                    Sulfanian        allowed: False
+                    Ammonian         allowed: False
+                    Hydronian        allowed: True
+                    Acidian          allowed: True
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: pale yellow (0xFFFFAA)
+                Cloud      color: barely-distringuishable (0x0)
+                Calculating albedo
+                    Thin  clouds     cover  30.215046200357655% of the surface, contributing 0.30215046200357654 albedo
+                    Thick clouds     cover  49.53098668844248% of the surface, contributing 0.4953098668844248 albedo
+                    Reflective land  covers 20.200141707909783% of the surface, contributing 0.3449626154661658 albedo
+                    Absorptive land  covers 14.149969695267654% of the surface, contributing 0.19219897235649247 albedo
+                    Reflective ice   covers 65.64988859682256% of the surface, contributing 0.6922462657240889 albedo
+                    Absorptive water covers 0% of the surface, contributing 0.06712476807155436 albedo
+                    Total albedo: 0.10581878970164196
+                Calculated temp: 299.50395094692266
                 Planet is habitable and has freezing temp, rerandomizing
-                    Thin  clouds     cover  36.80066238276287% of the surface, contributing 0.3680066238276287 albedo
-                    Thick clouds     cover  35.35288228234626% of the surface, contributing 0.35352882282346254 albedo
-                    Reflective land  covers 41.38677416919989% of the surface, contributing 0.3669996836457869 albedo
-                    Absorptive land  covers 5.779523766060027% of the surface, contributing 0.08712029841989274 albedo
-                    Reflective ice   covers 12.125753208891405% of the surface, contributing 0.6800467456664319 albedo
-                    Absorptive water covers 40.70794885584868% of the surface, contributing 0.0694819681583174 albedo
-                    Total albedo: 0.2684969895450949
-                Calculated temp: 281.84306276593753
+                    Thin  clouds     cover  26.532698221470657% of the surface, contributing 0.2653269822147066 albedo
+                    Thick clouds     cover  26.2802936055292% of the surface, contributing 0.262802936055292 albedo
+                    Reflective land  covers 11.044121630365893% of the surface, contributing 0.2329818767340648 albedo
+                    Absorptive land  covers 31.013450474805005% of the surface, contributing 0.21491313984381905 albedo
+                    Reflective ice   covers 11.075811672604738% of the surface, contributing 0.7262142271593417 albedo
+                    Absorptive water covers 69.01823956743384% of the surface, contributing 0.06477008804421922 albedo
+                    Total albedo: 0.09625514394365857
+                Calculated temp: 307.9303076745151
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
@@ -441,35 +390,98 @@ Beginning system generation
             Generating rocky major moon for habitable planet
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.442801845098498
-                Calculated temp:   210.63655551565546
+                Calculated albedo: 0.4224020736407495
+                Calculated temp:   213.34237478128662
         Satellite system generation complete
 
-    Generating a inner asteroid belt for orbit 4
+    Generating a ocean planet for orbit 4
         Generating physical characteristics
-            Mass: 3.4491314787722067 (Max: 4131.769)
+            Assigning tilt and spin
+            Mass: 4.18965122364871 (Max: 4131.769)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Planet has no atmosphere
-            Estimated temperature: 192.60937256747988
+            Estimated temperature: 205.59945008755443
+            Picking a major class for the atmosphere
+                    Planet can retain substance (rms=2583.2528118271775, lim=2608.8971214364665, div=0.9901704404521827)
+                    Planet can retain substance (rms=1379.945072895854, lim=2608.8971214364665, div=0.5289380947823854)
+                    Planet can retain substance (rms=976.450976666957, lim=2608.8971214364665, div=0.3742773023296987)
+                    Planet can retain substance (rms=976.5206957757293, lim=2608.8971214364665, div=0.3743040259242013)
+                    Planet can retain substance (rms=1150.4841862308735, lim=2608.8971214364665, div=0.4409848808439842)
+                    Planet can retain substance (rms=2583.2528118271775, lim=2608.8971214364665, div=0.9901704404521827)
+                    Planet can retain substance (rms=976.450976666957, lim=2608.8971214364665, div=0.3742773023296987)
+                Jotunnian allowed: True
+                Helian    allowed: True
+                Ydatrian  allowed: True
+                Rhean     allowed: True
+                Minervan  allowed: True
+                Edelian   allowed: True
+                    Picked class 2 (allowed: True)
+                Major class: Ydatrian
+                    Picking primary component
+                    Generated 85.71530% Hydrogen Cyanide     (14.28470% remaining)
+                    Picking secondary component
+                    Generated 12.28639% Methylene            ( 1.99831% remaining)
+                    Picking tertiary component
+                    Generated  1.03904% Argon                ( 0.95927% remaining)
+                    Picking minor components
+                    Generated  0.83883% Propyne              ( 0.12044% remaining)
+                    Generated  0.10391% Oxygen               ( 0.01653% remaining)
+                    Generated  0.01463% Nitric Oxide         ( 0.00190% remaining)
+                    Generated  0.00178% Nitrogen Dioxide     ( 0.00012% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+            Picking minor class
+                    Cryoazurian      allowed: False
+                    Frigidian        allowed: False
+                    Neonean          allowed: False
+                    Borean           allowed: False
+                    Methanean        allowed: False
+                    Mesoazurian      allowed: True
+                    Tholian          allowed: True
+                    Sulfanian        allowed: False
+                    Ammonian         allowed: False
+                    Hydronian        allowed: True
+                    Acidian          allowed: False
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: gray (0x828282)
+                Cloud      color: light gray (0xD3D3D3)
                 Calculating albedo
+                    Thin  clouds     cover  26.07659170014228% of the surface, contributing 0.2607659170014228 albedo
+                    Thick clouds     cover  7.0379212873287305% of the surface, contributing 0.0703792128732873 albedo
+                    Reflective land  covers 4.301934572507815% of the surface, contributing 0.3748242443134071 albedo
+                    Absorptive land  covers 1.0695849541535305% of the surface, contributing 0.17176001689447484 albedo
+                    Reflective ice   covers 94.62848047333866% of the surface, contributing 0.7354061429306878 albedo
+                    Absorptive water covers 0% of the surface, contributing 0.06655384818163133 albedo
+                    Total albedo: 0.6002723829424346
+                Calculated temp: 188.3985532998339
+            Minor class generation complete
+            Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
+            Generating moons for desert/water planet
+        Satellite system generation complete
 
     Generating a gas giant for orbit 5
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 1981.4019865709774 (Max: 4131.769)
+            Mass: 2237.0910354370435 (Max: 4131.769)
         Physical property generation complete
-            Maximum giant planet mass set to 1981.4019865709774
+            Maximum giant planet mass set to 2237.0910354370435
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 142.52880563564747
+            Estimated temperature: 159.57298510682773
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=3030.721408679148, lim=25018.329922241403, div=0.12114003684893547)
+                    Planet can retain substance (rms=3206.818486753175, lim=26575.321428124265, div=0.12066903858251915)
                 Jotunnian allowed: True
                 Helian    allowed: False
                 Ydatrian  allowed: False
@@ -477,20 +489,54 @@ Beginning system generation
                 Minervan  allowed: False
                 Edelian   allowed: False
                     Picked class 3 (allowed: False)
-                    Picked class 1 (allowed: False)
+                    Picked class 2 (allowed: False)
+                    Picked class 4 (allowed: False)
                     Picked class 0 (allowed: True)
                 Major class: Jotunnian
                     Picking primary component
-                    Generated 90.97098% Hydrogen             ( 9.02902% remaining)
+                    Generated 87.33046% Hydrogen             (12.66954% remaining)
                     Picking secondary component
-                    Generated  7.91388% Helium               ( 1.11514% remaining)
+                    Generated 11.90219% Helium               ( 0.76735% remaining)
                     Picking tertiary component
-                    Generated  0.95385% Methylene            ( 0.16129% remaining)
+                    Generated  1.00496% Propane              (-0.23761% remaining)
                     Picking minor components
-                    Generated  0.13799% Nitrogen             ( 0.02330% remaining)
-                    Generated  0.02019% Water                ( 0.00311% remaining)
-                    Generated  0.00279% Phosphine            ( 0.00032% remaining)
-                    Generated  0.00029% Ammonia              ( 0.00002% remaining)
+                    Generated -0.22073% Ammonia              (-0.01688% remaining)
+                    Generated -0.01494% Nitrogen             (-0.00194% remaining)
+                    Generated -0.00179% Tholins              (-0.00015% remaining)
+                    Generated -0.00014% Sulfur Dioxide       (-0.00001% remaining)
+                    Picking primary component
+                    Generated 90.46589% Hydrogen             ( 9.53411% remaining)
+                    Picking secondary component
+                    Generated  8.90062% Helium               ( 0.63349% remaining)
+                    Picking tertiary component
+                    Generated  1.00280% Diacetylene          (-0.36931% remaining)
+                    Picking minor components
+                    Generated -0.32755% Nitrogen             (-0.04176% remaining)
+                    Generated -0.03802% Ammonia              (-0.00374% remaining)
+                    Generated -0.00344% Carbon Disulfide     (-0.00030% remaining)
+                    Generated -0.00026% Ethylene             (-0.00004% remaining)
+                    Picking primary component
+                    Generated 89.57942% Hydrogen             (10.42058% remaining)
+                    Picking secondary component
+                    Generated  9.50367% Helium               ( 0.91691% remaining)
+                    Picking tertiary component
+                    Generated  1.00496% Diacetylene          (-0.08805% remaining)
+                    Picking minor components
+                    Generated -0.08102% Ammonia              (-0.00703% remaining)
+                    Generated -0.00618% Phosphine            (-0.00086% remaining)
+                    Generated -0.00079% Tholins              (-0.00007% remaining)
+                    Generated -0.00006% Nitrogen             (-0.00001% remaining)
+                    Picking primary component
+                    Generated 85.76461% Hydrogen             (14.23539% remaining)
+                    Picking secondary component
+                    Generated 12.83483% Helium               ( 1.40056% remaining)
+                    Picking tertiary component
+                    Generated  1.03678% Methylene            ( 0.36378% remaining)
+                    Picking minor components
+                    Generated  0.31280% Nitrogen             ( 0.05098% remaining)
+                    Generated  0.04789% Tholins              ( 0.00309% remaining)
+                    Generated  0.00277% Water                ( 0.00031% remaining)
+                    Generated  0.00029% Phosphine            ( 0.00002% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -513,103 +559,144 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: teal (0x8080)
-                Cloud      color: pale blue (0x86C5D8)
+                Atmosphere color: tan (0xD2B48C)
+                Cloud      color: pale tan (0xF8E8CA)
                 Calculating albedo
-                Calculated temp: 180.81510167102135
+                Calculated temp: 245.18872304225619
                     Switched to class-2
-                Calculated temp: 140.1418388717061
+                Calculated temp: 197.33761616297045
+                    Confirmed class-2
+                    Planet is outside temp range for minor class, rerandomizing
+            Picking minor class
+                    Cryoazurian      allowed: False
+                    Frigidian        allowed: False
+                    Neonean          allowed: False
+                    Borean           allowed: False
+                    Methanean        allowed: False
+                    Mesoazurian      allowed: True
+                    Tholian          allowed: True
+                    Sulfanian        allowed: False
+                    Ammonian         allowed: False
+                    Hydronian        allowed: True
+                    Acidian          allowed: False
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: white (0xFAFAFA)
+                Cloud      color: pale yellow (0xFFFFAA)
+                Calculating albedo
+                Calculated temp: 105.6959116597055
                     Switched to class-1
-                Calculated temp: 154.85965208682524
+                Calculated temp: 144.886879102626
+                    Confirmed class-1
+                    Planet is outside temp range for minor class, rerandomizing
+            Picking minor class
+                    Cryoazurian      allowed: False
+                    Frigidian        allowed: False
+                    Neonean          allowed: False
+                    Borean           allowed: False
+                    Methanean        allowed: False
+                    Mesoazurian      allowed: True
+                    Tholian          allowed: True
+                    Sulfanian        allowed: True
+                    Ammonian         allowed: True
+                    Hydronian        allowed: False
+                    Acidian          allowed: False
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: peach (0xFFE5B4)
+                Cloud      color: pale brown (0xB99C80)
+                Calculating albedo
+                Calculated temp: 259.62146155107195
+                    Switched to class-3
+                Calculated temp: 228.4890057064951
                     Switched to class-2
-                Calculated temp: 142.6977814397317
-                    Switched to class-1
-                Calculated temp: 220.15566560028276
-                    Switched to class-2
-                Calculated temp: 161.83284391373166
+                Calculated temp: 190.22313260200045
                     Confirmed class-2
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
             Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 20.489844748532953)
+                Generating moon 0 as type-A minor moon (a = 20.872887021047184)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6909732952953518
-                Calculated temp:   102.9893332870957
-                    Added ring gap from 20.44561243803656 to 20.534077059029347
-                Generating moon 1 as type-A minor moon (a = 21.63222721517416)
+                Calculated albedo: 0.661019650028492
+                Calculated temp:   118.00314942017503
+                    Added ring gap from 20.838371840644843 to 20.907402201449525
+                Generating moon 1 as type-A minor moon (a = 22.003237410144628)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6796292000745168
-                Calculated temp:   103.92175572538434
-                    Added ring gap from 21.604413702006404 to 21.66004072834192
-                Generating moon 2 as type-A minor moon (a = 21.919924789192105)
+                Calculated albedo: 0.704989900532059
+                Calculated temp:   113.97489178847118
+                    Added ring gap from 21.992332701114485 to 22.01414211917477
+                Generating moon 2 as type-A minor moon (a = 23.355136114831783)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7245388379778971
-                Calculated temp:   100.07102261012885
-                    Added ring gap from 21.8850403805132 to 21.95480919787101
-                Generating moon 3 as type-A minor moon (a = 22.40540619211685)
+                Calculated albedo: 0.7124687138604261
+                Calculated temp:   113.24557579534432
+                    Added ring gap from 23.32328889064205 to 23.386983339021516
+                Generating moon 3 as type-A minor moon (a = 23.95640143730745)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7267988295558728
-                Calculated temp:   99.86513257724927
-                    Added ring gap from 22.391231421023196 to 22.419580963210503
-                Generating moon 4 as type-A minor moon (a = 23.308090823307456)
+                Calculated albedo: 0.6566855290110927
+                Calculated temp:   118.37854424741766
+                    Added ring gap from 23.92135694158015 to 23.991445933034747
+                Generating moon 4 as type-A minor moon (a = 25.306799447327215)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6766936398624257
-                Calculated temp:   104.159001039754
-                    Added ring gap from 23.26264414641473 to 23.353537500200183
-                Generating moon 5 as type-A minor moon (a = 23.760400223951944)
+                Calculated albedo: 0.7316480586706329
+                Calculated temp:   111.30794196179474
+                    Added ring gap from 25.262682910137766 to 25.350915984516664
+                Generating moon 5 as type-A minor moon (a = 25.564987434201562)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7492077765356284
-                Calculated temp:   97.75112412974418
-                    Added ring gap from 23.723632334110757 to 23.79716811379313
-                Generating moon 6 as type-A minor moon (a = 24.868068466485113)
+                Calculated albedo: 0.7402244093225154
+                Calculated temp:   110.40774829838462
+                    Added ring gap from 25.533056811575335 to 25.59691805682779
+                Generating moon 6 as type-A minor moon (a = 26.2594460592653)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7200498582664034
-                Calculated temp:   100.47624978538673
-                    Added ring gap from 24.834592758889706 to 24.90154417408052
-                Generating moon 7 as type-A minor moon (a = 25.15326590243902)
+                Calculated albedo: 0.7026831777622042
+                Calculated temp:   114.19703764249559
+                    Added ring gap from 26.24287600040889 to 26.27601611812171
+                Generating moon 7 as type-A minor moon (a = 27.270998633565647)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6546252578351974
-                Calculated temp:   105.89266721660974
-                    Added ring gap from 25.109519791981352 to 25.19701201289669
-                Generating moon 8 as type-A minor moon (a = 25.814625003727752)
+                Calculated albedo: 0.6868222507039501
+                Calculated temp:   115.69049844400584
+                    Added ring gap from 27.257887080932353 to 27.28411018619894
+                Generating moon 8 as type-A minor moon (a = 28.00750477731435)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7158806862636247
-                Calculated temp:   100.84826552498797
-                    Added ring gap from 25.784790410340644 to 25.84445959711486
-                Generating moon 9 as type-A minor moon (a = 27.05970788906663)
+                Calculated albedo: 0.7323372024639666
+                Calculated temp:   111.23641168092946
+                Generating moon 9 as type-A minor moon (a = 28.3370581364178)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7008675909971307
-                Calculated temp:   102.15487838728943
-                    Added ring gap from 27.036338265196434 to 27.083077512936825
-                Generating moon 10 as type-A minor moon (a = 28.22784488363486)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7419132629423363
-                Calculated temp:   98.45429478446577
-                Generating moon 11 as type-B major moon (a = 33.855712920769484)
+                Calculated albedo: 0.6710897643181414
+                Calculated temp:   117.11683160259243
+                Generating moon 10 as type-B major moon (a = 33.610941688940954)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 58.425218711491276
+            Estimated temperature: 39.413990638408556
                 Calculating albedo
-                Calculated albedo: 1.2663302731000634
-                Calculated temp:   NaN
-                Calculated albedo: 0.9657705874529372
-                Calculated temp:   59.41459012003409
+                Calculated albedo: 0.5898444881568122
+                Calculated temp:   123.76193918996188
         Atmospheric generation complete
-                    Checking for resonance gap overlap (10 existing gaps)
+                    Checking for resonance gap overlap (8 existing gaps)
                         Gap from moon 0 does not overlap
                         Gap from moon 1 does not overlap
                         Gap from moon 2 does not overlap
@@ -618,105 +705,102 @@ Beginning system generation
                         Gap from moon 5 does not overlap
                         Gap from moon 6 does not overlap
                         Gap from moon 7 does not overlap
-                        Gap from moon 8 does not overlap
-                        Gap from moon 9 does not overlap
-                    Added ring gap from 21.077063942798752 to 21.578461425276558
-                Generating moon 12 as type-B major moon (a = 65.73666291696826)
+                    Added ring gap from 20.929346155602488 to 21.417786785083365
+                Generating moon 11 as type-B major moon (a = 46.040251088993486)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 41.92880662739124
+            Estimated temperature: 33.67610908004986
                 Calculating albedo
-                Calculated albedo: 0.771298834825001
-                Calculated temp:   95.52352454400821
-        Atmospheric generation complete
-                Generating moon 13 as type-B major moon (a = 99.79138715632696)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 34.030615079952334
-                Calculating albedo
-                Calculated albedo: 0.5573988672064635
-                Calculated temp:   112.66690759881386
-        Atmospheric generation complete
-                Generating moon 14 as reverse lagrangian companion to moon 13
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 15 as type-B major moon (a = 113.35986992015994)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 31.929098679730597
-                Calculating albedo
-                Calculated albedo: 0.9394294219344217
-                Calculated temp:   68.52651938717305
-        Atmospheric generation complete
-                Generating moon 16 as type-B major moon (a = 129.7784411623631)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 29.84111538222055
-                Calculating albedo
-                Calculated albedo: 1.0193988155964893
+                Calculated albedo: 1.4531728312560728
                 Calculated temp:   NaN
-                Calculated albedo: 0.6682340893451031
-                Calculated temp:   104.83376514220424
+                Calculated albedo: 0.6641478307291179
+                Calculated temp:   117.7299628505317
         Atmospheric generation complete
-                Generating moon 17 as type-B major moon (a = 140.99089398761953)
+                Generating moon 12 as type-B major moon (a = 82.91412212649753)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 28.629963635141948
+            Estimated temperature: 25.094381484988183
                 Calculating albedo
-                Calculated albedo: 1.4177399339661831
+                Calculated albedo: 0.6406738985189432
+                Calculated temp:   119.73528683570221
+        Atmospheric generation complete
+                Generating moon 13 as type-B major moon (a = 104.19455119631401)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 22.38557453120596
+                Calculating albedo
+                Calculated albedo: 0.8703863745297911
+                Calculated temp:   92.79244799862774
+        Atmospheric generation complete
+                Generating moon 14 as type-B major moon (a = 128.3869219502927)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 20.166491881553938
+                Calculating albedo
+                Calculated albedo: 0.5614070274688017
+                Calculated temp:   125.85352518522883
+        Atmospheric generation complete
+                Generating moon 15 as type-B major moon (a = 142.06469836447178)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 19.171127808713443
+                Calculating albedo
+                Calculated albedo: 1.124851403669847
                 Calculated temp:   NaN
-                Calculated albedo: 0.6697708032965296
-                Calculated temp:   104.71215824413062
+                Calculated albedo: 0.7808732544128234
+                Calculated temp:   105.80929353928916
         Atmospheric generation complete
-                Generating moon 18 as type-B major moon (a = 152.07561323716095)
+                Generating moon 16 as forward lagrangian companion to moon 15
                     Generating orbital parameters
                     Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 27.566811738611474
-                Calculating albedo
-                Calculated albedo: 0.5772739938320717
-                Calculated temp:   111.38019800609423
-        Atmospheric generation complete
         Satellite system generation complete
 
     Generating a gas giant for orbit 6
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 1881.8077568797194 (Max: 1981.4019865709774)
+            Mass: 621.4651793493401 (Max: 2237.0910354370435)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 118.70053864649984
+            Estimated temperature: 127.37339982485544
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=2765.8016968316083, lim=24047.34659988653, div=0.11501483896957926)
+                    Planet can retain substance (rms=2865.0622629144914, lim=14113.946850324057, div=0.2029951149241227)
                 Jotunnian allowed: True
                 Helian    allowed: False
                 Ydatrian  allowed: False
                 Rhean     allowed: False
                 Minervan  allowed: False
                 Edelian   allowed: False
-                    Picked class 4 (allowed: False)
-                    Picked class 5 (allowed: False)
-                    Picked class 4 (allowed: False)
                     Picked class 0 (allowed: True)
                 Major class: Jotunnian
                     Picking primary component
-                    Generated 86.29285% Hydrogen             (13.70715% remaining)
+                    Generated 87.85801% Hydrogen             (12.14199% remaining)
                     Picking secondary component
-                    Generated 12.03740% Helium               ( 1.66975% remaining)
+                    Generated 11.25887% Helium               ( 0.88313% remaining)
                     Picking tertiary component
-                    Generated  0.95844% Propyne              ( 0.71131% remaining)
+                    Generated  1.00741% Ethane               (-0.12429% remaining)
                     Picking minor components
-                    Generated  0.66390% Nitrogen             ( 0.04741% remaining)
-                    Generated  0.04414% Phosphine            ( 0.00327% remaining)
-                    Generated  0.00305% Ammonia              ( 0.00022% remaining)
-                    Generated  0.00020% Hydrogen Chloride    ( 0.00002% remaining)
+                    Generated -0.11594% Nitrogen             (-0.00835% remaining)
+                    Generated -0.00757% Ammonia              (-0.00078% remaining)
+                    Generated -0.00072% Silane               (-0.00006% remaining)
+                    Generated -0.00005% Hydrogen Cyanide     (-0.00001% remaining)
+                    Picking primary component
+                    Generated 87.33329% Hydrogen             (12.66671% remaining)
+                    Picking secondary component
+                    Generated 11.02528% Helium               ( 1.64142% remaining)
+                    Picking tertiary component
+                    Generated  1.02549% Methane              ( 0.61594% remaining)
+                    Picking minor components
+                    Generated  0.57556% Ammonia              ( 0.04038% remaining)
+                    Generated  0.03786% Nitrogen             ( 0.00252% remaining)
+                    Generated  0.00238% Phosphine            ( 0.00014% remaining)
+                    Generated  0.00012% Nitrogen Dioxide     ( 0.00002% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -739,91 +823,79 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: blue-green (0xABAB5)
-                Cloud      color: pale green (0x98FB98)
+                Atmosphere color: orange (0xFF8C00)
+                Cloud      color: pale yellow (0xFFFFAA)
                 Calculating albedo
-                Calculated temp: 130.50651450136633
+                Calculated temp: 135.50672953715906
                     Confirmed class-1
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
             Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 21.104622579664404)
+                Generating moon 0 as type-A minor moon (a = 19.99651981766827)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6814918179565221
-                Calculated temp:   86.4218255895969
-                    Added ring gap from 21.088293200816825 to 21.120951958511984
-                Generating moon 1 as type-A minor moon (a = 21.893239931552174)
+                Calculated albedo: 0.7190597137540664
+                Calculated temp:   89.87167672678129
+                    Added ring gap from 19.95482463613702 to 20.038214999199518
+                Generating moon 1 as type-A minor moon (a = 21.089713413817393)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6531263737474784
-                Calculated temp:   88.28483465854363
-                    Added ring gap from 21.85364331378341 to 21.932836549320935
-                Generating moon 2 as type-A minor moon (a = 22.301871146403005)
+                Calculated albedo: 0.6920968878667788
+                Calculated temp:   91.9544728090129
+                    Added ring gap from 21.051303619845612 to 21.128123207789173
+                Generating moon 2 as type-A minor moon (a = 21.52460969608846)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7122982813810149
-                Calculated temp:   84.251744474809
-                    Added ring gap from 22.273709585956826 to 22.330032706849185
-                Generating moon 3 as type-A minor moon (a = 22.891937751169777)
+                Calculated albedo: 0.6521159974182823
+                Calculated temp:   94.80428206895631
+                    Added ring gap from 21.478254936146627 to 21.570964456030296
+                Generating moon 3 as type-A minor moon (a = 21.919279675076744)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7019608357760249
-                Calculated temp:   84.99857054772879
-                    Added ring gap from 22.8450244311691 to 22.938851071170454
-                Generating moon 4 as type-A minor moon (a = 23.87877906877608)
+                Calculated albedo: 0.7289881616801855
+                Calculated temp:   89.06691392652125
+                    Added ring gap from 21.883667528200753 to 21.954891821952735
+                Generating moon 4 as type-A minor moon (a = 23.31270065997145)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6848114378858693
-                Calculated temp:   86.19575937788066
-                    Added ring gap from 23.840974831175373 to 23.916583306376786
-                Generating moon 5 as type-A minor moon (a = 24.67393477231712)
+                Calculated albedo: 0.6668671997551268
+                Calculated temp:   93.78290647605266
+                    Added ring gap from 23.28916167068221 to 23.336239649260694
+                Generating moon 5 as type-A minor moon (a = 24.76916024374718)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7086756252020279
-                Calculated temp:   84.51571961443351
-                    Added ring gap from 24.630016728341662 to 24.71785281629258
-                Generating moon 6 as type-A minor moon (a = 24.994126630680626)
+                Calculated albedo: 0.7428269809353658
+                Calculated temp:   87.9074515599821
+                    Added ring gap from 24.72797616503543 to 24.81034432245893
+                Generating moon 6 as type-A minor moon (a = 25.643236541152795)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7014175349859859
-                Calculated temp:   85.03728044005787
-                    Added ring gap from 24.95516876932317 to 25.033084492038082
-                Generating moon 7 as type-A minor moon (a = 25.890922199421432)
+                Calculated albedo: 0.7177523116502978
+                Calculated temp:   89.97605293273064
+                    Added ring gap from 25.60472288957915 to 25.68175019272644
+                Generating moon 7 as type-A minor moon (a = 26.198603732417237)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7410779533502043
-                Calculated temp:   82.06076204895291
-                    Added ring gap from 25.84692780216611 to 25.934916596676754
-                Generating moon 8 as type-A minor moon (a = 26.844567785759025)
+                Calculated albedo: 0.6738879347604754
+                Calculated temp:   93.28483676274979
+                    Added ring gap from 26.162707759686814 to 26.23449970514766
+                Generating moon 8 as type-A minor moon (a = 26.72663253849)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.749230459897754
-                Calculated temp:   81.40704372492254
-                    Added ring gap from 26.83764205596067 to 26.85149351555738
-                Generating moon 9 as type-A minor moon (a = 27.50742523442173)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6604336737127429
-                Calculated temp:   87.8161598824966
-                    Added ring gap from 27.467139135777277 to 27.547711333066186
-                Generating moon 10 as type-A minor moon (a = 28.487145008659343)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6937279794421859
-                Calculated temp:   85.57957370129076
-                Generating moon 11 as type-B major moon (a = 32.37341802503482)
+                Calculated albedo: 0.6821107533969794
+                Calculated temp:   92.69115599348021
+                Generating moon 9 as type-B major moon (a = 31.17283923350661)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 59.747818214009015
+            Estimated temperature: 40.926308104545996
                 Calculating albedo
-                Calculated albedo: 0.6326512703008044
-                Calculated temp:   89.55976048864234
+                Calculated albedo: 0.6453281484797831
+                Calculated temp:   95.26338729786477
         Atmospheric generation complete
-                    Checking for resonance gap overlap (10 existing gaps)
+                    Checking for resonance gap overlap (8 existing gaps)
                         Gap from moon 0 does not overlap
                         Gap from moon 1 does not overlap
                         Gap from moon 2 does not overlap
@@ -832,78 +904,90 @@ Beginning system generation
                         Gap from moon 5 does not overlap
                         Gap from moon 6 does not overlap
                         Gap from moon 7 does not overlap
-                        Gap from moon 8 does not overlap
-                        Gap from moon 9 does not overlap
-                    Added ring gap from 20.135673324178732 to 20.652277502608754
-                Generating moon 12 as type-B major moon (a = 68.07514628354966)
+                    Added ring gap from 19.379531755137165 to 19.895784580146575
+                Generating moon 10 as type-B major moon (a = 61.09883452093122)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 41.20235473800201
+            Estimated temperature: 29.233060561710527
                 Calculating albedo
-                Calculated albedo: 0.5250458861869879
-                Calculated temp:   95.50062224506568
+                Calculated albedo: 0.699887130822643
+                Calculated temp:   91.36723744999397
         Atmospheric generation complete
-                Generating moon 13 as type-B major moon (a = 88.62205929344421)
+                Generating moon 11 as reverse lagrangian companion to moon 10
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 12 as type-B major moon (a = 98.33930409431144)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 36.111490129870276
+            Estimated temperature: 23.04237201651888
                 Calculating albedo
-                Calculated albedo: 0.9987638758911691
-                Calculated temp:   21.570430216208177
+                Calculated albedo: 0.5644162864823845
+                Calculated temp:   100.28529294978497
         Atmospheric generation complete
-                Generating moon 14 as type-B major moon (a = 112.04735380057629)
+                Generating moon 13 as type-B major moon (a = 110.31552861168878)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 32.11556200747262
+            Estimated temperature: 21.75566807114431
                 Calculating albedo
-                Calculated albedo: 0.4121268822554505
-                Calculated temp:   100.73124186399122
+                Calculated albedo: 0.7576408528729429
+                Calculated temp:   86.613221699654
         Atmospheric generation complete
-                Generating moon 15 as type-B major moon (a = 134.53969864083555)
+                Generating moon 14 as type-B major moon (a = 140.06532646605405)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 29.308332050716555
+            Estimated temperature: 19.30747274155369
                 Calculating albedo
-                Calculated albedo: 0.81796358246803
-                Calculated temp:   75.14201863352311
+                Calculated albedo: 0.7089646902487765
+                Calculated temp:   90.66835991272072
         Atmospheric generation complete
+                Generating moon 15 as type-C minor moon group (a = 0)
+                Calculated albedo: 0.6775677751457476
+                Calculated temp:   93.02055989277716
+                    Generated distribution of orbital parameters
+                Generating moon 16 as type-C minor moon group (a = 0)
+                Calculated albedo: 1.3153070790594885
+                Calculated temp:   NaN
+                Calculated albedo: 1.012544850863045
+                Calculated temp:   NaN
+                Calculated albedo: 0.570989759843216
+                Calculated temp:   99.90477679619833
+                    Generated distribution of orbital parameters
         Satellite system generation complete
 
     Generating a gas giant for orbit 7
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 1392.7207497882416 (Max: 1981.4019865709774)
+            Mass: 1491.0026408557521 (Max: 2237.0910354370435)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 98.96643247061384
+            Estimated temperature: 92.17711338859554
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=2525.4492839901945, lim=21084.746509641518, div=0.11977612739310718)
+                    Planet can retain substance (rms=2437.284607275815, lim=22229.381685455246, div=0.10964248316769593)
                 Jotunnian allowed: True
                 Helian    allowed: False
                 Ydatrian  allowed: False
                 Rhean     allowed: False
                 Minervan  allowed: False
                 Edelian   allowed: False
-                    Picked class 5 (allowed: False)
                     Picked class 0 (allowed: True)
                 Major class: Jotunnian
                     Picking primary component
-                    Generated 85.83847% Hydrogen             (14.16153% remaining)
+                    Generated 85.26053% Hydrogen             (14.73947% remaining)
                     Picking secondary component
-                    Generated 12.80098% Helium               ( 1.36055% remaining)
+                    Generated 13.48922% Helium               ( 1.25024% remaining)
                     Picking tertiary component
-                    Generated  0.98110% Ethane               ( 0.37945% remaining)
+                    Generated  0.95820% Ethane               ( 0.29204% remaining)
                     Picking minor components
-                    Generated  0.33518% Ammonia              ( 0.04427% remaining)
-                    Generated  0.03945% Tholins              ( 0.00481% remaining)
-                    Generated  0.00440% Water                ( 0.00041% remaining)
-                    Generated  0.00035% Phosphine            ( 0.00006% remaining)
+                    Generated  0.26522% Ammonia              ( 0.02682% remaining)
+                    Generated  0.02527% Water                ( 0.00155% remaining)
+                    Generated  0.00142% Tholins              ( 0.00012% remaining)
+                    Generated  0.00011% Cyanogen             ( 0.00001% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -926,83 +1010,78 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: blue (0xFF)
-                Cloud      color: turqoise (0x0)
+                Atmosphere color: orange (0xFF8C00)
+                Cloud      color: pale yellow (0xFFFFAA)
                 Calculating albedo
-                Calculated temp: 103.99255092312706
+                Calculated temp: 108.54896413877702
                     Confirmed class-1
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
             Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 19.864816813312967)
+                Generating moon 0 as type-A minor moon (a = 20.18011906583622)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.723990405746017
-                Calculated temp:   69.51996710805194
-                    Added ring gap from 19.84741304785229 to 19.882220578773644
-                Generating moon 1 as type-A minor moon (a = 20.189894504085483)
+                Calculated albedo: 0.6589151672134543
+                Calculated temp:   68.26990582549024
+                    Added ring gap from 20.14473325761601 to 20.21550487405643
+                Generating moon 1 as type-A minor moon (a = 20.971134333300487)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.658314219996532
-                Calculated temp:   73.33060018648239
-                    Added ring gap from 20.147049005276866 to 20.2327400028941
-                Generating moon 2 as type-A minor moon (a = 21.629073987926567)
+                Calculated albedo: 0.718463633300056
+                Calculated temp:   65.07247529849478
+                    Added ring gap from 20.92463607787371 to 21.017632588727263
+                Generating moon 2 as type-A minor moon (a = 22.037707779190892)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6984427339748799
-                Calculated temp:   71.0756700530633
-                    Added ring gap from 21.583601294791094 to 21.67454668106204
-                Generating moon 3 as type-A minor moon (a = 22.46207041583648)
+                Calculated albedo: 0.7035012144267754
+                Calculated temp:   65.92033891627126
+                    Added ring gap from 21.995089770059877 to 22.080325788321908
+                Generating moon 3 as type-A minor moon (a = 23.21122774303389)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7441013847935829
-                Calculated temp:   68.21745251038253
-                    Added ring gap from 22.414676135863644 to 22.509464695809314
-                Generating moon 4 as type-A minor moon (a = 23.57008550074281)
+                Calculated albedo: 0.6698003329738738
+                Calculated temp:   67.7185826205036
+                    Added ring gap from 23.187267165451416 to 23.235188320616366
+                Generating moon 4 as type-A minor moon (a = 23.593107821448708)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7077329212359542
-                Calculated temp:   70.52181612175184
-                    Added ring gap from 23.550310737148425 to 23.589860264337194
-                Generating moon 5 as type-A minor moon (a = 24.736392815764212)
+                Calculated albedo: 0.7321634052547158
+                Calculated temp:   64.26598680166502
+                    Added ring gap from 23.55893453331836 to 23.627281109579055
+                Generating moon 5 as type-A minor moon (a = 24.168082439051776)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7081600071381402
-                Calculated temp:   70.49603884956905
-                    Added ring gap from 24.690201450524658 to 24.782584181003767
-                Generating moon 6 as type-A minor moon (a = 25.09270453177961)
+                Calculated albedo: 0.7054554602560815
+                Calculated temp:   65.811447924906
+                    Added ring gap from 24.129419666221974 to 24.20674521188158
+                Generating moon 6 as type-A minor moon (a = 25.632227739274)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.686515984284166
-                Calculated temp:   71.7682511812808
-                    Added ring gap from 25.065487267049633 to 25.119921796509587
-                Generating moon 7 as type-A minor moon (a = 26.029495138431272)
+                Calculated albedo: 0.6588318406185697
+                Calculated temp:   68.27407500655592
+                    Added ring gap from 25.598359151631325 to 25.666096326916676
+                Generating moon 7 as type-A minor moon (a = 25.919580031906722)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7420754570886909
-                Calculated temp:   68.35207145565546
-                    Added ring gap from 25.994624314300296 to 26.06436596256225
-                Generating moon 8 as type-A minor moon (a = 27.12281253758886)
+                Calculated albedo: 0.6668043829158329
+                Calculated temp:   67.87166789926079
+                    Added ring gap from 25.87724148312822 to 25.961918580685225
+                Generating moon 8 as type-A minor moon (a = 26.645854424465107)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.705748117921382
-                Calculated temp:   70.64124188921234
-                    Added ring gap from 27.09309955462659 to 27.15252552055113
-                Generating moon 9 as type-A minor moon (a = 27.594070332621392)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7402172852445842
-                Calculated temp:   68.47484786490682
-                Generating moon 10 as type-B major moon (a = 32.72321165728417)
+                Calculated albedo: 0.6544803183277508
+                Calculated temp:   68.49074647002067
+                    Added ring gap from 26.611447029452094 to 26.68026181947812
+                Generating moon 9 as type-B major moon (a = 30.308976031379082)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 59.427624127345695
+            Estimated temperature: 41.505449077844716
                 Calculating albedo
-                Calculated albedo: 0.6731365217301962
-                Calculated temp:   72.52205682212737
+                Calculated albedo: 0.7892916737058722
+                Calculated temp:   60.52490635477847
         Atmospheric generation complete
                     Checking for resonance gap overlap (9 existing gaps)
                         Gap from moon 0 does not overlap
@@ -1014,101 +1093,191 @@ Beginning system generation
                         Gap from moon 6 does not overlap
                         Gap from moon 7 does not overlap
                         Gap from moon 8 does not overlap
-                    Added ring gap from 20.36716936368179 to 20.861493823495834
-                Generating moon 11 as forward lagrangian companion to moon 10
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 12 as type-B major moon (a = 52.9569011474312)
+                    Added ring gap from 18.852289415356807 to 19.334627487336874
+                Generating moon 10 as type-B major moon (a = 60.94093071453884)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 46.71485946283386
+            Estimated temperature: 29.270908894648343
+            Picking a major class for the atmosphere
+                    Moon can retain substance (rms=368.4321952460272, lim=147702550.91441047, div=2.4944199877734232E-06)
+                Jotunnian allowed: False
+                Helian    allowed: False
+                Ydatrian  allowed: False
+                Rhean     allowed: True
+                Minervan  allowed: False
+                Edelian   allowed: False
+                    Picked class 4 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 3 (allowed: True)
+                Major class: Rhean
+                    Picking primary component
+                    Generated 85.03328% Nitrogen             (14.96672% remaining)
+                    Picking secondary component
+                    Generated 12.91868% Nitrogen Dioxide     ( 2.04804% remaining)
+                    Picking tertiary component
+                    Generated  0.95326% Argon                ( 1.09478% remaining)
+                    Picking minor components
+                    Generated  1.00484% Oxygen               ( 0.08994% remaining)
+                    Generated  0.07974% Sulfur Dioxide       ( 0.01020% remaining)
+                    Generated  0.00927% Krypton              ( 0.00093% remaining)
+                    Generated  0.00085% Carbon Dioxide       ( 0.00008% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
+            Picking minor class
+                    Cryoazurian      allowed: True
+                    Frigidian        allowed: False
+                    Neonean          allowed: True
+                    Borean           allowed: False
+                    Methanean        allowed: False
+                    Mesoazurian      allowed: False
+                    Tholian          allowed: False
+                    Sulfanian        allowed: False
+                    Ammonian         allowed: False
+                    Hydronian        allowed: False
+                    Acidian          allowed: False
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: primrose (0xEED7D9)
+                Cloud      color: light gray (0xD3D3D3)
                 Calculating albedo
-                Calculated albedo: 0.6161368476966405
-                Calculated temp:   75.49577012245503
+                Calculated albedo: 0.7001230588397697
+                Calculated temp:   66.10730762744826
+                    Moon is outside temp range for minor class, rerandomizing
+            Picking minor class
+                    Cryoazurian      allowed: True
+                    Frigidian        allowed: False
+                    Neonean          allowed: False
+                    Borean           allowed: False
+                    Methanean        allowed: True
+                    Mesoazurian      allowed: False
+                    Tholian          allowed: True
+                    Sulfanian        allowed: False
+                    Ammonian         allowed: False
+                    Hydronian        allowed: False
+                    Acidian          allowed: False
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: grayish-blue (0x98AFC7)
+                Cloud      color:  (0x0)
+                Calculating albedo
+                Calculated albedo: 0.3928192388401339
+                Calculated temp:   78.85753590731304
+            Minor class generation complete
+            Calculating molar weight
         Atmospheric generation complete
-                Generating moon 13 as type-B major moon (a = 73.03386326813333)
+                Generating moon 11 as type-B major moon (a = 81.5083340855382)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 39.779030249102114
+            Estimated temperature: 25.30985988231848
                 Calculating albedo
-                Calculated albedo: 0.6296744857166796
-                Calculated temp:   74.82115739823035
+                Calculated albedo: 0.5498640953134799
+                Calculated temp:   73.17279019183125
         Atmospheric generation complete
-                Generating moon 14 as forward lagrangian companion to moon 13
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 15 as type-B major moon (a = 114.80827940426244)
+                Generating moon 12 as type-B major moon (a = 93.42068143184886)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 31.72705228998421
+            Estimated temperature: 23.641184586282797
                 Calculating albedo
-                Calculated albedo: 0.7876990964072694
-                Calculated temp:   65.10531941555716
+                Calculated albedo: 1.2836206316462173
+                Calculated temp:   NaN
+                Calculated albedo: 0.6547328258124939
+                Calculated temp:   68.47822969555898
         Atmospheric generation complete
-                Generating moon 16 as type-B major moon (a = 135.5552790527349)
+                Generating moon 13 as reverse lagrangian companion to moon 12
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 14 as type-B major moon (a = 105.83455277277778)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 29.198336601754065
+            Estimated temperature: 22.211455058373655
                 Calculating albedo
-                Calculated albedo: 0.6308969136936243
-                Calculated temp:   74.75933549434971
+                Calculated albedo: 0.5611571809721954
+                Calculated temp:   72.70946529630649
         Atmospheric generation complete
-                Generating moon 17 as forward lagrangian companion to moon 16
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 18 as type-B major moon (a = 161.98650357192162)
+                Generating moon 15 as type-B major moon (a = 142.27041013770418)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 26.710186033254203
+            Estimated temperature: 19.15726282686846
                 Calculating albedo
-                Calculated albedo: 0.6003179751607719
-                Calculated temp:   76.26182034346222
+                Calculated albedo: 0.6626474272401564
+                Calculated temp:   68.08237673931058
         Atmospheric generation complete
-                Generating moon 19 as type-C minor moon group (a = 0)
-                Calculated albedo: 0.6706402473261364
-                Calculated temp:   72.66012577035163
-                    Generated distribution of orbital parameters
         Satellite system generation complete
 
     Generating a gas giant for orbit 8
         Generating physical characteristics
             Assigning tilt and spin
-            Mass: 531.9019414681621 (Max: 1981.4019865709774)
+            Mass: 1251.1409497910954 (Max: 2237.0910354370435)
         Physical property generation complete
         Generating orbital parameters
         Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 77.40930962428277
+            Estimated temperature: 68.80799853272086
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=2233.5274328482, lim=12794.682974875677, div=0.1745668444645384)
+                    Planet can retain substance (rms=2105.785624450997, lim=19911.24499099705, div=0.10575861154855644)
                 Jotunnian allowed: True
                 Helian    allowed: False
                 Ydatrian  allowed: False
                 Rhean     allowed: False
                 Minervan  allowed: False
                 Edelian   allowed: False
-                    Picked class 5 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 3 (allowed: False)
+                    Picked class 1 (allowed: False)
                     Picked class 2 (allowed: False)
-                    Picked class 4 (allowed: False)
-                    Picked class 5 (allowed: False)
                     Picked class 0 (allowed: True)
                 Major class: Jotunnian
                     Picking primary component
-                    Generated 90.66915% Hydrogen             ( 9.33085% remaining)
+                    Generated 87.93994% Hydrogen             (12.06006% remaining)
                     Picking secondary component
-                    Generated  8.15947% Helium               ( 1.17138% remaining)
+                    Generated 11.12920% Helium               ( 0.93085% remaining)
                     Picking tertiary component
-                    Generated  1.03857% Ethane               ( 0.13281% remaining)
+                    Generated  1.00783% Propyne              (-0.07698% remaining)
                     Picking minor components
-                    Generated  0.12114% Ammonia              ( 0.01168% remaining)
-                    Generated  0.01091% Tholins              ( 0.00077% remaining)
-                    Generated  0.00071% Carbon Dioxide       ( 0.00006% remaining)
-                    Generated  0.00005% Phosphine            ( 0.00001% remaining)
+                    Generated -0.06665% Ammonia              (-0.01033% remaining)
+                    Generated -0.00885% Tholins              (-0.00148% remaining)
+                    Generated -0.00135% Phosphine            (-0.00013% remaining)
+                    Generated -0.00011% Nitrogen             (-0.00002% remaining)
+                    Picking primary component
+                    Generated 86.79463% Hydrogen             (13.20537% remaining)
+                    Picking secondary component
+                    Generated 12.38191% Helium               ( 0.82346% remaining)
+                    Picking tertiary component
+                    Generated  0.96441% Acetylene            (-0.14095% remaining)
+                    Picking minor components
+                    Generated -0.12221% Nitrogen             (-0.01875% remaining)
+                    Generated -0.01635% Phosphine            (-0.00240% remaining)
+                    Generated -0.00207% Ammonia              (-0.00032% remaining)
+                    Generated -0.00028% Methylene            (-0.00004% remaining)
+                    Picking primary component
+                    Generated 89.46288% Hydrogen             (10.53712% remaining)
+                    Picking secondary component
+                    Generated  9.40754% Helium               ( 1.12958% remaining)
+                    Picking tertiary component
+                    Generated  0.99334% Methylene            ( 0.13624% remaining)
+                    Picking minor components
+                    Generated  0.12479% Ammonia              ( 0.01145% remaining)
+                    Generated  0.01059% Tholins              ( 0.00086% remaining)
+                    Generated  0.00076% Ethylene             ( 0.00010% remaining)
+                    Generated  0.00009% Water                ( 0.00001% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -1131,212 +1300,124 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: pale blue (0x86C5D8)
-                Cloud      color: barely-distringuishable (0x0)
+                Atmosphere color: steel blue (0x4682B4)
+                Cloud      color:  (0x0)
                 Calculating albedo
-                Calculated temp: 87.02676216993193
+                Calculated temp: 97.30093795098543
+                    Confirmed class-1
+                    Planet is outside temp range for minor class, rerandomizing
+            Picking minor class
+                    Cryoazurian      allowed: False
+                    Frigidian        allowed: False
+                    Neonean          allowed: False
+                    Borean           allowed: False
+                    Methanean        allowed: False
+                    Mesoazurian      allowed: True
+                    Tholian          allowed: True
+                    Sulfanian        allowed: True
+                    Ammonian         allowed: True
+                    Hydronian        allowed: False
+                    Acidian          allowed: False
+                    Pyroazurian      allowed: False
+                    Sulfolian        allowed: False
+                    Aithalian        allowed: False
+                    Alkalinean       allowed: False
+                    Hyperpyroazurian allowed: False
+                    Enstatian        allowed: False
+                    Refractian       allowed: False
+                    Carbean          allowed: False
+                Atmosphere color: pale yellow (0xFFFFAA)
+                Cloud      color: tan (0xD2B48C)
+                Calculating albedo
+                Calculated temp: 72.77912914237902
                     Confirmed class-1
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
             Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 20.094039537681773)
+                Generating moon 0 as type-A minor moon (a = 20.79172143995848)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6501789715741039
-                Calculated temp:   57.69594225951959
-                    Added ring gap from 20.052764751313365 to 20.13531432405018
-                Generating moon 1 as type-A minor moon (a = 20.747636354224824)
+                Calculated albedo: 0.7263499436987453
+                Calculated temp:   48.231237939815806
+                    Added ring gap from 20.74672634906479 to 20.83671653085217
+                Generating moon 1 as type-A minor moon (a = 22.286358670574767)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7360039677563288
-                Calculated temp:   53.775337193024136
-                    Added ring gap from 20.70632042888369 to 20.788952279565958
-                Generating moon 2 as type-A minor moon (a = 21.210958164656226)
+                Calculated albedo: 0.6936204666959892
+                Calculated temp:   49.61288260382914
+                    Added ring gap from 22.237273517010326 to 22.335443824139208
+                Generating moon 2 as type-A minor moon (a = 23.628879571082926)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6562226166657477
-                Calculated temp:   57.44511692722035
-                    Added ring gap from 21.18121701317078 to 21.240699316141672
-                Generating moon 3 as type-A minor moon (a = 21.763169091140696)
+                Calculated albedo: 0.65863352618284
+                Calculated temp:   50.972359805557154
+                    Added ring gap from 23.607929984518613 to 23.64982915764724
+                Generating moon 3 as type-A minor moon (a = 24.741499749609904)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6543732379995258
-                Calculated temp:   57.52221924028316
-                    Added ring gap from 21.718211190854273 to 21.80812699142712
-                Generating moon 4 as type-A minor moon (a = 22.253388825125043)
+                Calculated albedo: 0.7194425592527278
+                Calculated temp:   48.53275793566985
+                    Added ring gap from 24.702228942732734 to 24.780770556487074
+                Generating moon 4 as type-A minor moon (a = 25.944206316774512)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.692749760990174
-                Calculated temp:   55.85433039900256
-                    Added ring gap from 22.218949046197025 to 22.28782860405306
-                Generating moon 5 as type-A minor moon (a = 22.5961952231964)
+                Calculated albedo: 0.6517995351215068
+                Calculated temp:   51.225577146238074
+                    Added ring gap from 25.90558075082262 to 25.982831882726405
+                Generating moon 5 as type-A minor moon (a = 27.3210074193351)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.7065931387867072
-                Calculated temp:   55.21427306170526
-                    Added ring gap from 22.551672049518345 to 22.640718396874455
-                Generating moon 6 as type-A minor moon (a = 23.479539314654296)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7084758339327242
-                Calculated temp:   55.12548618257382
-                    Added ring gap from 23.43897968837208 to 23.520098940936514
-                Generating moon 7 as type-A minor moon (a = 24.65850419690085)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.703128347240464
-                Calculated temp:   55.376560143390755
-                    Added ring gap from 24.61649519781386 to 24.70051319598784
-                Generating moon 8 as type-A minor moon (a = 24.925137289072342)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6529294194283523
-                Calculated temp:   57.582198581725024
-                    Added ring gap from 24.882269895110095 to 24.96800468303459
-                Generating moon 9 as type-A minor moon (a = 26.151080425666446)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6692049705205284
-                Calculated temp:   56.89492590419672
-                    Added ring gap from 26.131106009903323 to 26.17105484142957
-                Generating moon 10 as type-A minor moon (a = 26.874209432250456)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7288034877723046
-                Calculated temp:   54.138325304798045
-                Generating moon 11 as type-B major moon (a = 33.08721373821188)
+                Calculated albedo: 0.7058727699038064
+                Calculated temp:   49.10925341480683
+                Generating moon 6 as type-B major moon (a = 32.912305629091136)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 59.099829787823886
-                Calculating albedo
-                Calculated albedo: 0.8243872540937325
-                Calculated temp:   48.56493376574959
-        Atmospheric generation complete
-                    Checking for resonance gap overlap (10 existing gaps)
-                        Gap from moon 0 does not overlap
-                        Gap from moon 1 overlaps
-                    Overwrote ring gap from moon 1 with 20.58724450032234 to 21.100032570821643
-                Generating moon 12 as reverse lagrangian companion to moon 11
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 13 as type-B major moon (a = 48.583641243637146)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 48.77208229832739
-                Calculating albedo
-                Calculated albedo: 1.5609113133371921
-                Calculated temp:   NaN
-                Calculated albedo: 0.8079550752233348
-                Calculated temp:   49.663177301278516
-        Atmospheric generation complete
-                Generating moon 14 as type-B major moon (a = 88.50078707193305)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 36.13622336423602
-                Calculating albedo
-                Calculated albedo: 1.2716237224203228
-                Calculated temp:   NaN
-                Calculated albedo: 0.6581150651225731
-                Calculated temp:   57.36589628309295
-        Atmospheric generation complete
-                Generating moon 15 as type-B major moon (a = 104.07429338039428)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 33.32303836271852
-                Calculating albedo
-                Calculated albedo: 0.5332011812538062
-                Calculated temp:   62.010642257615764
-        Atmospheric generation complete
-                Generating moon 16 as type-B major moon (a = 115.66929188599106)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 31.608747709842728
-                Calculating albedo
-                Calculated albedo: 0.8136976017992954
-                Calculated temp:   49.28768312990622
-        Atmospheric generation complete
-                Generating moon 17 as reverse lagrangian companion to moon 16
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 18 as type-B major moon (a = 132.66946178567207)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 29.51418837839189
-                Calculating albedo
-                Calculated albedo: 0.7406555732064933
-                Calculated temp:   53.536875600058316
-        Atmospheric generation complete
-                Generating moon 19 as type-B major moon (a = 153.97215264450324)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 27.39650971801461
-                Calculating albedo
-                Calculated albedo: 0.751020069228773
-                Calculated temp:   52.9937774809095
-        Atmospheric generation complete
-                Generating moon 20 as type-B major moon (a = 174.36792532725505)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 25.744415046543065
-                Calculating albedo
-                Calculated albedo: 0.8330906509278174
-                Calculated temp:   47.95169444440413
-        Atmospheric generation complete
-                Generating moon 21 as reverse lagrangian companion to moon 20
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Generating moon 22 as type-C minor moon group (a = 0)
-                Calculated albedo: 0.6572495972125183
-                Calculated temp:   57.40216673240272
-                    Generated distribution of orbital parameters
-                Generating moon 23 as type-C minor moon group (a = 0)
-                Calculated albedo: 0.99208519407037
-                Calculated temp:   22.376587706485093
-                    Generated distribution of orbital parameters
-        Satellite system generation complete
-
-    Generating a gas giant for orbit 9
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 1377.7147697023981 (Max: 1981.4019865709774)
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 59.51118683188602
+            Estimated temperature: 39.830118239407184
             Picking a major class for the atmosphere
-                    Planet can retain substance (rms=1958.3666270022045, lim=21164.460197779234, div=0.09253090363285968)
-                Jotunnian allowed: True
+                    Moon can retain substance (rms=429.7790757756524, lim=86710367.47158049, div=4.956490075036453E-06)
+                Jotunnian allowed: False
                 Helian    allowed: False
                 Ydatrian  allowed: False
-                Rhean     allowed: False
+                Rhean     allowed: True
                 Minervan  allowed: False
                 Edelian   allowed: False
+                    Picked class 0 (allowed: False)
+                    Picked class 5 (allowed: False)
                     Picked class 1 (allowed: False)
                     Picked class 4 (allowed: False)
-                    Picked class 0 (allowed: True)
-                Major class: Jotunnian
+                    Picked class 0 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 2 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 4 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 1 (allowed: False)
+                    Picked class 5 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 0 (allowed: False)
+                    Picked class 3 (allowed: True)
+                Major class: Rhean
                     Picking primary component
-                    Generated 90.46195% Hydrogen             ( 9.53805% remaining)
+                    Generated 85.40989% Nitrogen             (14.59011% remaining)
                     Picking secondary component
-                    Generated  8.40256% Helium               ( 1.13550% remaining)
+                    Generated 13.09352% Carbon Disulfide     ( 1.49659% remaining)
                     Picking tertiary component
-                    Generated  0.95393% Methane              ( 0.18156% remaining)
+                    Generated  0.96512% Argon                ( 0.53148% remaining)
                     Picking minor components
-                    Generated  0.16930% Tholins              ( 0.01226% remaining)
-                    Generated  0.01111% Ammonia              ( 0.00116% remaining)
-                    Generated  0.00099% Cyanogen             ( 0.00016% remaining)
-                    Generated  0.00014% Phosphine            ( 0.00002% remaining)
+                    Generated  0.45780% Neon                 ( 0.07368% remaining)
+                    Generated  0.06432% Ethylene             ( 0.00936% remaining)
+                    Generated  0.00883% Oxygen               ( 0.00054% remaining)
+                    Generated  0.00050% Hydrogen Chloride    ( 0.00004% remaining)
             Major class generation complete
             Generating minor class for the atmosphere
             Picking minor class
@@ -1359,20 +1440,100 @@ Beginning system generation
                     Enstatian        allowed: False
                     Refractian       allowed: False
                     Carbean          allowed: False
-                Atmosphere color: burnt orange (0xBF5700)
-                Cloud      color: gray (0x828282)
+                Atmosphere color: steel blue (0x4682B4)
+                Cloud      color:  (0x0)
                 Calculating albedo
-                Calculated temp: 70.01492034370384
-                    Confirmed class-1
-                    Planet is outside temp range for minor class, rerandomizing
+                Calculated albedo: 0.7662217951973676
+                Calculated temp:   46.369298785410294
+            Minor class generation complete
+            Calculating molar weight
+        Atmospheric generation complete
+                    Checking for resonance gap overlap (5 existing gaps)
+                        Gap from moon 0 overlaps
+                    Overwrote ring gap from moon 0 with 20.471347827515917 to 20.995558835149534
+                Generating moon 7 as type-B major moon (a = 71.96699735065536)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 26.93543897179204
+                Calculating albedo
+                Calculated albedo: 1.0590040738280333
+                Calculated temp:   NaN
+                Calculated albedo: 0.960528003629648
+                Calculated temp:   29.72362657986472
+        Atmospheric generation complete
+                Generating moon 8 as type-B major moon (a = 101.6476185242873)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 22.66429139332708
+                Calculating albedo
+                Calculated albedo: 0.6827180327914453
+                Calculated temp:   50.04847754347937
+        Atmospheric generation complete
+                Generating moon 9 as type-B major moon (a = 127.05816518588819)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 20.271666815606736
+                Calculating albedo
+                Calculated albedo: 0.7331695117536423
+                Calculated temp:   47.92789843516041
+        Atmospheric generation complete
+                Generating moon 10 as reverse lagrangian companion to moon 9
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 11 as type-B major moon (a = 169.06625755443184)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 17.573662423650664
+                Calculating albedo
+                Calculated albedo: 0.779469559117414
+                Calculated temp:   45.69794387773513
+        Atmospheric generation complete
+        Satellite system generation complete
+
+    Generating a ice giant for orbit 9
+        Generating physical characteristics
+            Assigning tilt and spin
+            Mass: 4.898694734111136 (Max: 4131.769)
+        Physical property generation complete
+        Generating orbital parameters
+        Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 48.85450611991981
+            Picking a major class for the atmosphere
+                    Planet can retain substance (rms=1774.3815273827568, lim=2644.9294113587753, div=0.6708615813195584)
+                Jotunnian allowed: True
+                Helian    allowed: False
+                Ydatrian  allowed: False
+                Rhean     allowed: False
+                Minervan  allowed: False
+                Edelian   allowed: False
+                    Picked class 0 (allowed: True)
+                Major class: Jotunnian
+                    Picking primary component
+                    Generated 85.09690% Hydrogen             (14.90310% remaining)
+                    Picking secondary component
+                    Generated 13.08597% Helium               ( 1.81713% remaining)
+                    Picking tertiary component
+                    Generated  1.00596% Propane              ( 0.81117% remaining)
+                    Picking minor components
+                    Generated  0.73882% Nitrogen             ( 0.07235% remaining)
+                    Generated  0.06334% Ammonia              ( 0.00901% remaining)
+                    Generated  0.00789% Tholins              ( 0.00113% remaining)
+                    Generated  0.00104% Ethylene             ( 0.00009% remaining)
+            Major class generation complete
+            Generating minor class for the atmosphere
             Picking minor class
                     Cryoazurian      allowed: True
                     Frigidian        allowed: False
                     Neonean          allowed: False
-                    Borean           allowed: False
-                    Methanean        allowed: True
+                    Borean           allowed: True
+                    Methanean        allowed: False
                     Mesoazurian      allowed: False
-                    Tholian          allowed: True
+                    Tholian          allowed: False
                     Sulfanian        allowed: False
                     Ammonian         allowed: False
                     Hydronian        allowed: False
@@ -1388,303 +1549,302 @@ Beginning system generation
                 Atmosphere color: peach (0xFFE5B4)
                 Cloud      color: tan (0xD2B48C)
                 Calculating albedo
-                Calculated temp: 94.38908058612085
-                    Confirmed class-1
+                Calculated temp: 43.53626698039666
             Minor class generation complete
             Calculating molar weight
         Atmospheric generation complete
         Generating satellite system
             Generating moon system for giant
-                Generating moon 0 as type-A minor moon (a = 21.126605763494172)
+                Generating moon 0 as type-A minor moon (a = 4.235218273556149)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6778952779029673
-                Calculated temp:   43.44987011551571
-                    Added ring gap from 21.09248728865251 to 21.160724238335835
-                Generating moon 1 as type-A minor moon (a = 22.361689706875353)
+                Calculated albedo: 0.6522432589581052
+                Calculated temp:   36.359182897828944
+                    Added ring gap from 4.19239482425808 to 4.278041722854218
+                Generating moon 1 as type-A minor moon (a = 5.130471304799643)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6746562266172353
-                Calculated temp:   43.55869243985289
-                    Added ring gap from 22.316007792110653 to 22.407371621640053
-                Generating moon 2 as type-A minor moon (a = 22.88676444705618)
+                Calculated albedo: 0.6510799342710611
+                Calculated temp:   36.389552242861
+                    Added ring gap from 5.094935890565664 to 5.166006719033622
+                Generating moon 2 as type-A minor moon (a = 5.846967105610798)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6774501188700083
-                Calculated temp:   43.46487461920179
-                    Added ring gap from 22.843509553866525 to 22.930019340245835
-                Generating moon 3 as type-A minor moon (a = 23.257926116941004)
+                Calculated albedo: 0.7279189006253763
+                Calculated temp:   34.195567759415
+                Generating moon 3 as type-A minor moon (a = 6.512468106534023)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 0.6941844249675344
-                Calculated temp:   42.88980874618863
-                    Added ring gap from 23.246042067007437 to 23.26981016687457
-                Generating moon 4 as type-A minor moon (a = 24.507786729261554)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7404381573781929
-                Calculated temp:   41.16701918099157
-                    Added ring gap from 24.471799725468614 to 24.543773733054493
-                Generating moon 5 as type-A minor moon (a = 24.977989846785704)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7055893070965016
-                Calculated temp:   42.48421563308446
-                    Added ring gap from 24.940390925431977 to 25.01558876813943
-                Generating moon 6 as type-A minor moon (a = 26.407610522596464)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7274273201556366
-                Calculated temp:   41.6734821421208
-                    Added ring gap from 26.39379759797379 to 26.421423447219137
-                Generating moon 7 as type-A minor moon (a = 27.746867737257492)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.7081113046572363
-                Calculated temp:   42.39293922227353
-                Generating moon 8 as type-B major moon (a = 31.835160307994737)
+                Calculated albedo: 0.6700132326722341
+                Calculated temp:   35.88552932352693
+                Generating moon 4 as type-B major moon (a = 7.346185159775245)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 60.250798641432446
+            Estimated temperature: 84.30625816190863
                 Calculating albedo
-                Calculated albedo: 0.5637825676356476
-                Calculated temp:   46.87215961422606
+                Calculated albedo: 1.0853300020359855
+                Calculated temp:   NaN
+                Calculated albedo: 1.066289256980782
+                Calculated temp:   NaN
+                Calculated albedo: 1.0071869871022585
+                Calculated temp:   NaN
+                Calculated albedo: 0.7429731641623734
+                Calculated temp:   33.71241332383976
         Atmospheric generation complete
-                    Checking for resonance gap overlap (7 existing gaps)
+                    Checking for resonance gap overlap (2 existing gaps)
                         Gap from moon 0 does not overlap
                         Gap from moon 1 does not overlap
-                        Gap from moon 2 does not overlap
-                        Gap from moon 3 does not overlap
-                        Gap from moon 4 does not overlap
-                        Gap from moon 5 does not overlap
-                        Gap from moon 6 does not overlap
-                    Added ring gap from 19.794820408801517 to 20.314968190018806
-                Generating moon 9 as type-B major moon (a = 60.01242644104384)
+                    Added ring gap from 4.385825306555034 to 4.86978801267113
+                Generating moon 5 as forward lagrangian companion to moon 4
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+                Generating moon 6 as type-B major moon (a = 12.955216859478877)
                     Generating orbital parameters
                     Orbital parameter generation complete
         Generating atmosphere
-            Estimated temperature: 43.88294193640697
+            Estimated temperature: 63.48460265942465
                 Calculating albedo
-                Calculated albedo: 0.7519011999069817
-                Calculated temp:   40.70477660451554
-        Atmospheric generation complete
-                Generating moon 10 as type-B major moon (a = 92.67124142440517)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 35.31374999676735
-                Calculating albedo
-                Calculated albedo: 0.5889176643468679
-                Calculated temp:   46.18185926607453
-        Atmospheric generation complete
-                Generating moon 11 as type-B major moon (a = 108.89323065166536)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 32.577360008132594
-                Calculating albedo
-                Calculated albedo: 0.6463551349555479
-                Calculated temp:   44.47654555976335
-        Atmospheric generation complete
-                Generating moon 12 as type-B major moon (a = 147.87665845623624)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-        Generating atmosphere
-            Estimated temperature: 27.955451729613557
-                Calculating albedo
-                Calculated albedo: 0.6577718133060765
-                Calculated temp:   44.11315843066585
-        Atmospheric generation complete
-                Generating moon 13 as type-C minor moon group (a = 0)
-                Calculated albedo: 0.7526223515935055
-                Calculated temp:   40.67516504517776
-                    Generated distribution of orbital parameters
-        Satellite system generation complete
-
-    Generating a kuiper asteroid belt for orbit 10
-        Generating physical characteristics
-            Mass: 3.028906669337009 (Max: 4131.769)
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Planet has no atmosphere
-            Estimated temperature: 52.09097862338054
-                Calculating albedo
-        Atmospheric generation complete
-        Generating satellite system
-
-    Generating a plutino dwarf for orbit 11
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 0.0005893486456710509 (Max: ∞)
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Planet has no atmosphere
-            Estimated temperature: 52.09097862338054
-                Calculating albedo
-                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
-                    Thick clouds     cover  0% of the surface, contributing 0 albedo
-                    Reflective land  covers 29.194140325325733% of the surface, contributing 0.22112572091636773 albedo
-                    Absorptive land  covers 70.80585967467427% of the surface, contributing 0.10321309048862687 albedo
-                    The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.15831069895075273
-                Calculated temp: 48.35496422922933
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moon system for dwarf
-                Generating moon 0 as minor moon (a = 592.5264249416947)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.9478432300591089
-                Calculated temp:   24.125747967816253
-                Generating moon 1 as minor moon (a = 2150.252982254832)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.88383480736002
-                Calculated temp:   29.472848989371307
-                Generating moon 2 as minor moon (a = 2582.121460308798)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6779430988426117
-                Calculated temp:   38.03087057833866
-                Generating moon 3 as minor moon (a = 2022.0695258490741)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.8640922878717001
-                Calculated temp:   30.65237570626402
-                Generating moon 4 as minor moon (a = 1777.9741829720367)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.8978870477080374
-                Calculated temp:   28.53798614922908
-        Satellite system generation complete
-
-    Generating a twotino dwarf for orbit 12
-        Generating physical characteristics
-            Assigning tilt and spin
-            Mass: 6.824675306717979E-05 (Max: ∞)
-        Physical property generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating atmosphere
-            Planet has no atmosphere
-            Estimated temperature: 52.09097862338054
-                Calculating albedo
-                    Thin  clouds     cover  0% of the surface, contributing 0 albedo
-                    Thick clouds     cover  0% of the surface, contributing 0 albedo
-                    Reflective land  covers 67.71762238067211% of the surface, contributing 0.26549006601719527 albedo
-                    Absorptive land  covers 32.282377619327896% of the surface, contributing 0.10455091927842344 albedo
-                    The planet has no ice or water, contributing 0 albedo
-                    Total albedo: 0.4923191606550697
-                Calculated temp: 42.61385343623851
-        Atmospheric generation complete
-        Generating satellite system
-            Generating moon system for dwarf
-                Generating moon 0 as minor moon (a = 288.3591737036674)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 0.6266512070410937
-                Calculated temp:   39.46224627257291
-                Generating moon 1 as minor moon (a = 77.12179501996991)
-                    Generating orbital parameters
-                    Orbital parameter generation complete
-                Calculated albedo: 1.098793182902346
+                Calculated albedo: 1.2970946016588119
                 Calculated temp:   NaN
-                Calculated albedo: 0.9462571149850152
-                Calculated temp:   24.307111813970526
-                Generating moon 2 as minor moon (a = 1031.5542196260217)
+                Calculated albedo: 0.758958445482786
+                Calculated temp:   33.175555634351944
+        Atmospheric generation complete
+                Generating moon 7 as type-B major moon (a = 16.35131501359701)
                     Generating orbital parameters
                     Orbital parameter generation complete
-                Calculated albedo: 1.1775921014895738
-                Calculated temp:   NaN
-                Calculated albedo: 0.7726771035499541
-                Calculated temp:   34.85891857552765
+        Generating atmosphere
+            Estimated temperature: 56.50858162644933
+                Calculating albedo
+                Calculated albedo: 0.761106931596142
+                Calculated temp:   33.10138096405163
+        Atmospheric generation complete
+                Generating moon 8 as type-B major moon (a = 18.962855950180202)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 52.47336027421923
+                Calculating albedo
+                Calculated albedo: 0.42289624105003326
+                Calculated temp:   41.26755142863221
+        Atmospheric generation complete
+                Generating moon 9 as type-B major moon (a = 23.157328252215414)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 47.48391549534326
+                Calculating albedo
+                Calculated albedo: 0.6959495012349114
+                Calculated temp:   35.15860664867039
+        Atmospheric generation complete
+                Generating moon 10 as type-B major moon (a = 26.580922814606545)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 44.320609288008086
+                Calculating albedo
+                Calculated albedo: 0.9741535372211465
+                Calculated temp:   18.984340050610722
+        Atmospheric generation complete
+                Generating moon 11 as type-B major moon (a = 30.87946789871907)
+                    Generating orbital parameters
+                    Orbital parameter generation complete
+        Generating atmosphere
+            Estimated temperature: 41.12025935817325
+                Calculating albedo
+                Calculated albedo: 0.699911582393365
+                Calculated temp:   35.04350472682213
+        Atmospheric generation complete
+                Generating moon 12 as forward lagrangian companion to moon 11
+                    Generating orbital parameters
+                    Orbital parameter generation complete
         Satellite system generation complete
 
     Calculating final miscellanous values
-      Generating Kirkwood gaps for the inner belt
-      Calculating standard deviation of a for Kuiper belt
       Regenerating normally-distributed orbits
-        Generating orbital parameters
-        Orbital parameter generation complete
-        Generating orbital parameters
-        Orbital parameter generation complete
-      Calculating apparent magnitude of star (-26.184582409395624)
+      Calculating apparent magnitude of star (-26.200976327973912)
 
 System generation complete
-Chroma = 0.15022528347109734, H' = 0.32017740459126365, X = 0.0480987413657628
-R = 0.15022528347109734, G = 0.0480987413657628, B = 0
-Returned color is (124, 98, 86)
-Chroma = 0.006352470020800623, H' = 0.3112017406846674, X = 0.0019768997281203195
-R = 0.006352470020800623, G = 0.0019768997281203195, B = 0
-Returned color is (69, 68, 68)
-Chroma = 0.23740291689124368, H' = 0.8436917660104825, X = 0.20029488620801317
-R = 0.23740291689124368, G = 0.20029488620801317, B = 0
-Returned color is (143, 134, 83)
-Chroma = 0, H' = 0.08772707625107325, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.9640244370968932, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.9807831839268356, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.5084597423849203, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.4734750043297492, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.7315418427064323, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.10761361789131817, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.11012654459367267, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.6517479660527206, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.16120611702925888, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0, H' = 0.8228283731103238, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0.02509382742186326, H' = 0.4582324756618105, X = 0.01149880666335063
-R = 0.02509382742186326, G = 0.01149880666335063, B = 0
-Returned color is (249, 246, 243)
-Chroma = 0.127140883502596, H' = 0.8027108168503966, X = 0.10205736245144995
-R = 0.127140883502596, G = 0.10205736245144995, B = 0
-Returned color is (213, 206, 180)
-Chroma = 0.1992060443035118, H' = 0.6394833420027187, X = 0.12738894695835137
-R = 0.1992060443035118, G = 0.12738894695835137, B = 0
-Returned color is (168, 149, 117)
-Chroma = 0, H' = 0.44986159025534633, X = 0
-R = 0, G = 0, B = 0
-Returned color is (0, 0, 0)
-Chroma = 0.0343074956956844, H' = 0.04485812245950671, X = 0.0015389698431960103
-R = 0.0343074956956844, G = 0.0015389698431960103, B = 0
-Returned color is (244, 236, 235)
-Chroma = 0.2576656421304895, H' = 0.7931231049324423, X = 0.20436057412094533
-R = 0.2576656421304895, G = 0.20436057412094533, B = 0
-Returned color is (203, 190, 138)
-Chroma = 0.2673819199311608, H' = 0.45497088480838876, X = 0.12165098869284598
-R = 0.2673819199311608, G = 0.12165098869284598, B = 0
-Returned color is (205, 168, 137)
-Chroma = 0.21715054913340298, H' = 0.8961178563095429, X = 0.19459248458586514
-R = 0.21715054913340298, G = 0.19459248458586514, B = 0
-Returned color is (175, 169, 120)
-Chroma = 0.016169316114106227, H' = 0.25159749327361147, X = 0.004068159402257739
-R = 0.016169316114106227, G = 0.004068159402257739, B = 0
-Returned color is (42, 39, 38)
-Chroma = 0.2085406178185553, H' = 0.8593211387837626, X = 0.17920336118651034
-R = 0.2085406178185553, G = 0.17920336118651034, B = 0
-Returned color is (152, 145, 99)
+Chroma = 0.2865301104211856, H' = 0.16667795518678716, X = 0.04775825290444755
+R = 0.2865301104211856, G = 0.04775825290444755, B = 0
+Returned color is (141, 80, 68)
+Calculated Convolution kernel:
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0009   0.0013   0.0018   0.0024   0.0031   0.0039   0.0046   0.0053   0.0059   0.0062   0.0064   0.0062   0.0059   0.0053   0.0046   0.0039   0.0031   0.0024   0.0018   0.0013   0.0009   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+Total: 0.29045995980394956
+Chroma = 0.025303675513669882, H' = 0.0026456820049988445, X = 6.694547896684561E-05
+R = 0.025303675513669882, G = 6.694547896684561E-05, B = 0
+Returned color is (85, 79, 79)
+Calculated Convolution kernel:
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0009   0.0013   0.0018   0.0024   0.0031   0.0039   0.0046   0.0053   0.0059   0.0062   0.0064   0.0062   0.0059   0.0053   0.0046   0.0039   0.0031   0.0024   0.0018   0.0013   0.0009   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+Total: 0.29045995980394956
+Chroma = 0.03135432236210146, H' = 0.5230508018201496, X = 0.016399903452024616
+R = 0.03135432236210146, G = 0.016399903452024616, B = 0
+Returned color is (23, 19, 15)
+Calculated Convolution kernel:
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0009   0.0013   0.0018   0.0024   0.0031   0.0039   0.0046   0.0053   0.0059   0.0062   0.0064   0.0062   0.0059   0.0053   0.0046   0.0039   0.0031   0.0024   0.0018   0.0013   0.0009   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+Total: 0.29045995980394956
+Chroma = 0.01714679544729581, H' = 0.01840726054654973, X = 0.00031562553133676673
+R = 0.01714679544729581, G = 0.00031562553133676673, B = 0
+Returned color is (27, 22, 22)
+Calculated Convolution kernel:
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0009   0.0013   0.0018   0.0024   0.0031   0.0039   0.0046   0.0053   0.0059   0.0062   0.0064   0.0062   0.0059   0.0053   0.0046   0.0039   0.0031   0.0024   0.0018   0.0013   0.0009   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+Total: 0.29045995980394956
+Chroma = 0.06073964003404212, H' = 3.2804947243058775, X = 0.043702491448255235
+R = 0, G = 0.043702491448255235, B = 0.06073964003404212
+Returned color is (145, 156, 161)
+Chroma = 0.002879350790276395, H' = 0.5258084769792416, X = 0.0015139870537242068
+R = 0.002879350790276395, G = 0.0015139870537242068, B = 0
+Returned color is (153, 153, 153)
+Calculated Convolution kernel:
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0009   0.0013   0.0018   0.0024   0.0031   0.0039   0.0046   0.0053   0.0059   0.0062   0.0064   0.0062   0.0059   0.0053   0.0046   0.0039   0.0031   0.0024   0.0018   0.0013   0.0009   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0004   0.0006   0.0008   0.0012   0.0017   0.0023   0.0030   0.0038   0.0045   0.0052   0.0058   0.0061   0.0062   0.0061   0.0058   0.0052   0.0045   0.0038   0.0030   0.0023   0.0017   0.0012   0.0008   0.0006   0.0004   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0012   0.0016   0.0022   0.0029   0.0036   0.0043   0.0049   0.0054   0.0058   0.0059   0.0058   0.0054   0.0049   0.0043   0.0036   0.0029   0.0022   0.0016   0.0012   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0011   0.0015   0.0020   0.0026   0.0032   0.0039   0.0044   0.0049   0.0052   0.0053   0.0052   0.0049   0.0044   0.0039   0.0032   0.0026   0.0020   0.0015   0.0011   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001  
+ 0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0013   0.0017   0.0023   0.0028   0.0034   0.0039   0.0043   0.0045   0.0046   0.0045   0.0043   0.0039   0.0034   0.0028   0.0023   0.0017   0.0013   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0008   0.0011   0.0014   0.0019   0.0023   0.0028   0.0032   0.0036   0.0038   0.0039   0.0038   0.0036   0.0032   0.0028   0.0023   0.0019   0.0014   0.0011   0.0008   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0001   0.0001   0.0002   0.0003   0.0004   0.0006   0.0009   0.0012   0.0015   0.0019   0.0023   0.0026   0.0029   0.0030   0.0031   0.0030   0.0029   0.0026   0.0023   0.0019   0.0015   0.0012   0.0009   0.0006   0.0004   0.0003   0.0002   0.0001   0.0001   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0003   0.0005   0.0007   0.0009   0.0012   0.0014   0.0017   0.0020   0.0022   0.0023   0.0024   0.0023   0.0022   0.0020   0.0017   0.0014   0.0012   0.0009   0.0007   0.0005   0.0003   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0007   0.0009   0.0011   0.0013   0.0015   0.0016   0.0017   0.0018   0.0017   0.0016   0.0015   0.0013   0.0011   0.0009   0.0007   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0004   0.0005   0.0006   0.0008   0.0009   0.0011   0.0012   0.0012   0.0013   0.0012   0.0012   0.0011   0.0009   0.0008   0.0006   0.0005   0.0004   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0002   0.0002   0.0003   0.0004   0.0005   0.0006   0.0007   0.0008   0.0008   0.0009   0.0008   0.0008   0.0007   0.0006   0.0005   0.0004   0.0003   0.0002   0.0002   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0004   0.0005   0.0005   0.0006   0.0006   0.0006   0.0005   0.0005   0.0004   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0002   0.0002   0.0003   0.0003   0.0003   0.0004   0.0004   0.0004   0.0003   0.0003   0.0003   0.0002   0.0002   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0002   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+ 0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0001   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000   0.0000  
+Total: 0.29045995980394956

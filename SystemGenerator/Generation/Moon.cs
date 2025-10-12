@@ -607,9 +607,13 @@ namespace SystemGenerator.Generation
     
         public void genImage(int x, int y)
         {
-            this.image = new Bitmap(x,y);
-
+            this.image     = new Bitmap(x,y);
+            Bitmap surface = new Bitmap(x,y);
+            Bitmap mask    = new Bitmap(x,y);
+            
             Graphics g = Graphics.FromImage(this.image);
+            Graphics gs = Graphics.FromImage(surface);
+            Graphics gm = Graphics.FromImage(mask);
             Pen p = new Pen(Color.Black);
             PathGradientBrush pgb = null;
 
@@ -667,7 +671,8 @@ namespace SystemGenerator.Generation
 
             rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
 
-            g.FillEllipse(p.Brush, rect);
+            gs.FillEllipse(p.Brush, rect);
+            gm.FillEllipse(p.Brush, rect);
             
 
             //Now draw the planet's surfaces
@@ -701,7 +706,7 @@ namespace SystemGenerator.Generation
                 rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
                 points[1] = new Point(rad, rad);
 
-                g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+                gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
             }
 
             //Switch back to surface color
@@ -721,8 +726,18 @@ namespace SystemGenerator.Generation
                 rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
                 points[1] = new Point(rad, rad);
 
-                g.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+                gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
             }
+
+            
+            //Blur surface
+            surface = Utils.UI.blur(surface, UI.BLUR_RADIUS);
+
+            //Copy surface onto this.image using mask to preserve the sharp edge between surface and atmo
+            for (int sx = 0; sx < this.image.Width; sx++)
+                for (int sy = 0; sy < this.image.Height; sy++)
+                    if (mask.GetPixel(sx, sy).R > 0 || mask.GetPixel(sx, sy).G > 0 || mask.GetPixel(sx, sy).B > 0)
+                        this.image.SetPixel(sx, sy, surface.GetPixel(sx, sy));
 
             //Give a light sheen of atmo color
             if (this.hasAir)
@@ -735,8 +750,10 @@ namespace SystemGenerator.Generation
                 g.FillEllipse(p.Brush, rect);      
             }
             
-
+            
             g.Dispose();
+            gs.Dispose();
+            gm.Dispose();
             p.Dispose();
 
             if (pgb != null)
