@@ -69,7 +69,8 @@ namespace SystemGenerator
         {
             genButton.Hide();
             genProgressBar.Show();
-            genProgressBar.Value = 0;
+            genProgressBar.Value   = 0;
+            genProgressBar.Maximum = 100;
 
             //Clear log file
             using (StreamWriter output = new StreamWriter("C:\\Users\\green\\source\\repos\\SystemGenerator\\SystemGenerator\\log.txt"))
@@ -655,7 +656,16 @@ namespace SystemGenerator
             pictureBox.Hide();
 
             if (planet.image == null)
-                planet.genImage(pictureBox.Width, pictureBox.Height);
+            {
+                genButton.Hide();
+                genProgressBar.Show();
+                genProgressBar.Value   = 0;
+                genProgressBar.Maximum = pictureBox.Width;
+                planet.genImage(pictureBox.Width, pictureBox.Height, true);
+                genProgressBar.Hide();
+                genButton.Show();
+                scaleLabel.Show();
+            }
 
             pictureBox.Image = planet.image;
 
@@ -675,7 +685,16 @@ namespace SystemGenerator
             pictureBox.Hide();
 
             if (moon.image == null)
-                moon.genImage(pictureBox.Width, pictureBox.Height);
+            {
+                genButton.Hide();
+                genProgressBar.Show();
+                genProgressBar.Value   = 0;
+                genProgressBar.Maximum = pictureBox.Width;
+                moon.genImage(pictureBox.Width, pictureBox.Height, false);
+                genProgressBar.Hide();
+                genButton.Show();
+                scaleLabel.Show();
+            }
 
             pictureBox.Image = moon.image;
 

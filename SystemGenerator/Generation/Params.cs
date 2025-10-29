@@ -42,13 +42,16 @@ namespace SystemGenerator.Generation
 
     public class UI
     {
-        public const string FORMAT      = "{0,7:N4}";
+        public const string FORMAT      = "{0,10:N4}";
         public const double SCALE_SMALL = 1.0/2.0;
         public const double SCALE_MAJOR = 1.0/10.0;
         public const double SCALE_MID   = 1.0/200.0;
         public const double SCALE_BIG   = 1.0/400.0;
         public const double SCALE_STAR  = 1.0/1600.0;
-        public const int    BLUR_RADIUS = 5;
+        public const int    BLUR_RADIUS = 3;
+        public const double GIANT_COLOR_BALANCE = 2.0/3.0;
+        public const double MIN_TURN    = 0.25;
+        public const double MAX_TURN    = 0.75;
     }
 
     public class Gen

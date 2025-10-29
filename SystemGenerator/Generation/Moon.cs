@@ -34,6 +34,7 @@ namespace SystemGenerator.Generation
         public Orbit  orbit;
         public double day  ;
         public double tilt ;
+        public double turn ;
 
         public double t;
         public string flavortext;
@@ -605,7 +606,13 @@ namespace SystemGenerator.Generation
             this.flavortext = flavor;
         }
     
-        public void genImage(int x, int y)
+        public void genImage(int x, int y, bool blur)
+        {
+            if (this.isMajor)
+                drawMajor(x, y, blur);
+        }
+
+        public void drawMajor(int x, int y, bool blur)
         {
             this.image     = new Bitmap(x,y);
             Bitmap surface = new Bitmap(x,y);
@@ -625,6 +632,7 @@ namespace SystemGenerator.Generation
             Color surf;
 
             int radius = (int)Math.Round(( this.rA + this.rB + this.rC ) / 3.0); //Radius of the planet
+            int atmoHeight = 0;
             
             if (this.isMajor)
                 radius = (int)Math.Round(radius * UI.SCALE_MAJOR);
@@ -635,7 +643,11 @@ namespace SystemGenerator.Generation
 
             if (this.hasAir)
             {
-                int atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MID); //Extra radius of the atmosphere
+                //Extra radius of the atmosphere
+                if (this.isMajor)
+                    atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MAJOR);
+                else
+                    atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_SMALL);
                 double transparency = 0.9;
 
                 rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
@@ -706,7 +718,7 @@ namespace SystemGenerator.Generation
                 rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
                 points[1] = new Point(rad, rad);
 
-                gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+                gs.FillEllipse(p.Brush, new Rectangle(points[0].X, points[0].Y, points[1].X, points[1].Y));
             }
 
             //Switch back to surface color
@@ -729,9 +741,9 @@ namespace SystemGenerator.Generation
                 gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
             }
 
-            
             //Blur surface
-            surface = Utils.UI.blur(surface, UI.BLUR_RADIUS);
+            if (blur)
+                surface = Utils.UI.blur(surface, UI.BLUR_RADIUS/2);
 
             //Copy surface onto this.image using mask to preserve the sharp edge between surface and atmo
             for (int sx = 0; sx < this.image.Width; sx++)
@@ -750,6 +762,132 @@ namespace SystemGenerator.Generation
                 g.FillEllipse(p.Brush, rect);      
             }
             
+            g.Dispose();
+            gs.Dispose();
+            gm.Dispose();
+            
+            g = Graphics.FromImage(this.image);
+            LinearGradientBrush lgb;
+
+            //Add lighting
+            
+            this.turn = Utils.randDouble(UI.MIN_TURN, UI.MAX_TURN);
+            int turnPoint, startPoint;
+            p.Width = 1;
+
+            Blend blend;
+
+            for (int sy = center.Y-radius-atmoHeight; sy < center.Y + radius + atmoHeight - 1; sy++)
+            {
+                //Find the point on a circle corresponding to height sy
+                startPoint = (int)Math.Round(center.X - Math.Sqrt(
+                        Math.Pow(radius + atmoHeight, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                ) - 1;
+
+                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                if (sy < center.Y - radius || sy > center.Y + radius)
+                    turnPoint = center.X;
+                else
+                    turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
+                            Math.Pow(radius, 2.0) - 
+                            Math.Pow((sy - center.Y), 2.0)
+                        )
+                    );
+
+                //Create linear gradient brush for shadow
+                lgb = new LinearGradientBrush(
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    new Point(
+                        turnPoint+1,
+                        sy
+                    ),
+                    Color.Black,
+                    Color.Transparent
+                );
+
+                //Create a Blend object and assign it to lgb
+                blend            = new Blend();
+                blend.Factors    = new float[]{ 0.0f, 0.75f, 1.0f };
+                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                lgb.Blend        = blend;
+
+                p.Brush = lgb;
+
+                g.DrawLine(
+                    p,
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    new Point(
+                        turnPoint,
+                        sy
+                    )
+                );
+
+                p.Brush.Dispose();
+                lgb.Dispose();
+
+                if (sy <= center.Y - radius || sy >= center.Y + radius)
+                    continue;
+
+                
+                //Find the point on a circle corresponding to height sy
+                startPoint = (int)Math.Round(center.X + Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                ) + 1;
+
+                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                );
+
+                //Create linear gradient brush for light
+                lgb = new LinearGradientBrush(
+                    new Point(
+                        turnPoint,
+                        sy
+                    ),
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    Color.Transparent,
+                    Color.FromArgb(Color.White.R/5, Color.White)
+                );
+
+                //Create a Blend object and assign it to lgb
+                blend            = new Blend();
+                blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
+                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                lgb.Blend        = blend;
+
+                p.Brush = lgb;
+
+                g.DrawLine(
+                    p,
+                    new Point(
+                        turnPoint+1,
+                        sy
+                    ),
+                    new Point(
+                        startPoint,
+                        sy
+                    )
+                );
+
+                p.Brush.Dispose();
+                lgb.Dispose();
+            }
             
             g.Dispose();
             gs.Dispose();

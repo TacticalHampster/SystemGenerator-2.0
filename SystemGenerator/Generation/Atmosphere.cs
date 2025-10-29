@@ -294,12 +294,23 @@ namespace SystemGenerator.Generation
             //Set the RGB values
             this.color      = colorLookup(this.colorName     );
             this.colorCloud = colorLookup(this.colorCloudName);
+
+            //Balance gas giant clouds so they're not so jarring
+            if (Math.Abs(Utils.UI.RgbToHue((int)this.color) - Utils.UI.RgbToHue((int)this.colorCloud)) > 90)
+            {
+                Color c  = Utils.UI.colorFromHex((int)this.color);
+                Color cc = Utils.UI.colorFromHex((int)this.colorCloud);
+                int r = (int)Math.Round((c.R * (1.0 - UI.GIANT_COLOR_BALANCE)) + (cc.R * UI.GIANT_COLOR_BALANCE) / 2.0);
+                int g = (int)Math.Round((c.G * (1.0 - UI.GIANT_COLOR_BALANCE)) + (cc.G * UI.GIANT_COLOR_BALANCE) / 2.0);
+                int b = (int)Math.Round((c.B * (1.0 - UI.GIANT_COLOR_BALANCE)) + (cc.B * UI.GIANT_COLOR_BALANCE) / 2.0);
+                this.colorCloud = Utils.UI.hexFromColor(Color.FromArgb(r, g, b));
+            }
             
             Utils.writeLog(String.Format("                Atmosphere color: {0} (0x{1:X})", this.colorName     , (int)this.color     ));
             Utils.writeLog(String.Format("                Cloud      color: {0} (0x{1:X})", this.colorCloudName, (int)this.colorCloud));
         }
 
-        private double albedoFromRGB(double color)
+        public static double albedoFromRGB(double color)
         {
             Color c = Utils.UI.colorFromHex((int)color);
             return (Math.Pow(c.R/255.0, 2.2) + Math.Pow(c.G/255.0, 2.2) + Math.Pow(c.B/255.0, 2.2)) / 3.0;

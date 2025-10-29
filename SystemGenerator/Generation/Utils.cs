@@ -13,6 +13,7 @@ using static SystemGenerator.Generation.Gen;
 using static SystemGenerator.Generation.UI;
 using System.Diagnostics.Eventing.Reader;
 using System.Numerics;
+using System.Windows.Forms;
 
 namespace SystemGenerator.Generation
 {
@@ -473,6 +474,11 @@ namespace SystemGenerator.Generation
                 return Color.FromArgb((int)Math.Round(r),(int)Math.Round(g),(int)Math.Round(b));
             }
 
+            public static int hexFromColor(Color color)
+            {
+                return (color.R * 0x10000) + (color.G * 0x100) + (color.B);
+            }
+
             //Formulae for the next two are from https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
             public static Color HslToRgb(double h, double s, double l)
             {
@@ -510,6 +516,38 @@ namespace SystemGenerator.Generation
                 Utils.writeLog(String.Format("Returned color is ({0:D}, {1:D}, {2:D})", c.R, c.G, c.B));
 
                 return c;
+            }
+
+            public static double RgbToHue(int color)
+            {
+                return RgbToHue(colorFromHex(color));
+            }
+
+            public static double RgbToHue(Color color)
+            {
+                //Code is from https://stackoverflow.com/questions/23090019/fastest-formula-to-get-hue-from-rgb
+
+                float min = Math.Min(Math.Min(color.R, color.G), color.B);
+                float max = Math.Max(Math.Min(color.R, color.G), color.B);
+
+                if (min == max) {
+                    return 0;
+                }
+
+                float hue = 0f;
+                if (max == color.R) {
+                    hue =      (color.G - color.B) / (max - min);
+                } else if (max == color.G) {
+                    hue = 2f + (color.B - color.R) / (max - min);
+                } else {
+                    hue = 4f + (color.R - color.G) / (max - min);
+                }
+
+                hue *= 60f;
+
+                if (hue < 0) hue += 360f;
+
+                return Math.Round(hue);
             }
 
             public static Bitmap expandBitmap(Bitmap bmp)
@@ -551,7 +589,7 @@ namespace SystemGenerator.Generation
                 Bitmap result = new Bitmap(bmp.Width, bmp.Height);
 
                 //Create the kernel
-                int radius = 3*stddev;
+                int radius = 2*stddev;
                 int kwidth = (2*radius) +1;
                 double[][] kernel = new double[kwidth][];
                 double total = 0, d, q = 2.0*stddev*stddev;
@@ -717,9 +755,36 @@ namespace SystemGenerator.Generation
                         xloop:
                         for (;false;){ }
                     }
+                
+                    updateProgress();    
                 }
 
                 return result;
+            }
+
+            public static Bitmap rotate(Bitmap b, double angle)
+            {
+                //Code is from https://foxlearn.com/csharp/image-rotation-8368.html
+                
+                // Create a new empty bitmap to hold the rotated image
+                Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
+                // Create a graphics object from the empty bitmap
+                Graphics g = Graphics.FromImage(returnBitmap);
+     
+                // Move the rotation point to the center of the image
+                g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
+     
+                // Rotate the image by the specified angle
+                g.RotateTransform((float)angle);
+     
+                // Move the image back to its original position
+                g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
+     
+                // Draw the original image onto the graphics object
+                g.DrawImage(b, new Point(0, 0));
+     
+                // Return the rotated image
+                return returnBitmap;
             }
         }
     }

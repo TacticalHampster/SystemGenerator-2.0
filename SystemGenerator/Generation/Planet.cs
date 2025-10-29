@@ -44,6 +44,7 @@ namespace SystemGenerator.Generation
         public Orbit  orbit;
         public double day  ; //(hours)
         public double tilt ; //(degrees)
+        public double turn ; //%
 
         //Satellites
         public List<Moon> moons  ;
@@ -980,7 +981,332 @@ namespace SystemGenerator.Generation
             this.flavortext = flavor;
         }
     
-        public void genImage(int x, int y)
+        public void genImage(int x, int y, bool blur)
+        {
+            if (this.isBelt)
+                return;
+            else if (this.isGiant || this.isIcy)
+                drawGiant(x, y, blur);
+            else
+                drawRocky(x, y, blur);
+        }
+
+        private void drawGiant(int x, int y, bool blur)
+        {
+            this.image     = new Bitmap(x,y);
+            Bitmap surface = new Bitmap(x,y);
+            Bitmap mask    = new Bitmap(x,y);
+            
+            Graphics g  = Graphics.FromImage(this.image);
+            Graphics gs = Graphics.FromImage(surface);
+            Graphics gm = Graphics.FromImage(mask);
+            Pen p = new Pen(Color.Black);
+            PathGradientBrush pgb = null;
+
+            g.Clear(Color.Black);
+
+            GraphicsPath path;
+            Point center = new Point(x/2, y/2);
+            Rectangle rect;
+            Color surf, band;
+
+            int radius; //Radius of the planet
+
+            if (this.isGiant && (this.r/Gen.Planet.Giant.GAS_RADIUS_NORM) > 1.1)
+                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE_BIG);
+            else
+                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE_MID);
+
+            radius += UI.BLUR_RADIUS;
+
+            p.Width = 1;
+
+            //For giants the atmo is the planet
+            Color h = Utils.UI.colorFromHex((int)this.atmo.color);
+            p.Color = Color.FromArgb(h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+            surf = p.Color;
+            
+            rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+            gs.FillEllipse(p.Brush, rect);
+
+            radius -= UI.BLUR_RADIUS;
+            rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+            gm.FillEllipse(p.Brush, rect);
+            radius += UI.BLUR_RADIUS;
+            
+            //Draw the bands and jets
+            int l = (int)Math.Round(Utils.fudge(30));
+            int sweep, A, R, G, B, mn, mx, upLim, dnLim, lfLim, rtLim, lightness, height, left, right, greebles;
+
+            p.StartCap = LineCap.Round;
+            p.EndCap   = LineCap.Round;
+
+            for (int i = 0; l < 100; i++)
+            {
+                mn = (int)Math.Abs(Math.Round(1.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
+                mx = (int)Math.Abs(Math.Round(2.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
+
+                sweep = Utils.randInt(mn, mx);
+
+                if (i%2!=0)
+                {
+                    if (this.atmo.colorCloud != 0)
+                        h = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+                    else
+                    {
+                        h = Utils.UI.colorFromHex((int)this.atmo.color);
+                        lightness = Utils.randInt(Color.White.R/7, Color.White.R/6) * (int)Utils.randSign();
+                        h = Color.FromArgb(Math.Max(0, Math.Min(h.R+lightness, 255)), Math.Max(0, Math.Min(h.G+lightness, 255)), Math.Max(0, Math.Min(h.B+lightness, 255)));
+                    }
+
+                    //Draw the upper hemisphere band
+                    path = new GraphicsPath();
+
+                    //Draw side arcs then add straight lines by closing figure
+                    path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 270+l      , sweep);
+                    path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 270-l-sweep, sweep);
+                    path.CloseFigure();
+
+                    //Fill in the band
+                    pgb = new PathGradientBrush(path);
+                    
+                    R = Math.Min(Color.White.R, (int)Math.Round((double)h.R * (Color.White.R/255)));
+                    G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
+                    B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
+
+                    if (this.atmo.classMinor.cloudColorNames == null)
+                        A = Utils.randInt(Color.White.R/7, Color.White.R/3);
+                    else
+                        A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
+                    
+                    band = Color.FromArgb(A,R,G,B);
+                    pgb.CenterColor = band;
+                    pgb.SurroundColors = new Color[]{surf};
+                    pgb.FocusScales = new PointF(1.0f, 1.0f);
+
+                    gs.FillPath(pgb, path);
+
+                    path.Dispose();
+                    pgb.Dispose();
+
+                    //Draw the lower hemisphere band
+
+                    path = new GraphicsPath();
+
+                    path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90+l      , sweep);
+                    path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90-l-sweep, sweep);
+                    path.CloseFigure();
+
+                    pgb = new PathGradientBrush(path);
+                    
+                    R = Math.Min(Color.White.R, (int)Math.Round((double)h.R * (Color.White.R/255)));
+                    G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
+                    B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
+
+                    if (this.atmo.classMinor.cloudColorNames == null)
+                        A = Utils.randInt(Color.White.R/7, Color.White.R/5);
+                    else
+                        A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
+                    
+                    band = Color.FromArgb(A,R,G,B);
+                    pgb.CenterColor = band;
+                    pgb.SurroundColors = new Color[]{surf};
+                    pgb.FocusScales = new PointF(1.0f, 1.0f);
+
+                    gs.FillPath(pgb, path);
+
+                    path.Dispose();
+                    pgb.Dispose();
+                }
+
+                l += sweep;
+            }
+
+            //Greeble
+            
+            double avgLight = (Atmosphere.albedoFromRGB(Utils.UI.hexFromColor(surf)) + Atmosphere.albedoFromRGB(Utils.UI.hexFromColor(h))) / 2.0;
+
+            if (this.isIcy)
+                greebles = 50;
+            else
+                greebles = 200;
+
+            for (int line = 0; line < greebles; line++)
+            {
+                p.Width = Utils.randInt(5, 20);
+            
+                upLim = -radius + (int)Math.Round(p.Width);
+                dnLim =  radius - (int)Math.Round(p.Width);
+
+                height = Utils.randInt(upLim, dnLim);
+
+                lfLim = -(int)Math.Sqrt((radius * radius) - (height * height)) + (int)Math.Round(p.Width);
+                rtLim =  (int)Math.Sqrt((radius * radius) - (height * height)) - (int)Math.Round(p.Width);
+            
+                left   = Utils.randInt(lfLim, rtLim);
+                right  = Utils.randInt(lfLim, rtLim);
+
+                lightness = Utils.randInt(Color.White.R/7, Color.White.R/6) * (int)Utils.randSign();
+                A = Utils.randInt(Color.White.R/7, Color.White.R/3);
+                
+                if (Atmosphere.albedoFromRGB(Utils.UI.hexFromColor(this.image.GetPixel(radius, center.Y + height))) >= avgLight)
+                {
+                    R = Math.Max(0, Math.Min(Color.White.R, lightness + ((int)Math.Round((double)h.R * (Color.White.R/255)))));
+                    G = Math.Max(0, Math.Min(Color.White.R, lightness + ((int)Math.Round((double)h.G * (Color.White.R/255)))));
+                    B = Math.Max(0, Math.Min(Color.White.R, lightness + ((int)Math.Round((double)h.B * (Color.White.R/255)))));
+                }
+                else
+                {
+                    R = Math.Max(0, Math.Min(Color.White.R, lightness + ((int)Math.Round((double)surf.R * (Color.White.R/255)))));
+                    G = Math.Max(0, Math.Min(Color.White.R, lightness + ((int)Math.Round((double)surf.G * (Color.White.R/255)))));
+                    B = Math.Max(0, Math.Min(Color.White.R, lightness + ((int)Math.Round((double)surf.B * (Color.White.R/255)))));
+                }
+                
+                p.Color = Color.FromArgb(A,R,G,B);
+                
+                gs.DrawLine(p, new Point(center.X + left, center.Y + height), new Point(center.X + right, center.Y + height));
+            }
+
+            g.Dispose();
+            gs.Dispose();
+            gm.Dispose();
+
+            surface = Utils.UI.rotate(surface, this.tilt);
+
+            if (blur)
+                surface = Utils.UI.blur(surface, UI.BLUR_RADIUS);
+
+            //Copy surface onto this.image using mask to cut off the parts where the planet blurs into space
+            for (int sx = 0; sx < this.image.Width; sx++)
+                for (int sy = 0; sy < this.image.Height; sy++)
+                    if (mask.GetPixel(sx, sy).R > 0 || mask.GetPixel(sx, sy).G > 0 || mask.GetPixel(sx, sy).B > 0)
+                        this.image.SetPixel(sx, sy, surface.GetPixel(sx, sy));
+            
+            g = Graphics.FromImage(this.image);
+            LinearGradientBrush lgb;
+
+            //Add lighting
+
+            this.turn = Utils.randDouble(UI.MIN_TURN, UI.MAX_TURN);
+            int turnPoint, startPoint;
+            p.Width = 1;
+
+            Blend blend;
+
+            for (int sy = center.Y-radius; sy < center.Y + radius - 1; sy++)
+            {
+                //Find the point on a circle corresponding to height sy
+                startPoint = (int)Math.Round(center.X - Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                ) - 1;
+
+                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                );
+
+                //Create linear gradient brush for shadow
+                lgb = new LinearGradientBrush(
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    new Point(
+                        turnPoint+1,
+                        sy
+                    ),
+                    Color.Black,
+                    Color.Transparent
+                );
+
+                //Create a Blend object and assign it to lgb
+                blend            = new Blend();
+                blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
+                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                lgb.Blend        = blend;
+
+                p.Brush = lgb;
+
+                g.DrawLine(
+                    p,
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    new Point(
+                        turnPoint,
+                        sy
+                    )
+                );
+
+                p.Brush.Dispose();
+                lgb.Dispose();
+
+                //Find the point on a circle corresponding to height sy
+                startPoint = (int)Math.Round(center.X + Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                ) + 1;
+
+                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                );
+
+                //Create linear gradient brush for light
+                lgb = new LinearGradientBrush(
+                    new Point(
+                        turnPoint,
+                        sy
+                    ),
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    Color.Transparent,
+                    Color.FromArgb(Color.White.R/5, Color.White)
+                );
+
+                //Create a Blend object and assign it to lgb
+                blend            = new Blend();
+                blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
+                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                lgb.Blend        = blend;
+
+                p.Brush = lgb;
+
+                g.DrawLine(
+                    p,
+                    new Point(
+                        turnPoint+1,
+                        sy
+                    ),
+                    new Point(
+                        startPoint,
+                        sy
+                    )
+                );
+
+                p.Brush.Dispose();
+                lgb.Dispose();
+            }
+
+            g.Dispose();
+            gs.Dispose();
+            gm.Dispose();
+            p.Dispose();
+            if (pgb != null)
+                pgb.Dispose();
+        }
+
+        private void drawRocky(int x, int y, bool blur)
         {
             this.image     = new Bitmap(x,y);
             Bitmap mask    = new Bitmap(x,y);
@@ -994,325 +1320,352 @@ namespace SystemGenerator.Generation
 
             g.Clear(Color.Black);
 
-            if (this.isBelt)
-            {
-                g.Dispose();
-                p.Dispose();
-                return;
-            }
-
             GraphicsPath path = new GraphicsPath();
             Point center = new Point(x/2, y/2);
             Rectangle rect;
             Color surf;
+            Color h;
 
-            int radius; //Radius of the planet
+            int radius, atmoHeight = 0; //Radius of the planet
 
             if (this.isDwarf)
                 radius = (int)Math.Round(this.r * UI.SCALE_SMALL);
-            else if (this.isGiant && (this.r/Gen.Planet.Giant.GAS_RADIUS_NORM) > 1.1)
-                radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE_BIG);
             else
                 radius = (int)Math.Round(this.r * Const.Earth.RADIUS * UI.SCALE_MID);
 
             p.Width = 1;
 
-            //For giants the atmo is the planet
-            if (this.isGiant)
+            //Draw the planet and atmosphere separately
+            if (this.hasAir)
             {
-                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
-                p.Color = Color.FromArgb(h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
-                surf = p.Color;
-                
-                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+                //Extra radius of the atmosphere
+                if (this.isDwarf)
+                    atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_SMALL);
+                else
+                    atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MID);
+                double transparency = 0.7;
 
-                g.FillEllipse(p.Brush, rect);
+                rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
+                path.AddEllipse(rect);
+
+                pgb = new PathGradientBrush(path);
+
+                h = Utils.UI.colorFromHex((int)this.atmo.color);
+                pgb.CenterColor = Color.FromArgb((int)Math.Round(transparency * Color.White.R), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
+                pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(transparency * Color.White.R), 0, 0, 0)};
+
+                PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
+
+                pgb.FocusScales = scale;
+
+                g.FillEllipse(pgb, rect);
+
+                pgb.Dispose();
+                path.Dispose();
+            }
+            
+            double hue;
+            double saturation = Utils.randDouble(0, 0.5);
+            double lightness  = this.albedo;
+
+            if (this.isWater)
+                hue = Utils.randDouble(180.0, 240.0);
+            else
+                hue = Utils.randDouble(0.0, 60.0);
+            
+            if (this.type == ID.Planet.ROCK_DENSE)
+                hue = Utils.randDouble(0.0, 1.0/5.0);
+
+            p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
+            surf = p.Color;
+
+            rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+            
+            gs.FillEllipse(p.Brush, rect);
+            gm.FillEllipse(p.Brush, rect);
+            
+            //Now draw the planet's surfaces
+            
+            //Draw random geographic features
+            double theta, r;
+            int rad;
+            
+            if (this.isWater)
+            {
+                hue = Utils.randDouble(0.0, 50.0);
+                saturation = Utils.randDouble(0, 0.5);
+                lightness  = this.albedo;
+            
+                p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
             }
             else
             {
-                //Otherwise draw the planet and atmosphere separately
-                if (this.hasAir)
+                int light = Utils.randInt(Color.White.R/10, Color.White.R/5);
+            
+                if (this.albedo < 0.15)
+                    p.Color = Color.FromArgb(p.Color.R+light, p.Color.G+light, p.Color.B+light);
+                else
+                    p.Color = Color.FromArgb(Math.Abs(p.Color.R-light), Math.Abs(p.Color.G-light), Math.Abs(p.Color.B-light));
+            }
+                
+            Point[] points;
+            
+            double numFeatures = Utils.randDouble(100.0, 150.0);
+            
+            //For each feature
+            for (int f = 0; f < numFeatures; f++)
+            {
+                points = new Point[2];
+            
+                theta = Utils.randDouble(2.0 * Math.PI * (((double)f)/3.0), 2.0 * Math.PI * (((double)f+1.0)/3.0));
+                r = Utils.randDouble(radius/4.0, radius);
+                points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
+            
+                rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
+                points[1] = new Point(rad, rad);
+            
+                gs.FillEllipse(p.Brush, new Rectangle(points[0].X, points[0].Y, points[1].X, points[1].Y));
+                //gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+            }
+            
+            //Switch back to surface color
+            p.Color = surf;
+            
+            double numPoints = Utils.randDouble(6.0, 12.0);
+            
+            //Pepper on some extra circles so the interior isn't boring
+            for (int f = 0; f < numPoints; f++)
+            {
+                points = new Point[2];
+            
+                theta = Utils.randDouble(0.0, 2.0 * Math.PI);
+                r = Utils.randDouble(radius/4.0, radius);
+                points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
+            
+                rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
+                points[1] = new Point(rad, rad);
+            
+                gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
+            }
+            
+            //Add clouds
+            /*
+            int q = Utils.randInt(5, 20);
+            for (int f = -radius+q; f < radius-q; f++)
+            {
+                if (Utils.flip() > this.surface.coverCloudThin)
+                    continue;
+            
+                path = new GraphicsPath();
+                r = (int)Math.Floor(Math.Sqrt((radius*radius) - (f*f)));
+                int height = (int)Math.Round(r * Math.Tan(10.0 * (Math.PI/180.0)));
+            
+                Rectangle arcrect = new Rectangle(
+                    center.X - (int)r,
+                    center.Y + f - height/2,
+                    (int)r * 2,
+                    height
+                );
+            
+                if (arcrect.Height < 1 || arcrect.Width < 1)
                 {
-                    int atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MID); //Extra radius of the atmosphere
-                    double transparency = 0.9;
-
-                    rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
-                    path.AddEllipse(rect);
-
-                    pgb = new PathGradientBrush(path);
-
-                    Color h = Utils.UI.colorFromHex((int)this.atmo.color);
-                    pgb.CenterColor = Color.FromArgb((int)Math.Round(transparency * Color.White.R), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
-                    pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(transparency * Color.White.R), 0, 0, 0)};
-
-                    PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
-
-                    pgb.FocusScales = scale;
-
-                    g.FillEllipse(pgb, rect);
-
-                    pgb.Dispose();
                     path.Dispose();
+                    continue;
                 }
             
-                double hue;
-                double saturation = Utils.randDouble(0, 0.5);
-                double lightness  = this.albedo;
-
-                if (this.isWater)
-                    hue = Utils.randDouble(180.0, 240.0);
+                int theta1, theta2 = (int)Utils.randInt( 0, 90);
+                int roll = Utils.roll(3);
+                switch (roll)
+                {
+                    case 0:
+                        theta1 = (int)Utils.randInt(0, 90) + 90;
+                        break;
+                    case 1:
+                        theta1 = (int)Utils.fudge(45);
+                        break;
+                    default:
+                        theta1 = (int)Utils.randInt(0, 90);
+                        break;
+                }
+            
+                theta1 = 90;
+                theta2 = 270;
+                
+                path.AddArc(arcrect, theta1 - theta2/2, theta2);
+            
+                try
+                {
+                    pgb = new PathGradientBrush(path);
+                }
+                catch (Exception ex)
+                {
+                    path.Dispose();
+                    pgb.Dispose();
+                    continue;
+                }
+            
+                if (this.atmo.colorCloud < 1)
+                    surf = Utils.UI.colorFromHex((int)this.atmo.color);
                 else
-                    hue = Utils.randDouble(0.0, 60.0);
+                    surf = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+            
+                pgb.CenterColor = surf;
+                pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(Color.White.R*0.1), surf)};
                 
-                if (this.type == ID.Planet.ROCK_DENSE)
-                    hue = Utils.randDouble(0.0, 1.0/5.0);
-
-                p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
-                surf = p.Color;
-
-                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
-                
-                gs.FillEllipse(p.Brush, rect);
-                gm.FillEllipse(p.Brush, rect);
+                g.FillPath(pgb, path);
+            
+                pgb.Dispose();
+                path.Dispose();
             }
-
-            //Now draw the planet's surfaces
-            if (this.isGiant || this.isIcy)
-            {
-                //Draw the bands and jets
-                int l = (int)Math.Round(Utils.fudge(30));
-                int sweep, A, R, G, B, mn, mx;
-                Color h;
-
-                for (int i = 0; l < 100; i++)
-                {
-                    mn = (int)Math.Abs(Math.Round(1.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
-                    mx = (int)Math.Abs(Math.Round(2.0 * Math.Sin(i * (Math.PI/180)) * (180/Math.PI)));
-
-                    sweep = Utils.randInt(mn, mx);
-
-                    if (i%2!=0)
-                    {
-                        if (this.atmo.colorCloud != 0)
-                            h = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
-                        else
-                        {
-                            h = Utils.UI.colorFromHex((int)this.atmo.color);
-                            int lightness = Utils.randInt(Color.White.R/7, Color.White.R/6) * (int)Utils.randSign();
-                            h = Color.FromArgb(Math.Max(0, Math.Min(h.R+lightness, 255)), Math.Max(0, Math.Min(h.G+lightness, 255)), Math.Max(0, Math.Min(h.B+lightness, 255)));
-                        }
-
-                        //Draw the upper hemisphere band
-                        path = new GraphicsPath();
-
-                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 270+l      -(float)this.tilt, sweep);
-                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 270-l-sweep-(float)this.tilt, sweep);
-                        path.CloseFigure();
-
-                        pgb = new PathGradientBrush(path);
+            */
                         
-                        R = Math.Min(Color.White.R, (int)Math.Round((double)h.R * (Color.White.R/255)));
-                        G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
-                        B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
+            //Blur
+            if (blur)
+                surface = Utils.UI.blur(surface, UI.BLUR_RADIUS/2);
 
-                        if (this.atmo.classMinor.cloudColorNames == null)
-                            A = Utils.randInt(Color.White.R/7, Color.White.R/3);
-                        else
-                            A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
-                        
-                        pgb.CenterColor = Color.FromArgb(A,R,G,B);
-                        pgb.SurroundColors = new Color[]{surf};
-                        pgb.FocusScales = new PointF(1.0f, 1.0f);
-
-                        g.FillPath(pgb, path);
-
-                        path.Dispose();
-                        pgb.Dispose();
-
-                        //Draw the lower hemisphere band
-
-                        path = new GraphicsPath();
-
-                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90+l      -(float)this.tilt, sweep);
-                        path.AddArc(center.X - radius, center.Y - radius, radius*2, radius*2, 90-l-sweep-(float)this.tilt, sweep);
-                        path.CloseFigure();
-
-                        pgb = new PathGradientBrush(path);
-                        
-                        R = Math.Min(Color.White.R, (int)Math.Round((double)h.R * (Color.White.R/255)));
-                        G = Math.Min(Color.White.R, (int)Math.Round((double)h.G * (Color.White.R/255)));
-                        B = Math.Min(Color.White.R, (int)Math.Round((double)h.B * (Color.White.R/255)));
-
-                        if (this.atmo.classMinor.cloudColorNames == null)
-                            A = Utils.randInt(Color.White.R/7, Color.White.R/5);
-                        else
-                            A = Utils.randInt((Color.White.R*3)/5, Color.White.R);
-                        
-                        pgb.CenterColor = Color.FromArgb(A,R,G,B);
-                        pgb.SurroundColors = new Color[]{surf};
-                        pgb.FocusScales = new PointF(1.0f, 1.0f);
-
-                        g.FillPath(pgb, path);
-
-                        path.Dispose();
-                        pgb.Dispose();
-                    }
-                    
-                    l += sweep;
-                }
-
-                this.image = Utils.UI.blur(this.image, UI.BLUR_RADIUS);
-            }
-            else
-            {
-                //Draw random geographic features
-                double theta, r;
-                int rad;
-
-                if (this.isWater)
-                {
-                    double hue = Utils.randDouble(0.0, 50.0);
-                    double saturation = Utils.randDouble(0, 0.5);
-                    double lightness  = this.albedo;
+            //Copy surface onto this.image using mask to preserve the sharp edge between surface and atmo
+            for (int sx = 0; sx < this.image.Width; sx++)
+                for (int sy = 0; sy < this.image.Height; sy++)
+                    if (mask.GetPixel(sx, sy).R > 0 || mask.GetPixel(sx, sy).G > 0 || mask.GetPixel(sx, sy).B > 0)
+                        this.image.SetPixel(sx, sy, surface.GetPixel(sx, sy));
+            
+            //Give a light sheen of atmo color
+            h = Utils.UI.colorFromHex((int)this.atmo.color);
+            p.Color = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure)/(int)Gen.Atmo.RETENTION_FACTOR, h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
                 
-                    p.Color = Utils.UI.HslToRgb(hue, saturation, lightness);
-                }
+            rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+            
+            g.FillEllipse(p.Brush, rect);
+
+            this.image = Utils.UI.rotate(this.image, this.tilt);
+            
+            g.Dispose();
+            gs.Dispose();
+            gm.Dispose();
+            
+            g = Graphics.FromImage(this.image);
+            LinearGradientBrush lgb;
+
+            //Add lighting
+            
+            this.turn = Utils.randDouble(UI.MIN_TURN, UI.MAX_TURN);
+            int turnPoint, startPoint;
+            p.Width = 1;
+
+            Blend blend;
+
+            for (int sy = center.Y-radius-atmoHeight; sy < center.Y + radius + atmoHeight - 1; sy++)
+            {
+                //Find the point on a circle corresponding to height sy
+                startPoint = (int)Math.Round(center.X - Math.Sqrt(
+                        Math.Pow(radius + atmoHeight, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                ) - 1;
+
+                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                if (sy < center.Y - radius)
+                    turnPoint = center.X + (sy - (center.Y - radius + 1));
+                else if (sy > center.Y + radius)
+                    turnPoint = center.X - (sy - (center.Y + radius + 1));
                 else
-                {
-                    int light = Utils.randInt(Color.White.R/10, Color.White.R/5);
-                
-                    if (this.albedo < 0.15)
-                        p.Color = Color.FromArgb(p.Color.R+light, p.Color.G+light, p.Color.B+light);
-                    else
-                        p.Color = Color.FromArgb(Math.Abs(p.Color.R-light), Math.Abs(p.Color.G-light), Math.Abs(p.Color.B-light));
-                }
-                    
-                Point[] points;
-
-                double numFeatures = Utils.randDouble(100.0, 150.0);
-
-                //For each feature
-                for (int f = 0; f < numFeatures; f++)
-                {
-                    points = new Point[2];
-
-                    theta = Utils.randDouble(2.0 * Math.PI * (((double)f)/3.0), 2.0 * Math.PI * (((double)f+1.0)/3.0));
-                    r = Utils.randDouble(radius/4.0, radius);
-                    points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
-
-                    rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
-                    points[1] = new Point(rad, rad);
-
-                    gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
-                }
-
-                //Switch back to surface color
-                p.Color = surf;
-                
-                double numPoints = Utils.randDouble(6.0, 12.0);
-
-                //Pepper on some extra circles so the interior isn't boring
-                for (int f = 0; f < numPoints; f++)
-                {
-                    points = new Point[2];
-
-                    theta = Utils.randDouble(0.0, 2.0 * Math.PI);
-                    r = Utils.randDouble(radius/4.0, radius);
-                    points[0] = new Point(center.X + (int)Math.Round(r * Math.Cos(theta)), center.Y - (int)Math.Round(r * Math.Sin(theta)));
-
-                    rad = (int)Math.Round(Utils.randDouble((radius-r)/10.0, radius-r));
-                    points[1] = new Point(rad, rad);
-
-                    gs.FillEllipse(p.Brush, new Rectangle(points[0].X - points[1].X/2, points[0].Y - points[1].Y/2, points[1].X, points[1].Y));
-                }
-
-                //Add clouds
-                /*
-                int q = Utils.randInt(5, 20);
-                for (int f = -radius+q; f < radius-q; f++)
-                {
-                    if (Utils.flip() > this.surface.coverCloudThin)
-                        continue;
-
-                    path = new GraphicsPath();
-                    r = (int)Math.Floor(Math.Sqrt((radius*radius) - (f*f)));
-                    int height = (int)Math.Round(r * Math.Tan(10.0 * (Math.PI/180.0)));
-
-                    Rectangle arcrect = new Rectangle(
-                        center.X - (int)r,
-                        center.Y + f - height/2,
-                        (int)r * 2,
-                        height
+                    turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
+                            Math.Pow(radius, 2.0) - 
+                            Math.Pow((sy - center.Y), 2.0)
+                        )
                     );
 
-                    if (arcrect.Height < 1 || arcrect.Width < 1)
-                    {
-                        path.Dispose();
-                        continue;
-                    }
+                //Create linear gradient brush for shadow
+                lgb = new LinearGradientBrush(
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    new Point(
+                        turnPoint+1,
+                        sy
+                    ),
+                    Color.Black,
+                    Color.Transparent
+                );
 
-                    int theta1, theta2 = (int)Utils.randInt( 0, 90);
-                    int roll = Utils.roll(3);
-                    switch (roll)
-                    {
-                        case 0:
-                            theta1 = (int)Utils.randInt(0, 90) + 90;
-                            break;
-                        case 1:
-                            theta1 = (int)Utils.fudge(45);
-                            break;
-                        default:
-                            theta1 = (int)Utils.randInt(0, 90);
-                            break;
-                    }
+                //Create a Blend object and assign it to lgb
+                blend            = new Blend();
+                blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
+                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                lgb.Blend        = blend;
 
-                    theta1 = 90;
-                    theta2 = 270;
-                    
-                    path.AddArc(arcrect, theta1 - theta2/2, theta2);
+                p.Brush = lgb;
 
-                    try
-                    {
-                        pgb = new PathGradientBrush(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        path.Dispose();
-                        pgb.Dispose();
-                        continue;
-                    }
+                g.DrawLine(
+                    p,
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    new Point(
+                        turnPoint,
+                        sy
+                    )
+                );
 
-                    if (this.atmo.colorCloud < 1)
-                        surf = Utils.UI.colorFromHex((int)this.atmo.color);
-                    else
-                        surf = Utils.UI.colorFromHex((int)this.atmo.colorCloud);
+                p.Brush.Dispose();
+                lgb.Dispose();
 
-                    pgb.CenterColor = surf;
-                    pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(Color.White.R*0.1), surf)};
-                    
-                    g.FillPath(pgb, path);
+                if (sy <= center.Y - radius || sy >= center.Y + radius)
+                    continue;
 
-                    pgb.Dispose();
-                    path.Dispose();
-                }
-                */
+                
+                //Find the point on a circle corresponding to height sy
+                startPoint = (int)Math.Round(center.X + Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                ) + 1;
 
-                //Blur surface
-                surface = Utils.UI.blur(surface, UI.BLUR_RADIUS);
+                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
+                        Math.Pow(radius, 2.0) - 
+                        Math.Pow((sy - center.Y), 2.0)
+                    )
+                );
 
-                //Copy surface onto this.image using mask to preserve the sharp edge between surface and atmo
-                for (int sx = 0; sx < this.image.Width; sx++)
-                    for (int sy = 0; sy < this.image.Height; sy++)
-                        if (mask.GetPixel(sx, sy).R > 0 || mask.GetPixel(sx, sy).G > 0 || mask.GetPixel(sx, sy).B > 0)
-                            this.image.SetPixel(sx, sy, surface.GetPixel(sx, sy));
+                //Create linear gradient brush for light
+                lgb = new LinearGradientBrush(
+                    new Point(
+                        turnPoint,
+                        sy
+                    ),
+                    new Point(
+                        startPoint,
+                        sy
+                    ),
+                    Color.Transparent,
+                    Color.FromArgb(Color.White.R/5, Color.White)
+                );
 
-                //Give a light sheen of atmo color
-                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
-                p.Color = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure)/(int)Gen.Atmo.RETENTION_FACTOR, h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
-                    
-                rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
+                //Create a Blend object and assign it to lgb
+                blend            = new Blend();
+                blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
+                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                lgb.Blend        = blend;
 
-                g.FillEllipse(p.Brush, rect);
+                p.Brush = lgb;
+
+                g.DrawLine(
+                    p,
+                    new Point(
+                        turnPoint+1,
+                        sy
+                    ),
+                    new Point(
+                        startPoint,
+                        sy
+                    )
+                );
+
+                p.Brush.Dispose();
+                lgb.Dispose();
             }
 
             g.Dispose();

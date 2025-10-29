@@ -221,6 +221,8 @@ namespace SystemGenerator.Generation
             this.l = Utils.randDouble(0.0, 360.0);
             this.p = Utils.randDouble(0.0, 360.0);
 
+            moon.turn = host.turn;
+
             Utils.writeLog("                    Orbital parameter generation complete");
         }
     }

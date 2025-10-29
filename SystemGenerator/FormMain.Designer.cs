@@ -247,6 +247,8 @@
             genButton = new Button();
             propsPhysicalMoonGroup = new GroupBox();
             propsPhysicalMoonTable = new TableLayoutPanel();
+            propsPhysicalMoonLabelAlbedo = new Label();
+            propsPhysicalMoonLabelTemp = new Label();
             propsPhysicalMoonUnitMass = new Label();
             propsPhysicalMoonValueEscV = new Label();
             propsPhysicalMoonValueTemp = new Label();
@@ -270,8 +272,6 @@
             blankGroupBox1 = new GroupBox();
             blankGroupBox2 = new GroupBox();
             blankGroupBox4 = new GroupBox();
-            propsPhysicalMoonLabelTemp = new Label();
-            propsPhysicalMoonLabelAlbedo = new Label();
             propsPhysicalPlanetGroup.SuspendLayout();
             propsPhysicalPlanetTable.SuspendLayout();
             propsOrbitPlanetGroup.SuspendLayout();
@@ -976,6 +976,7 @@
             propsAtmoTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 215F));
             propsAtmoTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 105F));
             propsAtmoTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            propsAtmoTable.Controls.Add(propsAtmoValuePressure, 1, 7);
             propsAtmoTable.Controls.Add(propsAtmoUnitHeight, 2, 8);
             propsAtmoTable.Controls.Add(propsAtmoUnitComp5, 2, 4);
             propsAtmoTable.Controls.Add(propsAtmoValueHeight, 1, 8);
@@ -983,7 +984,6 @@
             propsAtmoTable.Controls.Add(propsAtmoUnitPressure, 2, 7);
             propsAtmoTable.Controls.Add(propsAtmoUnitComp4, 2, 3);
             propsAtmoTable.Controls.Add(propsAtmoLabelPressure, 0, 7);
-            propsAtmoTable.Controls.Add(propsAtmoValuePressure, 1, 7);
             propsAtmoTable.Controls.Add(propsAtmoUnitComp3, 2, 2);
             propsAtmoTable.Controls.Add(propsAtmoUnitComp2, 2, 1);
             propsAtmoTable.Controls.Add(propsAtmoUnitComp1, 2, 0);
@@ -3180,6 +3180,30 @@
             propsPhysicalMoonTable.Size = new Size(369, 124);
             propsPhysicalMoonTable.TabIndex = 0;
             // 
+            // propsPhysicalMoonLabelAlbedo
+            // 
+            propsPhysicalMoonLabelAlbedo.AutoSize = true;
+            propsPhysicalMoonLabelAlbedo.Dock = DockStyle.Fill;
+            propsPhysicalMoonLabelAlbedo.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonLabelAlbedo.Location = new Point(3, 100);
+            propsPhysicalMoonLabelAlbedo.Name = "propsPhysicalMoonLabelAlbedo";
+            propsPhysicalMoonLabelAlbedo.Size = new Size(209, 24);
+            propsPhysicalMoonLabelAlbedo.TabIndex = 19;
+            propsPhysicalMoonLabelAlbedo.Text = "Bond Albedo";
+            propsPhysicalMoonLabelAlbedo.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // propsPhysicalMoonLabelTemp
+            // 
+            propsPhysicalMoonLabelTemp.AutoSize = true;
+            propsPhysicalMoonLabelTemp.Dock = DockStyle.Fill;
+            propsPhysicalMoonLabelTemp.ForeColor = SystemColors.ControlLight;
+            propsPhysicalMoonLabelTemp.Location = new Point(3, 80);
+            propsPhysicalMoonLabelTemp.Name = "propsPhysicalMoonLabelTemp";
+            propsPhysicalMoonLabelTemp.Size = new Size(209, 20);
+            propsPhysicalMoonLabelTemp.TabIndex = 18;
+            propsPhysicalMoonLabelTemp.Text = "Blackbody Temperature";
+            propsPhysicalMoonLabelTemp.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // propsPhysicalMoonUnitMass
             // 
             propsPhysicalMoonUnitMass.AutoSize = true;
@@ -3432,30 +3456,6 @@
             blankGroupBox4.TabIndex = 3;
             blankGroupBox4.TabStop = false;
             // 
-            // propsPhysicalMoonLabelTemp
-            // 
-            propsPhysicalMoonLabelTemp.AutoSize = true;
-            propsPhysicalMoonLabelTemp.Dock = DockStyle.Fill;
-            propsPhysicalMoonLabelTemp.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonLabelTemp.Location = new Point(3, 80);
-            propsPhysicalMoonLabelTemp.Name = "propsPhysicalMoonLabelTemp";
-            propsPhysicalMoonLabelTemp.Size = new Size(209, 20);
-            propsPhysicalMoonLabelTemp.TabIndex = 18;
-            propsPhysicalMoonLabelTemp.Text = "Blackbody Temperature";
-            propsPhysicalMoonLabelTemp.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // propsPhysicalMoonLabelAlbedo
-            // 
-            propsPhysicalMoonLabelAlbedo.AutoSize = true;
-            propsPhysicalMoonLabelAlbedo.Dock = DockStyle.Fill;
-            propsPhysicalMoonLabelAlbedo.ForeColor = SystemColors.ControlLight;
-            propsPhysicalMoonLabelAlbedo.Location = new Point(3, 100);
-            propsPhysicalMoonLabelAlbedo.Name = "propsPhysicalMoonLabelAlbedo";
-            propsPhysicalMoonLabelAlbedo.Size = new Size(209, 24);
-            propsPhysicalMoonLabelAlbedo.TabIndex = 19;
-            propsPhysicalMoonLabelAlbedo.Text = "Bond Albedo";
-            propsPhysicalMoonLabelAlbedo.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
@@ -3464,27 +3464,27 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = SystemColors.WindowText;
             ClientSize = new Size(1924, 1055);
-            Controls.Add(blankGroupBox4);
-            Controls.Add(blankGroupBox2);
             Controls.Add(drawingGroupBox);
-            Controls.Add(propsOrbitBeltGroup);
-            Controls.Add(propsBulkBeltGroup);
-            Controls.Add(propsLightGroup);
-            Controls.Add(propsOrbitStarGroup);
             Controls.Add(textGroupBox);
-            Controls.Add(propsBulkGroup);
-            Controls.Add(propsOrbitPlanetGroup);
             Controls.Add(optionListBox);
             Controls.Add(systemListBox);
             Controls.Add(genProgressBar);
             Controls.Add(genButton);
-            Controls.Add(blankGroupBox3);
-            Controls.Add(propsAtmoGroup);
             Controls.Add(blankGroupBox1);
+            Controls.Add(blankGroupBox2);
+            Controls.Add(blankGroupBox4);
+            Controls.Add(propsOrbitBeltGroup);
+            Controls.Add(propsOrbitStarGroup);
+            Controls.Add(propsOrbitPlanetGroup);
+            Controls.Add(propsBulkBeltGroup);
+            Controls.Add(propsLightGroup);
+            Controls.Add(propsBulkGroup);
             Controls.Add(propsPhysicalBeltGroup);
             Controls.Add(propsPhysicalStarGroup);
             Controls.Add(propsPhysicalPlanetGroup);
             Controls.Add(propsPhysicalMoonGroup);
+            Controls.Add(blankGroupBox3);
+            Controls.Add(propsAtmoGroup);
             Font = new Font("Consolas", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             ForeColor = SystemColors.ControlLight;
             Name = "FormMain";
@@ -3774,8 +3774,8 @@
         private GroupBox blankGroupBox4;
         private PictureBox pictureBox;
         private Label scaleLabel;
-        public static ProgressBar genProgressBar;
         private Label propsPhysicalMoonLabelAlbedo;
         private Label propsPhysicalMoonLabelTemp;
+        public static ProgressBar genProgressBar;
     }
 }
