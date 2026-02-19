@@ -44,14 +44,17 @@ namespace SystemGenerator.Generation
     {
         public const string FORMAT      = "{0,10:N4}";
         public const double SCALE_SMALL = 1.0/2.0;
-        public const double SCALE_MAJOR = 1.0/10.0;
+        public const double SCALE_MAJOR = 1.0/20.0;
         public const double SCALE_MID   = 1.0/200.0;
         public const double SCALE_BIG   = 1.0/400.0;
         public const double SCALE_STAR  = 1.0/1600.0;
         public const int    BLUR_RADIUS = 3;
+        public const int    BLUR_RUNS   = 6;
         public const double GIANT_COLOR_BALANCE = 2.0/3.0;
-        public const double MIN_TURN    = 0.25;
+        public const double MIN_TURN    = 0.50;
         public const double MAX_TURN    = 0.75;
+        public const int    ATMO_SAMPLING_RATE = 2;
+        public const int    ATMO_SCALE_HEIGHTS = 6;
     }
 
     public class Gen
@@ -193,6 +196,9 @@ namespace SystemGenerator.Generation
                 public const double MIN_TILT               =    0.000;
                 public const double MAX_TILT               =   90.000;
 
+                public const double MIN_RISE               =    0.000;
+                public const double MAX_RISE               =   44.000;
+
                 public const double MIN_DAY_LENGTH         =    8.000;
                 public const double MAX_DAY_LENGTH         =   24.000;
             }
@@ -219,6 +225,9 @@ namespace SystemGenerator.Generation
 
                 public const double MIN_TILT             =    0.0000;
                 public const double MAX_TILT             =   90.0000;
+
+                public const double MIN_RISE               =   0.000;
+                public const double MAX_RISE               =   0.000;
 
                 public const double MIN_DAY_LENGTH       =    8.0000;
                 public const double MAX_DAY_LENGTH       = 3000.0000;
@@ -315,7 +324,8 @@ namespace SystemGenerator.Generation
 
         public class Sat
         {
-            public const double MIN_RADIUS = 300.0;
+            public const double MAX_MINOR_RADIUS = 300.0;
+            public const double MIN_MAJOR_RADIUS = 700.0;
 
             public const double MIN_COMP_DROPOFF = 0.6;
             public const double MAX_COMP_DROPOFF = 0.9;
@@ -371,10 +381,10 @@ namespace SystemGenerator.Generation
             public const double RETENTION_FACTOR = 6.0;
             public const double ATMO_DROPOFF     = 0.9;
 
-            public const double MIN_MAJORITY_COMP = 0.85;
+            public const double MIN_MAJORITY_COMP = 0.75;
             public const double MAX_MAJORITY_COMP = 0.91;
 
-            public const double MINOR_FRACTION = 0.02;
+            public const double MINOR_FRACTION = 0.01;
             
             public const double MIN_CLOUD_COVER = 0.1;
             public const double MAX_CLOUD_COVER = 0.7;
@@ -395,17 +405,15 @@ namespace SystemGenerator.Generation
                 new Atmosphere.Component[]{ Comps.HELIUM   },
                 new int                 []{ 1              },
             
-                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE     },
-                new int                 []{ 2            , 1              , 2              , 1                , 1               , 2                , 1               , 2                 },
-            
-                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.AMMONIA, Comps.PHOSPHINE, Comps.NITROGEN , Comps.THOLINS                                                                               },
-                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            56           , 56             , 56             , 56                                                                                          }
+                new Atmosphere.Component[]{ Comps.METHANE  , Comps.ETHANE     , Comps.ETHYLENE  , Comps.ACETYLENE  , Comps.WATER     , Comps.H_SULFIDE , Comps.AMMONIA  , Comps.PHOSPHINE   },
+                new int                 []{ 4              , 4                , 2               , 2                , 2               , 2               , 4              , 1                 },
+
+                new Atmosphere.Component[]{ Comps.METHANE  , Comps.ETHANE     , Comps.ETHYLENE  , Comps.DIACETYLENE, Comps.PROPYNE   , Comps.THOLINS   , Comps.NITROGEN , Comps.AMMONIA    ,
+                                            Comps.H_SULFIDE, Comps.H_CYANIDE  , Comps.WATER     , Comps.C_DIOXIDE  , Comps.ACETYLENE , Comps.PROPANE   , Comps.N_DIOXIDE, Comps.CYANOGEN   ,
+                                            Comps.S_DIOXIDE, Comps.C_MONOXIDE , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, Comps.N_OXIDE  , Comps.C_DISULFIDE  },
+                new int                 []{ 4              , 4                , 4               , 4                , 4               , 4               , 4              , 4                , 
+                                            4              , 4                , 4               , 4                , 2               , 2               , 2              , 2                ,
+                                            2              , 2                , 2               , 1                , 1               , 1               , 1              , 1                  }
             );
 
             public static readonly Atmosphere.MajorClass HELIAN = new Atmosphere.MajorClass(
@@ -418,24 +426,22 @@ namespace SystemGenerator.Generation
                 new Atmosphere.Component[]{ Comps.HELIUM },
                 new int                 []{ 1            },
             
-                new Atmosphere.Component[]{ Comps.METHANE , Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NITROGEN, Comps.NEON                                                                                                                    },
-                new int                 []{ 1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               ,
-                                            1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               ,
-                                            32            , 32                                                                                                                            },
+                new Atmosphere.Component[]{ Comps.METHANE   , Comps.ETHANE   , Comps.ETHYLENE, Comps.ACETYLENE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.PHOSPHINE ,
+                                            Comps.C_MONOXIDE, Comps.C_DIOXIDE, Comps.CYANOGEN, Comps.NITROGEN , Comps.NEON                                                             },
+                new int                 []{ 4               , 4              , 2             , 2              , 2              , 2              , 1                , 1               ,
+                                            2               , 4              , 2             , 4              , 4                                                                      },
             
                 new Atmosphere.Component[]{ Comps.ARGON },
                 new int                 []{ 1           },
             
-                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                           },
-                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            11           , 11             , 11             , 56               , 56                                                                        }
+                new Atmosphere.Component[]{ Comps.METHANE  , Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE  , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   , Comps.WATER  ,
+                                            Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE  , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, Comps.N_OXIDE,
+                                            Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S , Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  , Comps.NEON   ,
+                                            Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                                             },
+                new int                 []{ 4              , 4              , 2                , 2                , 4                , 2               , 4               , 4            ,
+                                            4              , 4              , 4                , 2                , 1                , 1               , 1               , 1            ,
+                                            2              , 2              , 1                , 1                , 2                , 4               , 2               , 4            , 
+                                            2              , 1              , 4                , 2                                                                                        }
             );
 
             public static readonly Atmosphere.MajorClass YDATRIAN = new Atmosphere.MajorClass(
@@ -445,23 +451,24 @@ namespace SystemGenerator.Generation
                 300.0,
                 0.001,
                 10.0,
-                new Atmosphere.Component[]{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.METHANE, Comps.METHYLENE },
-                new int                 []{ 3             , 2              , 3              , 2                , 3            , 1               },
-            
-                new Atmosphere.Component[]{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.METHANE, Comps.METHYLENE },
-                new int                 []{ 3             , 2              , 3              , 2                , 3            , 1               },
+
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.ETHANE, Comps.ETHYLENE, Comps.ACETYLENE, Comps.WATER, Comps.H_SULFIDE, Comps.AMMONIA, Comps.PHOSPHINE},
+                new int                 []{ 4            , 4           , 2             , 2              , 2          , 2              , 4            , 1              },
+                                                                       
+                new Atmosphere.Component[]{ Comps.METHANE, Comps.ETHANE, Comps.ETHYLENE, Comps.ACETYLENE, Comps.WATER, Comps.H_SULFIDE, Comps.AMMONIA, Comps.PHOSPHINE},
+                new int                 []{ 4            , 4           , 2             , 2              , 2          , 2              , 4            , 1              },
             
                 new Atmosphere.Component[]{ Comps.ARGON },
                 new int                 []{ 1           },
             
-                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            11           , 11             , 11             , 56               , 56                                                                       }
+                new Atmosphere.Component[]{ Comps.METHANE  , Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE  , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   , Comps.WATER  ,
+                                            Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE  , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, Comps.N_OXIDE,
+                                            Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S , Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  , Comps.NEON   ,
+                                            Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                                             },
+                new int                 []{ 4              , 4              , 2                , 2                , 4                , 2               , 4               , 4            ,
+                                            4              , 4              , 4                , 2                , 1                , 1               , 1               , 1            ,
+                                            2              , 2              , 1                , 1                , 2                , 4               , 2               , 4            , 
+                                            2              , 1              , 4                , 2                                                                                        }
             );
 
             public static readonly Atmosphere.MajorClass RHEAN = new Atmosphere.MajorClass(
@@ -474,22 +481,20 @@ namespace SystemGenerator.Generation
                 new Atmosphere.Component[]{ Comps.NITROGEN },
                 new int                 []{ 1              },
 
-                new Atmosphere.Component[]{ Comps.METHANE  , Comps.METHYLENE  , Comps.ETHANE    , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.N_OXIDE   , Comps.N_DIOXIDE,
-                                            Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN                                        },
-                new int                 []{ 1              , 1                , 1               , 1                , 1               , 1                , 1               , 1              ,
-                                            1              , 1                , 1               , 1                , 1               , 1                                                     },
+                new Atmosphere.Component[]{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN, 
+                                            Comps.OXYGEN                                                                                                              },
+                new int                 []{ 1            , 2              , 4              , 1                , 1                , 4               , 1             ,
+                                            2                                                                                                                         },
 
                 new Atmosphere.Component[]{ Comps.ARGON },
                 new int                 []{ 1           },
-
-                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            11           , 11             , 11             , 56               , 56                                                                       }
+                
+                new Atmosphere.Component[]{ Comps.METHANE   , Comps.ETHANE    , Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     ,
+                                            Comps.H_FLUORIDE, Comps.H_CHLORIDE, Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE ,
+                                            Comps.C_DIOXIDE , Comps.CYANOGEN  , Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                         },
+                new int                 []{ 4               , 4               , 4            , 2              , 1              , 1                , 1               , 1               , 
+                                            1               , 1               , 1            , 2              , 2              , 2                , 2               , 2               , 
+                                            4               , 2               , 2            , 2              , 2              , 4                , 2                                    }
             );
 
             public static readonly Atmosphere.MajorClass MINERVAN = new Atmosphere.MajorClass(
@@ -499,23 +504,21 @@ namespace SystemGenerator.Generation
                 -1.0,
                 0.001,
                 100.0,
-                new Atmosphere.Component[]{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_MONOXIDE , Comps.C_DIOXIDE },
-                new int                 []{ 1            , 2              , 2              , 1                , 1                , 2               },
+                new Atmosphere.Component[]{ Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_DIOXIDE },
+                new int                 []{ 2              , 1              , 1                , 4               },
             
-                new Atmosphere.Component[]{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN },
-                new int                 []{ 1            , 2              , 2              , 1                , 1               , 1                , 2               , 1              },
+                new Atmosphere.Component[]{ Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN },
+                new int                 []{ 1            , 2              , 2              , 1                , 1                , 2               , 1              },
             
                 new Atmosphere.Component[]{ Comps.ARGON },
                 new int                 []{ 1           },
-            
-                new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
-                                            Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
-                                            Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            11           , 11             , 11             , 56               , 56                                                                       }
+                
+                new Atmosphere.Component[]{ Comps.METHANE   , Comps.ETHANE    , Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     ,
+                                            Comps.H_FLUORIDE, Comps.H_CHLORIDE, Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE ,
+                                            Comps.C_DIOXIDE , Comps.CYANOGEN  , Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                         },
+                new int                 []{ 4               , 4               , 4            , 2              , 1              , 1                , 1               , 1               , 
+                                            1               , 1               , 1            , 2              , 2              , 2                , 2               , 2               , 
+                                            4               , 2               , 2            , 2              , 2              , 4                , 2                                    }
             );
 
             public static readonly Atmosphere.MajorClass EDELIAN = new Atmosphere.MajorClass(
@@ -532,20 +535,18 @@ namespace SystemGenerator.Generation
                 new int                 []{ 1         , 1           },
             
                 new Atmosphere.Component[]{ Comps.WATER   , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE,
-                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
-                                            Comps.NITROGEN                                                                                                                                },
-                new int                 []{ 1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1             , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            24                                                                                                                                            },
+                                            Comps.N_OXIDE , Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  , Comps.NITROGEN    },
+                new int                 []{ 1             , 4              , 4              , 2                , 1               , 1                , 1               , 1               , 
+                                            1             , 1              , 1              , 1                , 2               , 4                , 2               , 4                 },
             
                 new Atmosphere.Component[]{ Comps.METHANE, Comps.METHYLENE, Comps.ETHANE   , Comps.ETHYLENE   , Comps.ACETYLENE , Comps.DIACETYLENE, Comps.PROPANE   , Comps.PROPYNE   ,
                                             Comps.WATER  , Comps.H_SULFIDE, Comps.AMMONIA  , Comps.H_CYANIDE  , Comps.PHOSPHINE , Comps.SILANE     , Comps.H_FLUORIDE, Comps.H_CHLORIDE, 
                                             Comps.N_OXIDE, Comps.N_DIOXIDE, Comps.S_DIOXIDE, Comps.C_DISULFIDE, Comps.CARBONYL_S, Comps.C_MONOXIDE , Comps.C_DIOXIDE , Comps.CYANOGEN  ,
                                             Comps.NEON   , Comps.ARGON    , Comps.KRYPTON  , Comps.NITROGEN   , Comps.OXYGEN                                                             },
-                new int                 []{ 1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            1            , 1              , 1              , 1                , 1               , 1                , 1               , 1               , 
-                                            2            , 2              , 2              , 2                , 2               , 2                , 2               , 2               , 
-                                            21           , 21             , 21             , 56               , 56                                                                       }
+                new int                 []{ 4            , 2              , 4              , 2                , 2               , 4                , 2               , 4               , 
+                                            4            , 4              , 4              , 4                , 2               , 1                , 1               , 1               , 
+                                            1            , 2              , 2              , 1                , 1               , 2                , 4               , 2               , 
+                                            4            , 2              , 1              , 4                , 2                                                                        }
             );
         
             public static readonly Atmosphere.MajorClass[] MAJOR_CLASSES = new Atmosphere.MajorClass[]{ JOTUNNIAN, HELIAN, YDATRIAN, RHEAN, MINERVAN, EDELIAN };

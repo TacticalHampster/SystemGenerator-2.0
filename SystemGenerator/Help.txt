@@ -1,0 +1,139 @@
+===== HELP FILE =====
+
+This file provides explanations for the information presented by this tool, and how to use the tool.
+When you first stat the program it will take a minute to load, and will then present you with a randomly-generated classical solar system.
+On the left side, you will see the generate system button, system list, and the satellite list. On the right side will be four boxes list-
+ing various properties of the selected object. In the middle is an image of the selected object, and on the bottom is some flavor text.
+
+=== The UI ===
+
+--- Image ---
+
+The centerpiece of the UI is a procedurally-generated image of the selected object, based on both the randomly generated and calculated
+properties of the object. In the bottom-left corner is a scale indicator; this scale is in pixels per kilometer.
+
+--- The System List ---
+
+The system list shows all of the notable objects in the system, starting with the star and moving outward. The list can be navigated with
+the W and S keys.
+
+--- The Satellite List ---
+
+The satellite list shows all of the satellites orbiting the selected object, starting with the closest one and moving outward. The list
+can be navigated with the A and D keys.
+
+--- Physical Properties ---
+
+The physical properties box shows statistics concerning the size and appearance of the selected object.
+For stars,   these properties are: mass, radius, gravity, escape velocity, metallicity (proportion of elements heavier than helium), and
+	expected lifetime.
+For planets and moons, these properties are: mass, radius, gravity, escape velocity, temperature, and albedo (reflectivity).
+For asteroid belts, these properties are: total mass, width (range of orbital radii), height (range of orbital inclination), and average
+	albedo.
+
+--- Bulk Composition ---
+
+The bulk composition box only shows for planets and moons, and shows approximately how much of the object's total mass is made of rock,
+metal and metal ore, volatile ices like frozen ammonia, methane, carbon dioxide and other similar material, water, and period-1 elements
+like hydrogen, deuterium, tritium, and helium. This information is then used to calculate the average density of the object.
+
+--- Radiance ---
+
+The radiance box only shows for stars, and shows details about the star's luminous output. These details are:
+	- Luminosity: the amount of power outputted by the star
+	- Effective Temperature: the temperature of an idealized blackbody with the same luminous power
+	- B-V Index: a non-dimensional number describing the star's color based on its temperature
+	- Absolute Magnitude: a non-dimensional measure of brightness on a logarithmic scale, as viewed from 10 parsecs away
+	- Relative Magnitude: a non-dimensional measure of brightness on a logarithmic scale, as viewed from the habitable planet
+
+--- Asteroid Composition ---
+
+The asteroid composition box only shows for belts, and is the asteroid belt version of the bulk composition box. It shows the proportion
+of different kinds of asteroids in the belt: s-type (primarily made of silicon), m-type (metallic), c-type (primarily made of carbon
+compounds), and i-type (comet nuclei with high proportions of ices).
+
+--- Atmospheric Properties ---
+
+The atmospheric properties shows the composition of the selected object's atmosphere, if it has one. The five most abundant substances
+are shown with their relative abundances. This determines the average molar mass of the atmosphere, which is used to calculated the
+surface pressure and the scale height - the altitude at which the atmospheric pressure drops to 1/e times the surface pressure. Since
+giant planets have no surface to exert pressure on, the surface pressure statistic remains fixed at 1 bar.
+
+--- Orbital Motion (Planets) ---
+
+The orbital motion box for planets and moons describes the parameters of the selected object's orbit, as wel as other parameters of
+orientation and motion. The five parameters required to rigorously define the path of an orbiting body are:
+	- Semi-major axis: The average distance from the orbited object over the whole orbit.
+	- Eccentricity:    The orbit's deviation from a perfect circle. Higher percentages represent ellipses with more extreme aspect ratios.
+	- Inclination:     The angle between the plane of the orbit and the ecliptic plane defined by the habitable planet's orbit.
+	- Longitude of the Ascending Node: The angle, in the ecliptic plane, between the ascending node of the orbit (the point at which the
+		planet crosses through the ecliptic from below) and the habitable planet's apse line (the line formed by the points closest and
+		farthest away from the sun).
+	- Argument of Periapsis: The angle, in the orbit's own plane, between the ascending node and the periapsis (the point closest to the
+		sun).
+
+--- Orbital Motion (Belts) ---
+
+The orbital motion box for asteroid belts shows the average day length, year length, and orbital velocity; calculated based on the middle
+of the belt. The orbital parameters of each asteroid are modelled as normally distributed over the width of the belt, and the mean and
+standard deviation are givne for each parameter.
+
+--- Orbital Motion (Stars) ---
+
+The orbital motion box for stars shows how long the star takes to orbit th center of the galaxy. It also shows three zones around the star:
+	- Formation Zone:  the minimum and maximum orbital distances of planets.
+	- Goldilocks Zone: the minimum and maximum orbital distances of habitable planets.
+	- Frost Line: the point at which planets switch from small, rocky bodies to giant planets.
+
+=== Generation ===
+
+--- Types of Planets ---
+
+There are several types of planets that the tool can generate:
+	- Mercurical planet: a small, dense metallic world like Mercury. These form close to the star and taper off quickly, and never have
+		atmospheres.
+	- Terrestrial planet: a primarily rocky desert world like Venus or Mars. These can form anywhere in the inner system, and can have
+		atmospheres but not water.
+	- Ocean planet: a world whose water content makes up an appreciable fraction of the planet's mass. They form close to the frost line
+		on the inner side, as volatile ices are rare in the inner system. They can support atmospheres.
+	- Habitable planet: can be either a terrestrial planet with some liquid water or an ocean planet. Every system is guaranteed to have
+		exactly one, and they always have one large major moon and an atmosphere.
+	- Gas giant: A planet made primarily of hydrogen and helium, with a gradual transition to supercritical hydrogen instead of a solid
+		surface. They are much larger than the solid planets and spin much faster, and all have the same type of atmosphere.
+	- Hot gas giants: Hot gas giants form at the frost line and then move inward to the closest orbit. If the gas giant moves, it will
+		prevent an inner asteroid belt from forming.
+	- Ice giant: A planet with a three-way split between hydrogen/helium, icy volatiles, and solid silicates and metals. Larger than
+		solid planets but smaller than gas giants, they form in the outer reaches of the system and have gas giant atmospheres.
+	- Gas dwarf: The smaller cousins of ice giants with less hydrogen/helium compared to their solid mass; they form under approximately
+		the same conditions.
+	- Asteroid belt: an abnormally high number of small bodies in a location where a planet would be expected. Only two can form per system:
+		one immediately inside the frost line, and one outside the most distant giant. Both can have dwarf planets within, but inner belts'
+		dwarfs cannot have moons.
+
+--- Types of Atmospheres ---
+
+Atmospheres in this program are divided into "major classes" and "minor classes", based on https://www.orionsarm.com/eg-article/5e724eb65b934
+Minor classes correspond to the "Aerosols" section, and are used to determine the aesthetics of the planet like atmospheric color.
+Major classes correspond to the "Atmospheric Composition" section, and are used to determine the actual chemical composition. There are six
+major classes (Hephaestian is not included, as it is outside the temperature range that this program generates):
+	- Jotunnian: the hydrogen-dominated atmospheres of giant planets. It contains:
+		First  component: Hydrogen (guaranteed)
+		Second component: Helium (guaranteed)
+		Third  component: 
+			Likely:   Methane, Ethane, Diacetylene, Propyne
+			Unlikely: Methylene, Ethylene, Acetylene, Propane
+		Remaining:
+			Likely:   Methane, Ethane, Diacetylene, Propyne, Tholins, Nitrogen, Ammonia, Hydrogen Sulfide, Hydrogen Cyanide, Water, Carbon Dioxide
+			Unlikely: Methylene, Ethylene, Acetylene, Propane, Nitrogen Dioxide, Cyanogen, Sulfur Dioxide, Carbon Monoxide, Phosphine
+			Rare:     Silane, Hydrogen Fluoride, Hydrogen Chloride, Nitrogen Monoxide, Carbon Disulfide, Carbonyl Sulfide
+	- Helian: a helium-dominated atmosphere that rarely occurs on cold terrestrial worlds or small giants. It contains:
+		First  component: Helium (guaranteed)
+		Second component:
+			Likely:   Methane, Ethane, Diacetylene, Propyne, Nitrogen, Carbon Dioxide, Neon
+ 			Unlikely: Methylene, Ethylene, Acetylene, Propane, Nitrogen Dioxide, Cyanogen, Sulfur Dioxide, Carbon Monoxide
+			Rare:     Nitrogen Monoxide, Carbon Disulfide, Carbonyl Sulfide
+		Third component: Argon (guaranteed)
+		Remaining:
+			Likely:   Methane, Ethane, Diacetylene, Propyne, Nitrogen, Ammonia, Hydrogen Sulfide, Hydrogen Cyanide, Water, Carbon Dioxide, Neon
+			Unlikely: Methylene, Ethylene, Acetylene, Propane, Nitrogen Dioxide, Cyanogen, Sulfur Dioxide, Carbon Monoxide, Oxygen, Phosphine
+			Rare:     Silane, Hydrogen FLuoride, Hydrogen Chloride, Nitrogen Monoxide, Carbon Disulfide, Carbonyl Sulfide, Krypton

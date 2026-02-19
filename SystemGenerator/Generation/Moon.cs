@@ -426,19 +426,27 @@ namespace SystemGenerator.Generation
                     this.type = ID.Sat.MAJOR;
 
                     if (mass_max > 0)
-                        this.rA = Utils.randDouble(Gen.Sat.MIN_RADIUS, mass_max*Const.MOON_RAD_MULT);
+                    {
+                        //This maximum is calculated by putting in the maximum possible values into the mass equation below and then solving for radius.
+                        //It assumes all moons are composed of solid water, which makes it overshoot, so it takes a couple of iterations to stabilize.
+                        //However, much more of the possibility space is within the range that will yield a mass less than mass_max than calculating
+                        //based on the host radius.
+                        double max_radius = Math.Pow((mass_max * Math.Pow(Const.Earth.RADIUS, 3.0))/(Math.Max(Const.ROCK_DENS, Math.Max(Const.METAL_DENS, Const.WATER_DENS)) * Const.Earth.DENSITY), 1.0/3.0);
+                        this.rA = Utils.randDouble(Gen.Sat.MIN_MAJOR_RADIUS, max_radius);
+                    }
                     else
-                        this.rA = Utils.randDouble(Gen.Sat.MIN_RADIUS, host.r*Const.Earth.RADIUS);
+                        this.rA = Utils.randDouble(Gen.Sat.MIN_MAJOR_RADIUS, host.r*Const.Earth.RADIUS);
 
-                    this.rB = this.rC = this.rA;
+                    this.rB = this.rA;
+                    this.rC = this.rA;
                 }
                 else
                 {
                     this.type = ID.Sat.MINOR;
                 
-                    this.rA = Utils.randDouble(0.0, Gen.Sat.MIN_RADIUS);
-                    this.rB = Utils.randDouble(0.0, Gen.Sat.MIN_RADIUS);
-                    this.rC = Utils.randDouble(0.0, Gen.Sat.MIN_RADIUS);
+                    this.rA = Utils.randDouble(0.0, Gen.Sat.MAX_MINOR_RADIUS);
+                    this.rB = Utils.randDouble(0.0, Gen.Sat.MAX_MINOR_RADIUS);
+                    this.rC = Utils.randDouble(0.0, Gen.Sat.MAX_MINOR_RADIUS);
                 }
 
                 //Decide composition
@@ -462,6 +470,13 @@ namespace SystemGenerator.Generation
                 this.m           = this.rA * this.rB * this.rC * this.bulkDensity * Const.Earth.DENSITY * Math.Pow((1.0 / Const.Earth.RADIUS), 3.0);
                 this.g           = this.m / Math.Pow(avgR, 2.0);
                 this.escV        = Math.Sqrt( (2.0 * Const.GRAV_CONST * Const.Earth.MASS * this.m) / (Const.Earth.RADIUS * avgR)) * Const.Earth.ESCV;
+
+                Utils.writeLog("                Calculated mass as " + this.m + " Earth masses ");
+
+                if (this.m > mass_max)
+                    Utils.writeLog("                   Mass is greater than maximum (" + mass_max + "), rerandomizing");
+                else if (this.m < 0)
+                    Utils.writeLog("                   Mass is negative, rerandomizing");
             }
             while (this.m > mass_max || this.m < 0);
         }
@@ -606,13 +621,13 @@ namespace SystemGenerator.Generation
             this.flavortext = flavor;
         }
     
-        public void genImage(int x, int y, bool blur)
+        public void genImage(int x, int y, bool blur, double scale)
         {
             if (this.isMajor)
-                drawMajor(x, y, blur);
+                drawMajor(x, y, blur, scale);
         }
 
-        public void drawMajor(int x, int y, bool blur)
+        public void drawMajor(int x, int y, bool blur, double s)
         {
             this.image     = new Bitmap(x,y);
             Bitmap surface = new Bitmap(x,y);
@@ -630,43 +645,79 @@ namespace SystemGenerator.Generation
             Point center = new Point(x/2, y/2);
             Rectangle rect;
             Color surf;
+            Color h = Color.Black;
 
-            int radius = (int)Math.Round(( this.rA + this.rB + this.rC ) / 3.0); //Radius of the planet
+            int radius = (int)Math.Round(( this.rA + this.rB + this.rC ) / 3.0) + UI.BLUR_RADIUS; //Radius of the planet
             int atmoHeight = 0;
             
-            if (this.isMajor)
-                radius = (int)Math.Round(radius * UI.SCALE_MAJOR);
-            else
-                radius = (int)Math.Round(radius * UI.SCALE_SMALL);
+            radius = (int)Math.Round(radius * s);
 
             p.Width = 1;
 
+            
+            //Draw the moon and atmosphere separately
             if (this.hasAir)
             {
-                //Extra radius of the atmosphere
-                if (this.isMajor)
-                    atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_MAJOR);
-                else
-                    atmoHeight = (int)Math.Round(this.atmo.height * UI.SCALE_SMALL);
-                double transparency = 0.9;
+                int decayConstants = UI.ATMO_SCALE_HEIGHTS;
+                int samplingRate   = UI.ATMO_SAMPLING_RATE;
 
+                radius -= 2*UI.BLUR_RADIUS;
+
+                //Extra radius of the atmosphere
+                atmoHeight = (int)Math.Round((this.atmo.height * s) / 1000.0)*decayConstants;
+                float surfacePercent, transparency, position;
+
+                //Create a bounding box around the atmosphere
                 rect = new Rectangle(center.X - (radius + atmoHeight), center.Y - (radius + atmoHeight), (radius + radius + atmoHeight + atmoHeight), (radius + radius + atmoHeight + atmoHeight));
                 path.AddEllipse(rect);
 
                 pgb = new PathGradientBrush(path);
 
-                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
-                pgb.CenterColor = Color.FromArgb((int)Math.Round(transparency * Color.White.R), h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
-                pgb.SurroundColors = new Color[]{Color.FromArgb((int)Math.Round(transparency * Color.White.R), 0, 0, 0)};
+                //Determine how far along the atmosphere circle the surface is, and set the transparency at that point to the specified transparency
+                surfacePercent = (float)radius/(float)(radius+atmoHeight);
+                //Utils.writeLog("Calculated that the surface is at " + ((double)((int)(surfacePercent*10000.0))/100.0) + "%");
 
-                PointF scale = new PointF((float)radius/(float)(radius+atmoHeight), (float)radius/(float)(radius+atmoHeight));
+                h = Utils.UI.colorFromHex((int)this.atmo.color);
+                h = Color.FromArgb(Color.White.R, h.R * (Color.White.R/255), h.G * (Color.White.G/255), h.B * (Color.White.B/255));
 
-                pgb.FocusScales = scale;
+                //Sample points between the boundary and surfacePercent so that transparency decreases exponentially
+                int samples = decayConstants*samplingRate;
+                Color[] sampleColors    = new Color[samples+2];
+                float[] samplePositions = new float[samples+2];
+                sampleColors[0]            = Color.Black;
+                samplePositions[0]         = 0.0f;
+                sampleColors[samples+1]    = h;
+                samplePositions[samples+1] = 1.0f;
+                for (int i = 1; i <= samples; i++)
+                {
+                    //Calculate transparency and position
+                    transparency         = (float)Math.Exp(((double)(i-1)/samplingRate)-decayConstants);
+                    position             = (float)(i*((1.0-surfacePercent)/(float)samples));
+
+                    //Add to the list
+                    sampleColors[i]    = Color.FromArgb((int)Math.Round(transparency*Color.White.R), h);
+                    samplePositions[i] = position;
+                    //Utils.writeLog("Calculated transparency of " + ((double)((int)(transparency*10000.0))/100.0) + "% at position " + ((double)((int)(position*10000.0))/100.0) + "%");
+                }
+
+                //Utils.writeLog("Final blend object:");
+                //for (int i = 0; i < sampleColors.Length; i++)
+                    //Utils.writeLog("   Position: " + ((double)((int)(samplePositions[i]*10000.0))/100.0) + "%   Transparency: " + ((double)((int)(sampleColors[i].A*(1.0/Color.White.R)*10000.0))/100.0) + "%");
+
+                //Create a Blend object and assign it to pgb
+                ColorBlend blend        = new ColorBlend();
+                blend.Colors            = sampleColors;
+                blend.Positions         = samplePositions;
+
+                pgb.InterpolationColors = blend;
+                //pgb.FocusScales = new PointF((float)surfacePercent, (float)surfacePercent);
 
                 g.FillEllipse(pgb, rect);
 
                 pgb.Dispose();
                 path.Dispose();
+
+                radius += 2*UI.BLUR_RADIUS;
             }
             
             double hue;
@@ -754,7 +805,6 @@ namespace SystemGenerator.Generation
             //Give a light sheen of atmo color
             if (this.hasAir)
             {
-                Color h = Utils.UI.colorFromHex((int)this.atmo.color);
                 p.Color = Color.FromArgb((int)Math.Round((Color.White.R/Gen.Atmo.MAX_SURFACE_PRESSURE)*this.atmo.pressure)/(int)Gen.Atmo.RETENTION_FACTOR, h.R * (Color.White.R/255), h.G * (Color.White.R/255), h.B * (Color.White.R/255));
                 
                 rect = new Rectangle(center.X - radius, center.Y - radius, radius*2, radius*2);
@@ -762,132 +812,9 @@ namespace SystemGenerator.Generation
                 g.FillEllipse(p.Brush, rect);      
             }
             
-            g.Dispose();
-            gs.Dispose();
-            gm.Dispose();
-            
-            g = Graphics.FromImage(this.image);
-            LinearGradientBrush lgb;
-
             //Add lighting
-            
-            this.turn = Utils.randDouble(UI.MIN_TURN, UI.MAX_TURN);
-            int turnPoint, startPoint;
-            p.Width = 1;
-
-            Blend blend;
-
-            for (int sy = center.Y-radius-atmoHeight; sy < center.Y + radius + atmoHeight - 1; sy++)
-            {
-                //Find the point on a circle corresponding to height sy
-                startPoint = (int)Math.Round(center.X - Math.Sqrt(
-                        Math.Pow(radius + atmoHeight, 2.0) - 
-                        Math.Pow((sy - center.Y), 2.0)
-                    )
-                ) - 1;
-
-                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
-                if (sy < center.Y - radius || sy > center.Y + radius)
-                    turnPoint = center.X;
-                else
-                    turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
-                            Math.Pow(radius, 2.0) - 
-                            Math.Pow((sy - center.Y), 2.0)
-                        )
-                    );
-
-                //Create linear gradient brush for shadow
-                lgb = new LinearGradientBrush(
-                    new Point(
-                        startPoint,
-                        sy
-                    ),
-                    new Point(
-                        turnPoint+1,
-                        sy
-                    ),
-                    Color.Black,
-                    Color.Transparent
-                );
-
-                //Create a Blend object and assign it to lgb
-                blend            = new Blend();
-                blend.Factors    = new float[]{ 0.0f, 0.75f, 1.0f };
-                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
-                lgb.Blend        = blend;
-
-                p.Brush = lgb;
-
-                g.DrawLine(
-                    p,
-                    new Point(
-                        startPoint,
-                        sy
-                    ),
-                    new Point(
-                        turnPoint,
-                        sy
-                    )
-                );
-
-                p.Brush.Dispose();
-                lgb.Dispose();
-
-                if (sy <= center.Y - radius || sy >= center.Y + radius)
-                    continue;
-
-                
-                //Find the point on a circle corresponding to height sy
-                startPoint = (int)Math.Round(center.X + Math.Sqrt(
-                        Math.Pow(radius, 2.0) - 
-                        Math.Pow((sy - center.Y), 2.0)
-                    )
-                ) + 1;
-
-                //Find the point on an ellipse squashed horizontally by turn corresponding to sy
-                turnPoint = (int)Math.Round(center.X - this.turn*Math.Sqrt(
-                        Math.Pow(radius, 2.0) - 
-                        Math.Pow((sy - center.Y), 2.0)
-                    )
-                );
-
-                //Create linear gradient brush for light
-                lgb = new LinearGradientBrush(
-                    new Point(
-                        turnPoint,
-                        sy
-                    ),
-                    new Point(
-                        startPoint,
-                        sy
-                    ),
-                    Color.Transparent,
-                    Color.FromArgb(Color.White.R/5, Color.White)
-                );
-
-                //Create a Blend object and assign it to lgb
-                blend            = new Blend();
-                blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
-                blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
-                lgb.Blend        = blend;
-
-                p.Brush = lgb;
-
-                g.DrawLine(
-                    p,
-                    new Point(
-                        turnPoint+1,
-                        sy
-                    ),
-                    new Point(
-                        startPoint,
-                        sy
-                    )
-                );
-
-                p.Brush.Dispose();
-                lgb.Dispose();
-            }
+            this.turn  = Utils.randDouble(UI.MIN_TURN, UI.MAX_TURN);
+            this.image = Utils.UI.shade(this.image, this.turn, radius, atmoHeight, center);
             
             g.Dispose();
             gs.Dispose();

@@ -11,9 +11,12 @@ using SystemGenerator.Generation;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using static SystemGenerator.Generation.Gen;
 using static SystemGenerator.Generation.UI;
+using static SystemGenerator.Gaussian.GaussianBlur;
 using System.Diagnostics.Eventing.Reader;
 using System.Numerics;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SystemGenerator.Generation
 {
@@ -470,6 +473,10 @@ namespace SystemGenerator.Generation
                 double r = (double)((int)(color / (double)0x10000));
                 double g = (double)((int)((color - (r*(double)0x10000)) / (double)0x100));
                 double b = color - (r*(double)0x10000) - (g*(double)0x100);
+                
+                r *= Color.White.R/255.0;
+                g *= Color.White.G/255.0;
+                b *= Color.White.B/255.0;
 
                 return Color.FromArgb((int)Math.Round(r),(int)Math.Round(g),(int)Math.Round(b));
             }
@@ -504,8 +511,8 @@ namespace SystemGenerator.Generation
                 else if (5.0 <= hprime && hprime <= 6.0)
                     rgb = new double[]{ chroma, 0.0, X };
                 
-                Utils.writeLog(String.Format("Chroma = {0}, H' = {1}, X = {2}", chroma, hprime, X));
-                Utils.writeLog(String.Format("R = {0}, G = {1}, B = {2}", rgb[0], rgb[1], rgb[2]));
+                //Utils.writeLog(String.Format("Chroma = {0}, H' = {1}, X = {2}", chroma, hprime, X));
+                //Utils.writeLog(String.Format("R = {0}, G = {1}, B = {2}", rgb[0], rgb[1], rgb[2]));
                 
                 rgb[0] = Math.Round((rgb[0] + l - (chroma/2.0)) * Color.White.R);
                 rgb[1] = Math.Round((rgb[1] + l - (chroma/2.0)) * Color.White.R);
@@ -513,7 +520,7 @@ namespace SystemGenerator.Generation
 
                 Color c = Color.FromArgb((int)rgb[0], (int)rgb[1], (int)rgb[2]);
 
-                Utils.writeLog(String.Format("Returned color is ({0:D}, {1:D}, {2:D})", c.R, c.G, c.B));
+                //Utils.writeLog(String.Format("Returned color is ({0:D}, {1:D}, {2:D})", c.R, c.G, c.B));
 
                 return c;
             }
@@ -534,7 +541,7 @@ namespace SystemGenerator.Generation
                     return 0;
                 }
 
-                float hue = 0f;
+                float hue;
                 if (max == color.R) {
                     hue =      (color.G - color.B) / (max - min);
                 } else if (max == color.G) {
@@ -548,6 +555,35 @@ namespace SystemGenerator.Generation
                 if (hue < 0) hue += 360f;
 
                 return Math.Round(hue);
+            }
+
+            public static Color alphaBlend(Color backColor, Color foreColor)
+            {
+                //Code comes from https://stackoverflow.com/questions/3722307/is-there-an-easy-way-to-blend-two-system-drawing-color-values
+                var fa = foreColor.A / Color.White.R;
+                var fr = foreColor.R / Color.White.R;
+                var fg = foreColor.G / Color.White.R;            
+                var fb = foreColor.B / Color.White.R;
+
+                var ba = backColor.A / Color.White.R;
+                var br = backColor.R / Color.White.R;
+                var bg = backColor.G / Color.White.R;
+                var bb = backColor.B / Color.White.R;
+
+                var a = fa + ba - fa * ba;
+
+                if (a <= 0)
+                    return Color.Transparent;
+
+                var r = (fa * (1 - ba) * fr + fa * ba * fa + (1 - fa) * ba * br) / a;
+                var g = (fa * (1 - ba) * fg + fa * ba * fa + (1 - fa) * ba * bg) / a;
+                var b = (fa * (1 - ba) * fb + fa * ba * fa + (1 - fa) * ba * bb) / a;
+
+                return Color.FromArgb(
+                    (int)(a * Color.White.R),
+                    (int)(r * Color.White.R),
+                    (int)(g * Color.White.R),
+                    (int)(b * Color.White.R));
             }
 
             public static Bitmap expandBitmap(Bitmap bmp)
@@ -582,14 +618,19 @@ namespace SystemGenerator.Generation
 
                 return bitmap;
             }
-
+            
             public static Bitmap blur(Bitmap bmp, int stddev)
+            {
+                return (new Gaussian.GaussianBlur(bmp)).Process(stddev);
+            }
+
+            public static Bitmap blurOld(Bitmap bmp, int stddev)
             {
                 Bitmap bitmap = bmp;
                 Bitmap result = new Bitmap(bmp.Width, bmp.Height);
 
                 //Create the kernel
-                int radius = 2*stddev;
+                int radius = 3*stddev;
                 int kwidth = (2*radius) +1;
                 double[][] kernel = new double[kwidth][];
                 double total = 0, d, q = 2.0*stddev*stddev;
@@ -751,13 +792,120 @@ namespace SystemGenerator.Generation
                                 (int)Math.Round(b)
                             )
                         );
-                        
-                        xloop:
-                        for (;false;){ }
                     }
                 
                     updateProgress();    
                 }
+
+                return result;
+            }
+
+            public static Bitmap blurFast(Bitmap bmp, int stddev)
+            {
+                //Code is inspired by, but not taken from, https://github.com/bfraboni/FastGaussianBlur
+
+                Bitmap result = new Bitmap(bmp.Width, bmp.Height);
+                Bitmap source = bmp;
+
+                int radius = 3*stddev;
+                int kwidth = (2*radius) +1;
+                double weight = 1.0/kwidth;
+                double r, g, b;
+                Color pix, pix2;
+
+                //Expand source to account for edges
+                for (int i = 0; i < radius; i++)
+                    source = expandBitmap(source);
+
+                //Convolve horizontal blurs
+                for (int i = 0; i < Generation.UI.BLUR_RUNS; i++)
+                {
+                    for (int y = radius; y < result.Height-radius; y++)
+                    {
+                        for (int x = 0; x < result.Width; x++)
+                        {
+                            r = 0;
+                            g = 0;
+                            b = 0;
+                            
+                            pix = source.GetPixel(x,y);
+                            pix2 = source.GetPixel(x+kwidth-1,y);
+
+                            if (pix.R == 0 && pix.G == 0 && pix.B == 0 && pix2.R == 0 && pix2.G == 0 && pix2.B == 0)
+                                continue;
+
+                            for (int k = 0; k < kwidth; k++)
+                            {
+                                pix = source.GetPixel(
+                                    Math.Max(0, Math.Min(x+k, result.Width)),
+                                    y
+                                );
+                                r += pix.R*weight;
+                                g += pix.G*weight;
+                                b += pix.B*weight;
+                            }
+                            result.SetPixel(
+                                x,
+                                y,
+                                Color.FromArgb(
+                                    Math.Max(0, Math.Min((int)Math.Round(r), Color.White.R)),
+                                    Math.Max(0, Math.Min((int)Math.Round(g), Color.White.G)),
+                                    Math.Max(0, Math.Min((int)Math.Round(b), Color.White.B))
+                                )
+                            );
+                        }
+
+                        updateProgress();
+                    }
+                }
+                
+                //Rotate
+                result = rotate(result, 90);
+
+                //Convolve vertical blurs
+                for (int i = 0; i < Generation.UI.BLUR_RUNS; i++)
+                {
+                    for (int y = radius; y < result.Height-radius; y++)
+                    {
+                        for (int x = 0; x < result.Width; x++)
+                        {
+                            r = 0;
+                            g = 0;
+                            b = 0;
+
+                            pix = source.GetPixel(x,y);
+                            pix2 = source.GetPixel(x+kwidth-1,y);
+
+                            if (pix.R == 0 && pix.G == 0 && pix.B == 0 && pix2.R == 0 && pix2.G == 0 && pix2.B == 0)
+                                continue;
+
+                            for (int k = 0; k < kwidth; k++)
+                            {
+                                pix = source.GetPixel(
+                                    Math.Max(0, Math.Min(x+k, result.Width)),
+                                    y
+                                );
+                                r += pix.R*weight;
+                                g += pix.G*weight;
+                                b += pix.B*weight;
+                            }
+                            result.SetPixel(
+                                x,
+                                y,
+                                Color.FromArgb(
+                                    Math.Max(0, Math.Min((int)Math.Round(r), Color.White.R)),
+                                    Math.Max(0, Math.Min((int)Math.Round(g), Color.White.G)),
+                                    Math.Max(0, Math.Min((int)Math.Round(b), Color.White.B))
+                                )
+                            );
+                        }
+
+                        updateProgress();
+                    }
+                }
+
+                //Rotate back
+                result = rotate(result, 180);
 
                 return result;
             }
@@ -785,6 +933,142 @@ namespace SystemGenerator.Generation
      
                 // Return the rotated image
                 return returnBitmap;
+            }
+        
+            public static Bitmap shade(Bitmap source, double turn, int radius, int atmoHeight, Point center)
+            {
+                Bitmap   b = source;
+                Graphics g = Graphics.FromImage(b);
+                Pen      p = new Pen(Color.Black);
+                LinearGradientBrush lgb;
+
+                //Add lighting
+            
+                int turnPoint, startPoint;
+                p.Width = 1;
+
+                Blend blend;
+
+                //for (int sy = center.Y-radius-atmoHeight; sy < center.Y + radius + atmoHeight - 1; sy++)
+                for (int sy = center.Y-radius; sy < center.Y+radius-1; sy++)
+                {
+                    //Find the point on a circle corresponding to height sy
+                    startPoint = (int)Math.Round(center.X - Math.Sqrt(
+                            Math.Pow(radius + atmoHeight, 2.0) - 
+                            Math.Pow((sy - center.Y), 2.0)
+                        )
+                    ) - 1;
+
+                    //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                    if (sy < center.Y - radius || sy > center.Y + radius)
+                        turnPoint = center.X;
+                    else
+                        turnPoint = (int)Math.Round(center.X - turn*Math.Sqrt(
+                                Math.Pow(radius, 2.0) - 
+                                Math.Pow((sy - center.Y), 2.0)
+                            )
+                        );
+
+                    //Create linear gradient brush for shadow
+                    lgb = new LinearGradientBrush(
+                        new Point(
+                            startPoint,
+                            sy
+                        ),
+                        new Point(
+                            turnPoint+1,
+                            sy
+                        ),
+                        Color.Black,
+                        Color.Transparent
+                    );
+
+                    //Create a Blend object and assign it to lgb
+                    blend            = new Blend();
+                    blend.Factors    = new float[]{ 0.0f, 0.1f, 0.2f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f };
+                    blend.Positions  = new float[blend.Factors.Length];
+
+                    for (int i = 0; i < blend.Factors.Length; i++)
+                        blend.Positions[i] = (float)Math.Pow(blend.Factors[i], 1.0f/3.0f);
+
+                    lgb.Blend        = blend;
+
+                    p.Brush = lgb;
+
+                    g.DrawLine(
+                        p,
+                        new Point(
+                            startPoint,
+                            sy
+                        ),
+                        new Point(
+                            turnPoint,
+                            sy
+                        )
+                    );
+
+                    p.Brush.Dispose();
+                    lgb.Dispose();
+
+                    if (sy <= center.Y - radius || sy >= center.Y + radius)
+                        continue;
+
+                
+                    //Find the point on a circle corresponding to height sy
+                    startPoint = (int)Math.Round(center.X + Math.Sqrt(
+                            Math.Pow(radius, 2.0) - 
+                            Math.Pow((sy - center.Y), 2.0)
+                        )
+                    ) + 1;
+
+                    //Find the point on an ellipse squashed horizontally by turn corresponding to sy
+                    turnPoint = (int)Math.Round(center.X - turn*Math.Sqrt(
+                            Math.Pow(radius, 2.0) - 
+                            Math.Pow((sy - center.Y), 2.0)
+                        )
+                    );
+
+                    //Create linear gradient brush for light
+                    lgb = new LinearGradientBrush(
+                        new Point(
+                            turnPoint,
+                            sy
+                        ),
+                        new Point(
+                            startPoint,
+                            sy
+                        ),
+                        Color.Transparent,
+                        Color.FromArgb(Color.White.R/5, Color.White)
+                    );
+
+                    //Create a Blend object and assign it to lgb
+                    blend            = new Blend();
+                    blend.Factors    = new float[]{ 0.0f, 0.9f, 1.0f };
+                    blend.Positions  = new float[]{ 0.0f, 0.9f, 1.0f };
+                    lgb.Blend        = blend;
+
+                    p.Brush = lgb;
+
+                    g.DrawLine(
+                        p,
+                        new Point(
+                            turnPoint+1,
+                            sy
+                        ),
+                        new Point(
+                            startPoint,
+                            sy
+                        )
+                    );
+
+                    p.Brush.Dispose();
+                    lgb.Dispose();
+                }
+
+                g.Dispose();
+
+                return b;
             }
         }
     }

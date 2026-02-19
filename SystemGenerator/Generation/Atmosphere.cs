@@ -27,6 +27,8 @@ namespace SystemGenerator.Generation
 
         public List<Component> comps;
 
+        public static int retries = 0;
+
         public Atmosphere()
         {
             this.classMajor     = new MajorClass();
@@ -312,7 +314,11 @@ namespace SystemGenerator.Generation
 
         public static double albedoFromRGB(double color)
         {
-            Color c = Utils.UI.colorFromHex((int)color);
+            return albedoFromRGB(Utils.UI.colorFromHex((int)color));
+        }
+
+        public static double albedoFromRGB(Color c)
+        {
             return (Math.Pow(c.R/255.0, 2.2) + Math.Pow(c.G/255.0, 2.2) + Math.Pow(c.B/255.0, 2.2)) / 3.0;
         }
 
@@ -399,6 +405,12 @@ namespace SystemGenerator.Generation
 
         private void genAlbedo(Star star, ref Planet planet)
         {
+            if (retries > 100)
+            {
+                Utils.writeLog("Exceeded maximum number of retries, quitting...");
+                System.Environment.Exit(-1);
+            }
+
             if (planet.isBelt) //Belts have neither temp nor atmo so don't need albedo
             {
                 return;
@@ -626,18 +638,21 @@ namespace SystemGenerator.Generation
                 if (planet.isWater && (planet.t < Const.KELVIN) && !frozen) //If a water world is freezing but has a liquid ocean, redo
                 {
                     Utils.writeLog("                Planet has liquid surface and freezing temp, rerandomizing");
+                    retries++;
                     genAlbedo(star, ref planet);
                 }
 
                 if (planet.isWater && (planet.t > Const.KELVIN) && frozen) //If a water world is above freezing but has a frozen ocean, redo
                 {
                     Utils.writeLog("                Planet has frozen surface and above-melting temp, rerandomizing");
+                    retries++;
                     genAlbedo(star, ref planet);
                 }
 
                 if (planet.isHab && frozen) //If a habitable planet is freezing, redo
                 {
                     Utils.writeLog("                Planet is habitable and has freezing temp, rerandomizing");
+                    retries++;
                     genAlbedo(star, ref planet);
                 }
             }
@@ -903,7 +918,7 @@ namespace SystemGenerator.Generation
                 }
                 while (Utils.contains(list, pick));
                 list.Add(pick.copy());
-                list[1].quantity = remain*Utils.fudge(Gen.Atmo.ATMO_DROPOFF);
+                list[1].quantity = Utils.randDouble(0.03, 0.08);
                 remain -= list[1].quantity;
                 Utils.writeLogAtmo(list[1], remain);
 
@@ -960,13 +975,13 @@ namespace SystemGenerator.Generation
                 if (remain > Gen.Atmo.MINOR_FRACTION)
                 {
                     list[0].quantity += remain-Gen.Atmo.MINOR_FRACTION;
-                    remain -= Gen.Atmo.MINOR_FRACTION;
+                    remain = Gen.Atmo.MINOR_FRACTION;
                 }
                 
                 Utils.writeLog("                    Picking minor components");
 
                 //Add minor components
-                for (int m = 0; m < 4; m++)
+                for (int m = 0; m < 6; m++)
                 {              
                     do
                     {
